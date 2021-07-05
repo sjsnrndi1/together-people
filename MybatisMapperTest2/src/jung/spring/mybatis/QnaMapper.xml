@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace = "jung.spring.mybatis.QnaMapper">
+		<resultMap type = "jung.spring.vo.QnaInfoVO" id = "QnaResultMap">			
+			<result property = "qnaNumber" column = "QNANUMBER"/>
+			<result property = "qnaRegistNumber" column = "QNAREGISTNUMBER"/>
+			<result property = "qnaTitle" column = "QNATITLE"/>
+			<result property = "qnaContent" column = "QNACONTENT"/>
+			<result property = "qnaWriter" column = "QNAWRITER"/>
+			<result property = "qnaUserId" column = "QNAUSERID"/>
+			<result property = "qnaDate" column = "QNADATE"/>
+			<result property = "qnaComment" column = "QNACOMMENT"/>
+		</resultMap>
+		
+		<select id = "getQnas" resultType = "jung.spring.vo.QnaInfoVO" parameterType = "string">
+			SELECT * FROM qnaInfo WHERE qnaUserId = #{user_id} ORDER BY qnaNumber DESC
+		</select>
+		
+		<select id = "getQnaInfo" resultType = "jung.spring.vo.QnaInfoVO" parameterType = "jung.spring.vo.QnaInfoVO">
+			SELECT * FROM qnaInfo WHERE qnaTitle = #{qnaTitle} AND qnaContent = #{qnaContent} AND qnaUserId = #{qnaUserId}
+		</select>
+				
+		<select id = "getQnaInfos" resultType = "jung.spring.vo.QnaInfoVO">
+			SELECT * FROM qnaInfo ORDER BY qnaNumber DESC
+		</select>
+		
+		<insert id = "addQna" parameterType="jung.spring.vo.QnaInfoVO">
+			INSERT INTO qnaInfo VALUES(qnaNumber_seq.nextval, #{qnaRegistNumber}, #{qnaTitle}, #{qnaContent}, #{qnaWriter}, #{qnaUserId}, #{qnaDate}, #{qnaComment})
+		</insert>
+		
+		<delete id = "deleteQna" parameterType = "int">
+			DELETE qnaInfo WHERE qnaNumber = #{qnaNumber}
+		</delete>
+		
+		<select id = "getQna" resultType = "jung.spring.vo.QnaInfoVO" parameterType = "int">
+			SELECT * FROM qnaInfo WHERE qnaNumber = #{qnaNumber}
+		</select>
+		
+		<update id = "qnaModify" parameterType = "jung.spring.vo.QnaInfoVO">
+			UPDATE qnaInfo SET qnaTitle = #{qnaTitle}, qnaContent = #{qnaContent} WHERE qnaNumber = #{qnaNumber} AND qnaUserId = #{qnaUserId}
+		</update>
+		
+		<update id = "modifyQnaNumber" parameterType = "jung.spring.vo.QnaInfoVO">
+			UPDATE qnaInfo SET qnaRegistNumber = #{qnaRegistNumber} WHERE qnaNumber = #{qnaNumber}
+		</update>
+
+		<update id = "modifyQnaComment" parameterType = "jung.spring.vo.QnaInfoVO">
+			UPDATE qnaInfo SET qnaComment = #{qnaComment} WHERE qnaNumber = #{qnaNumber} AND qnaUserId = #{qnaUserId}
+		</update>
+		
+		<delete id = "userSecession" parameterType = "string">
+			DELETE qnaInfo WHERE qnaUserId = #{qnaUserId}
+		</delete>
+		
+	</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace = "jung.spring.mybatis.PostingRecommandMapper">
+		<resultMap type = "jung.spring.vo.PostingRecommandInfoVO" id = "PostingRecommandResultMap">
+			<result property = "postingRecommandNumber" column = "POSTINGRECOMMANDNUMBER"/>
+			<result property = "postingNumber" column = "POSTINGNUMBER"/>
+			<result property = "userId" column = "USERID"/>
+			<result property = "postingRecommandCountCheck" column = "POSTINGRECOMMANDCOUNTCHECK"/>
+		</resultMap>
+		
+	<select id = "getUserPostingRecommand" resultType = "jung.spring.vo.PostingRecommandInfoVO" parameterType = "string">
+		SELECT * FROM postingRecommandInfo WHERE userId = #{user_id}
+	</select>
+	
+	<insert id = "addUserPostingRecommand" parameterType = "jung.spring.vo.PostingRecommandInfoVO">
+		INSERT INTO postingRecommandInfo VALUES(postingRecommandNumber_seq.nextval, #{postingNumber}, #{userId}, #{postingRecommandCountCheck})
+	</insert>
+	
+	<select id = "getUserRecommand" resultType = "jung.spring.vo.PostingRecommandInfoVO" parameterType = "jung.spring.vo.PostingRecommandInfoVO">
+		SELECT * FROM postingRecommandInfo WHERE userId = #{userId} AND postingNumber = #{postingNumber}
+	</select>
+	
+	<update id = "updatePostingRecommand" parameterType = "jung.spring.vo.PostingRecommandInfoVO">
+		UPDATE postingRecommandInfo SET postingRecommandCountCheck = #{postingRecommandCountCheck} WHERE userId = #{userId} AND postingNumber = #{postingNumber}
+	</update>
+	
+	<select id = "getPostingRecommand" parameterType = "int">
+		SELECT FROM postingRecommandInfo WHERE 
+	</select>
+	
+	<select id = "getPostingRecommands" resultType = "jung.spring.vo.PostingRecommandInfoVO" parameterType = "string">
+		SELECT * FROM postingRecommandInfo WHERE userId = #{user_id}
+	</select> 
+	
+	<select id = "getPostingRc" resultType = "jung.spring.vo.PostingRecommandInfoVO" parameterType = "jung.spring.vo.PostingRecommandInfoVO">
+		SELECT * FROM postingRecommandInfo WHERE userId = #{userId} AND postingNumber = #{postingNumber}
+	</select> 
+	
+	<delete id = "userSecession" parameterType = "string">
+		DELETE postingRecommandInfo WHERE userId = #{userId}
+	</delete>
+	
+	</mapper>

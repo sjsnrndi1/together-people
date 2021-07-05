@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace = "jung.spring.mybatis.MemberMapper">
+		<resultMap type = "jung.spring.vo.UserInfoVO" id = "MemberResultMap">
+			<result property = "user_re_level" column = "USER_RE_LEVEL"/>
+			<result property = "user_id" column = "USER_ID"/>
+			<result property = "user_password" column = "USER_PASSWORD"/>
+			<result property = "user_postCode" column = "POSTCODE"/>
+			<result property = "user_roadAddress" column = "USER_ROADADDRESS"/>
+			<result property = "user_jibunAddress" column = "USER_JIBYNADDRESS"/>
+			<result property = "user_detailAddress" column = "USER_DETAILADDRESS"/>
+			<result property = "user_name" column = "USER_NAME"/>
+			<result property = "user_gender" column = "USER_GENDER"/>
+			<result property = "user_birthday_year" column = "USER_BIRTHDAY_YEAR"/>
+			<result property = "user_birthday_month" column = "USER_BIRTHDAY_MONTH"/>
+			<result property = "user_birthday_day" column = "USER_BIRTHDAY_DAY"/>
+			<result property = "user_email" column = "USER_EMAIL"/>
+			<result property = "user_phone" column = "USER_PHONE"/>
+			<result property = "user_reportNumber" column = "USER_REPORTNUMBER"/>
+			<result property = "user_date" column = "USER_DATE"/>
+		</resultMap>
+		<!-- resultMap = "MemberResultMap" -->
+		<select id = "getMembers" resultType = "user">
+			SELECT * FROM userInfo ORDER BY user_re_level DESC
+		</select>
+		
+		<select id = "selectUserNamePhone" resultType = "user" parameterType = "user">
+			SELECT * FROM userInfo WHERE user_name = #{user_name} AND user_phone = #{user_phone}
+		</select>
+		
+		<select id = "getUser" resultType = "user" parameterType = "string">
+			SELECT * FROM userInfo WHERE user_id = #{user_id}
+		</select>
+		
+		<insert id = "addMember" parameterType = "user">
+			INSERT INTO userInfo VALUES(userInfo_seq.nextval, #{user_id}, #{user_password}, #{user_postCode}, #{user_roadAddress}, #{user_jibunAddress}, #{user_detailAddress}, 
+			#{user_name}, #{user_gender}, #{user_birthday_year}, #{user_birthday_month}, #{user_birthday_day}, #{user_email}, #{user_phone}, #{user_reportNumber}, #{user_date})
+		</insert>
+		
+		<select id = "selectUserId" resultType = "user" parameterType = "map">
+			SELECT * FROM userInfo WHERE user_name = #{user_name} AND user_phone = #{user_phone}
+		</select>
+		
+		<select id = "selectUserPassword" resultType = "user" parameterType = "string">
+			SELECT * FROM userInfo WHERE user_id = #{user_id}
+		</select>
+	
+		<select id = "selectUserPasswordModify" resultType = "user" parameterType = "map">
+			SELECT * FROM userInfo WHERE user_id = #{user_id} AND user_name = #{user_name} AND user_phone = #{user_phone}
+		</select>
+
+		<select id = "selectUserPasswordInfo" resultType = "string" parameterType = "string">
+			SELECT user_password FROM userInfo WHERE user_id = #{user_id}
+		</select>
+		
+		<select id = "selectUserInfo" resultType = "user" parameterType = "jung.spring.vo.UserIdPasswordVO">
+			SELECT * FROM userInfo WHERE user_id = #{user_id}
+		</select>
+		
+		<select id = "selectUserInfoRecommand" resultType = "user" parameterType = "string">
+			SELECT * FROM userInfo WHERE user_id = #{user_id}
+		</select>
+		
+		<update id = "modifyPassword" parameterType = "map">
+			UPDATE userInfo SET user_password = #{user_password} WHERE user_id = #{user_id}
+		</update>
+		
+		<update id = "modifyUserReport" parameterType = "user">
+			UPDATE userInfo SET user_reportNumber = #{user_reportNumber} WHERE user_id = #{user_id}
+		</update>
+		
+		<update id = "modifyUserInfo" parameterType = "user">
+			UPDATE userInfo SET user_name = #{user_name}, user_postNumber = #{user_postNumber}, user_address = #{user_address}, user_detailAddress = #{user_detailAddress}, user_email = #{user_email}, user_phone = #{user_phone}, user_passwordQuestion = #{user_passwordQuestion}, user_answer = #{user_answer} WHERE user_id = #{user_id}
+		</update>
+		
+		<delete id = "userSecession" parameterType = "string">
+			DELETE userInfo WHERE user_id = #{user_id}
+		</delete>
+	</mapper>

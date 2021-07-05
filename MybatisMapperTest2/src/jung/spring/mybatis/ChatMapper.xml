@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace = "jung.spring.mybatis.ChatMapper">
+		<resultMap type = "jung.spring.vo.ChatInfoVO" id = "ChatResultMap">			
+			<result property = "chatNumber" column = "CHATNUM"/>
+			<result property = "chatNum" column = "CHATNUMBER"/>
+			<result property = "chatUserId" column = "CHATUSERID"/>
+			<result property = "chatContent" column = "CHATCONTENT"/>
+			<result property = "chatDate" column = "CHATDATE"/>
+		</resultMap>
+		
+		<insert id = "addChat" parameterType = "jung.spring.vo.ChatInfoVO">
+			INSERT INTO chatInfo VALUES(chatNumber_seq.nextval, #{chatNum}, #{chatUserId}, #{chatContent}, #{chatDate})
+		</insert>
+		
+		<select id = "getChats" resultType = "jung.spring.vo.ChatInfoVO" parameterType = "int">
+			SELECT * FROM chatInfo WHERE chatNum = #{boardNumber} ORDER BY chatNumber ASC
+		</select>
+		
+		<delete id = "userSecession" parameterType = "string">
+			DELETE chatInfo WHERE chatUserId = #{chatUserId}
+		</delete>
+	</mapper>

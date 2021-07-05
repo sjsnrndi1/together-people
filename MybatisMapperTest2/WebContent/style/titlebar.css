@@ -1,0 +1,27 @@
+	.titleBar {
+		background-color:#F1DBC6;
+		width : 100%;
+		height : 200px;
+		position : relative;
+	}
+	.fixedTitleBar {
+		position:fixed;
+		width:100%;
+		top:0;
+		left:0;
+		background-color : #F1DBC6;
+	}
+	.titleBarDetail {
+		font-size : 100%;
+		display : inline;
+		padding-left : 25%;
+		padding-top : 10px;
+	}
+	.viewDetail{
+		text-decoration : none;
+		color : white;
+	}
+	body {
+		margin : 0px;
+		font-family: 'Hanna';
+	}

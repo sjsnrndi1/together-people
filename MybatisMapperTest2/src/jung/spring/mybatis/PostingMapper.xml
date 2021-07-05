@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace = "jung.spring.mybatis.PostingMapper">
+		<resultMap type = "jung.spring.vo.PostingInfoVO" id = "PostingResultMap">
+			<result property = "postingNumber" column = "POSTINGNUMBER"/>
+			<result property = "userId" column = "USERID"/>
+			<result property = "userName" column = "USERNAME"/>
+			<result property = "postingContent" column = "POSTINGCONTENT"/>
+			<result property = "postingRecommandCount" column = "POSTINGRECOMMANDCOUNT"/>
+			<result property = "postingAnswer" column = "POSTINGANSWER"/>
+			<result property = "postingDate" column = "POSTINGDATE"/>
+		</resultMap>
+		
+		<select id = "getPostings" resultType = "jung.spring.vo.PostingInfoVO">
+			SELECT * FROM postingInfo ORDER BY postingNumber DESC
+		</select>
+		
+		<select id = "getUserPosting" resultType = "jung.spring.vo.PostingInfoVO" parameterType = "int">
+			SELECT * FROM postingInfo WHERE postingNumber = #{postingNumber}
+		</select>
+		
+		<select id = "getUserPostingInfo" resultType = "jung.spring.vo.PostingInfoVO" parameterType = "jung.spring.vo.PostingInfoVO">
+			SELECT * FROM postingInfo WHERE userId = #{user_id}
+		</select>
+		
+		<insert id = "addUserPosting" parameterType = "jung.spring.vo.PostingInfoVO">
+			INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, #{userId}, #{userName}, #{postingContent}, #{postingRecommandCount}, #{postingDate})
+		</insert>
+		
+		<update id = "updateUserPosting" parameterType = "jung.spring.vo.PostingInfoVO">
+			UPDATE postingInfo SET postingContent = #{postingContent} WHERE postingNumber = #{postingNumber}
+		</update>
+
+		<update id = "updateUserPostingRecommand" parameterType = "jung.spring.vo.PostingInfoVO">
+			UPDATE postingInfo SET postingRecommandCount = #{postingRecommandCount} WHERE postingNumber = #{postingNumber}
+		</update>
+		
+		<delete id = "deleteUserPosting" parameterType = "jung.spring.vo.PostingInfoVO">
+			DELETE postingInfo WHERE postingNumber = #{postingNumber}
+		</delete>
+		
+		<select id = "getPosting" resultType = "jung.spring.vo.PostingInfoVO" parameterType = "int">
+			SELECT * FROM postingInfo WHERE postingNumber = #{postingNumber}
+		</select>
+		
+		<delete id = "userSecession" parameterType = "string">
+			DELETE postingInfo WHERE userId = #{userId}
+		</delete>
+		
+		<delete id = "adminDeletePosting" parameterType = "int">
+			DELETE postingInfo WHERE postingNumber = #{postingNumber}
+		</delete>
+		
+	</mapper>
