@@ -9,6 +9,7 @@
 <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet"> <!-- 폰트 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/titlebar.css"> <!-- 타이틀바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/togetherPeoplePharse.css"> <!-- 문구바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/footerbar.css"> <!-- 바닥바 -->
 <script>
 	function openNav() {
 		document.getElementById('mysidenav').style.width = '300px';
@@ -73,6 +74,16 @@
 			<a href = "loginView" class = "loginpwView">로그인</a>&nbsp;
 			<span style = "color : #DCDCDC;">|</span>&nbsp;
 			<a href = "findPassword" class = "loginpwView">비밀번호찾기</a>&nbsp;
+		</div>
+	</div>
+	
+	<div class = "floorBar">	
+		<div class = "togetherPeopleLeft">
+			Together People<br>사람들과 함께함으로써 사람을 얻는 곳
+		</div>
+		<div class = "togetherPeopleRight">
+			경상북도 경산시 진량읍 대구대로 299-31 TEL 010-2098-6362(대표번호, MSG)<br>
+			Copyright(c) 2021 Min Sung Graphic All right Reserved.
 		</div>
 	</div>
 </body>

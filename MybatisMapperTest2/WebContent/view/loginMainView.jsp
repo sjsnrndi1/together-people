@@ -12,7 +12,7 @@
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/sidebar.css"> <!-- 사이드바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/titlebar.css"> <!-- 타이틀바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/togetherPeoplePharse.css"> <!-- 문구바 -->
-
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/footerbar.css"> <!-- 바닥바 -->
 <script>
 	function openNav() {
 		document.getElementById('mysidenav').style.width = '300px';
@@ -41,36 +41,6 @@
 	}
 	.contentBar::-webkit-scrollbar {
 		display: none;
-	}
-	.floorBar {
-		width : 100%;
-		height : 100px;
-		background-color : #000000;
-		position : fixed;
-		bottom : 0;
-	}
-	.togetherPeopleLeft {
-		width : 100%;
-		color : #696969;
-		font-family: 'Hanna';
-		font-size : 90%;
-		text-align : center;
-		position : absolute;
-		transform : translate(0%, 20%);
-	}
-	.togetherPeopleLeft img {
-		width : 10%;
-		height : 10%;
-	}
-	.togetherPeopleRight {
-		float : right;
-		width : 100%;
-		color : #696969;
-		font-family: 'Hanna';
-		font-size : 90%;
-		text-align : center;
-		position : absolute;
-		transform : translate(0%, 220%);
 	}
 	.contentBar a:link { color : #696969; }
 	.contentBar a:visited { color : #696969; }

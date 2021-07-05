@@ -206,9 +206,10 @@
 <style>
 	.title {
 		width : 20%;
-		height : 90%;
+		height : 100%;
 		margin : auto;
 		text-align : center;
+		padding-bottom : 5%;
 	}
 	.user_id_title, .user_name_title, .user_password_title, .user_passwordCheck_title, .user_address_title, .user_email_title, .user_phone_title, .user_gender_title, .user_birthday_title {
 		text-align : left;
@@ -285,7 +286,7 @@
 </head>
 <body>
 <form action = "user_info_regist" name = "userRegistInfo" method = "POST" onsubmit="return check()">
-	<div class = "titleBar">
+	<header class = "titleBar">
 		<div class = "fixedTitleBar">
 			<div class = "titleBarDetail">
 				<a href = "firstView" class = "viewDetail">TogetherPeople</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -305,9 +306,9 @@
 			</div>
 			<hr align = "center" width = "50%" color = "#C0C0C0">
 		</div>
-	</div>
-
-	<div class = "title">
+	</header>
+	
+	<section class = "title">
 		<p class = "user_id_title">아이디</p>
 		<input type = "text" id = "user_id" class = "user_id" name = "user_id" maxlength = "16" onblur = "userIdCheck()"/>
 		<div class = "user_id_check"></div>
@@ -369,8 +370,17 @@
 		<p>
 			<input type = "submit" id = "user_signUp" class = "user_signUp"  name = "user_signUp" value = "회원가입">
 		</p>
-	</div>
-
+	</section>
+	
+	<footer class = "floorBar">	
+		<div class = "togetherPeopleLeft">
+			Together People<br>사람들과 함께함으로써 사람을 얻는 곳
+		</div>
+		<div class = "togetherPeopleRight">
+			경상북도 경산시 진량읍 대구대로 299-31 TEL 010-2098-6362(대표번호, MSG)<br>
+			Copyright(c) 2021 Min Sung Graphic All right Reserved.
+		</div>
+	</footer>
 </form>
 </body>
 </html>
