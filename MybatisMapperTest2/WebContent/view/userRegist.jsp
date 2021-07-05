@@ -6,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
+<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet"> <!-- 폰트 -->
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- 제이쿼리 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/sidebar.css"> <!-- 사이드바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/titlebar.css"> <!-- 타이틀바 -->
 <script>
 	function minusCut(loc) {
 		if(/[^0123456789]/g.test(loc.value)) {
@@ -192,13 +196,14 @@
 			return true;
 		}
 	}
-	
+	function openNav() {
+		document.getElementById('mysidenav').style.width = '300px';
+	}
+	function closeNav() {
+		document.getElementById('mysidenav').style.width = '0';
+	}
 </script>
 <style>
-	
-	body {
-		background-color : #F0F8FF;
-	}
 	.title {
 		width : 20%;
 		height : 90%;
@@ -208,34 +213,29 @@
 	.user_id_title, .user_name_title, .user_password_title, .user_passwordCheck_title, .user_address_title, .user_email_title, .user_phone_title, .user_gender_title, .user_birthday_title {
 		text-align : left;
 		width : 50%;
-		font-size : 15px;
-		font-weight : bold;
+		font-size : 120%;
 	}
-	#user_id, #user_password, #user_passwordCheck, #user_name, #user_phone, #user_email, #user_signUp{
+	.user_id, .user_password, .user_passwordCheck, .user_name, .user_phone, .user_email, .user_signUp{
 		text-align : left;
 		height : 30px;
 		width : 100%;
+		border : 1px solid #A9A9A9;
 	}
-	#user_gender {
-		text-align : left;
-		height : 36px;
-		width : 100%;
-	}
-	#user_gender {
+	.user_gender {
 		text-align : left;
 		height : 43px;
 		width : 100%;
 		margin : 0px;
 	}
-	#sample4_postcode {
+	.sample4_postcode {
 		width : 15%;
 		height : 30px;
 	}
-	#sample4_roadAddress {
+	.sample4_roadAddress {
 		width : 79%;
 		height : 30px;
 	}
-	#sample4_detailAddress, #sample4_jibunAddress {
+	.sample4_detailAddress, .sample4_jibunAddress {
 		width : 97.5%;
 		height : 30px;
 		margin : auto;
@@ -243,66 +243,96 @@
 	.user_address_input {
 		margin : 0px;
 	}
-	#user_birthday_year, #user_birthday_day {
+	.user_birthday_year, .user_birthday_day {
 		width : 31%;
 		height : 30px;
 	}
-	#user_birthday_month{
+	.user_birthday_month{
 		width : 30%;
 		height : 36px;
+	}
+	input:focus {
+		outline : 3px solid #F1DBC6;
+		border : 1px solid #F1DBC6;
+	}
+	select {
+		color : gray;
+	}
+	select:focus {
+		outline : 3px solid #F1DBC6;
+		border : 1px solid #F1DBC6;
 	}
 	input::placeholder {
 		color : gray;
 	}
-	#user_id_check, #user_password_check, #user_password_setting, #user_birthday_check {
+	.user_id_check, .user_password_check, .user_password_setting, .user_birthday_check {
 		width : 100%;
 		height : 10px;
 		text-align : left;
-		background-color : #F0F8FF;
 		border:none;
-		font-size : 12px;
+		font-size : 100%;
 	}
-	#user_signUp{
+	.user_signUp{
 		text-align : center;
 		height : 50px;
 		width : 100%;
-		background-color : #00BFFF;
 		font-size : 30px;
-		color : #F0F8FF;
+		background-color : #F1DBC6;
+		color : #696969;
+		border : 1px solid #C0C0C0;
 	}
-	
 </style>
 </head>
 <body>
 <form action = "user_info_regist" name = "userRegistInfo" method = "POST" onsubmit="return check()">
-<img alt = "title" src = "${togetherPeopleTitle}" style = "width : 100%; height : 200px;">
-	<hr>
+	<div class = "titleBar">
+		<div class = "fixedTitleBar">
+			<div class = "titleBarDetail">
+				<a href = "firstView" class = "viewDetail">TogetherPeople</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href = "noticeView" class = "viewDetail">소개</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href = "boardView" class = "viewDetail">공지사항</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href = "mypageView"class = "viewDetail">커뮤니티</a>
+				<span class="openmenu" onclick='openNav()' style = "font-family:'Hanna';font-size:100%;color:white;padding-left:24%;"><i class="fa fa-angle-double-left fa-5" aria-hidden="true"></i>전체메뉴</span>
+				&nbsp;&nbsp;&nbsp;<div id="mysidenav" class="sidenav">
+					<a href="#">Together People</a>
+					<a href="#" class="closebtn" onclick='closeNav()'>x</a>
+					<a href="#">소개</a>
+					<a href="#">공지사항</a>
+					<a href="#">커뮤니티</a>
+				</div>
+				<a href = "loginView" class = "viewDetail">로그인</a>&nbsp;&nbsp;&nbsp;						
+				<a href = "userRegist" class = "viewDetail">회원가입</a>					
+			</div>
+			<hr align = "center" width = "50%" color = "#C0C0C0">
+		</div>
+	</div>
+
 	<div class = "title">
 		<p class = "user_id_title">아이디</p>
-		<input type = "text" id = "user_id" name = "user_id" maxlength = "13" onblur = "userIdCheck()"/>
-		<div id = "user_id_check"></div>
+		<input type = "text" id = "user_id" class = "user_id" name = "user_id" maxlength = "16" onblur = "userIdCheck()"/>
+		<div class = "user_id_check"></div>
 		
 		<p class = "user_password_title">비밀번호</p>
-		<input type = "password" id = "user_password"  name = "user_password" maxlength = "16" onblur = "userPwSetting()" onKeyUp = "checkCapsLock(event)"/>
-		<div id = "user_password_setting"></div>
+		<input type = "password" id = "user_password" class = "user_password" name = "user_password" maxlength = "16" onblur = "userPwSetting()" onKeyUp = "checkCapsLock(event)"/>
+		<div class = "user_password_setting"></div>
 		
 		<p class = "user_passwordCheck_title">비밀번호 확인</p>
-		<input type = "password" id = "user_passwordCheck" name = "user_passwordCheck" maxlength = "16" onblur = "userPwCheck()" onKeyUp = "checkCapsLock(event)"/>
-		<div id = "user_password_check"></div>
+		<input type = "password" id = "user_passwordCheck" class = "user_passwordCheck" name = "user_passwordCheck" maxlength = "16" onblur = "userPwCheck()" onKeyUp = "checkCapsLock(event)"/>
+		<div class = "user_password_check"></div>
 		
 		<p class = "user_address_title">주소 &nbsp;&nbsp;<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"></p>
-			<input type = "text" id = "sample4_postcode" name = "sample4_postcode" placeholder = "우편번호">
-			<input type = "text" id = "sample4_roadAddress" name = "sample4_roadAddress" placeholder = "도로명주소">
-			<input type = "text" id = "sample4_jibunAddress" name = "sample4_jibunAddress" placeholder = "지번주소">
+			<input type = "text" id = "sample4_postcode" class = "sample4_postcode" name = "sample4_postcode" placeholder = "우편번호">
+			<input type = "text" id = "sample4_roadAddress" class = "sample4_roadAddress" name = "sample4_roadAddress" placeholder = "도로명주소">
+			<input type = "text" id = "sample4_jibunAddress" class = "sample4_jibunAddress" name = "sample4_jibunAddress" placeholder = "지번주소">
 			<span id = "guide" style = "color : #999; display : none"></span>
-			<input type = "text" id = "sample4_detailAddress" name = "sample4_detailAddress" placeholder = "상세주소">
+			<input type = "text" id = "sample4_detailAddress" class = "sample4_detailAddress" name = "sample4_detailAddress" placeholder = "상세주소">
 			<script src = "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 		<p class = "user_name_title">이름</p>
-		<input type = "text" id = "user_name" name = "user_name"/>
+		<input type = "text" id = "user_name" class = "user_name" name = "user_name"/>
 		
 		<p class = "user_gender_title">성별</p>
-		<select id = "user_gender" name = 'user_gender'>
+		<select id = "user_gender" class = "user_gender" name = 'user_gender'>
 		      <option value = "default"> 성별 </option>
 		      <option value = "male"> 남성 </option>
 		      <option value = "female"> 여성 </option>
@@ -310,8 +340,8 @@
 		</select>
 		
 		<p class = "user_birthday_title">생년월일</p>
-		<input type = "text" placeholder = "년(4자)" id = "user_birthday_year" name = "user_birthday_year" maxlength = "4" onblur = "userBirthday()"/>
-		<select id = "user_birthday_month" name = 'user_birthday_month' onblur = "userBirthday()">
+		<input type = "text" placeholder = "년(4자)" id = "user_birthday_year" class = "user_birthday_year" name = "user_birthday_year" maxlength = "4" onblur = "userBirthday()"/>
+		<select id = "user_birthday_month" name = 'user_birthday_month' class = "user_birthday_month" onblur = "userBirthday()">
 			<option value = "default"> 월 </option>
 		   	<option value = "january"> 1 </option>
 		   	<option value = "february"> 2 </option>
@@ -326,18 +356,18 @@
 		   	<option value = "november"> 11 </option>
 		   	<option value = "december"> 12 </option>
 	   	</select>
-	   	<input type = "text" placeholder = "일" id = "user_birthday_day" name = "user_birthday_day" onblur = "userBirthday()" maxlength = "2"/>
-		<div id = "user_birthday_check"></div>
+	   	<input type = "text" placeholder = "일" id = "user_birthday_day" class = "user_birthday_day" name = "user_birthday_day" onblur = "userBirthday()" maxlength = "2"/>
+		<div class = "user_birthday_check"></div>
 		
 		<p class = "user_email_title">이메일</p>
-		<input type = "email" id = "user_email" name = "user_email"/>
+		<input type = "email" id = "user_email" class = "user_email" name = "user_email"/>
 		
 		<p class = "user_phone_title">휴대전화</p>
-		<input type = "tel" id = "user_phone" name = "user_phone" placeholder = "-없이 입력하세요." onblur = "minusCut(this)"/>
-		<div id = "user_birthday_phone"></div>
+		<input type = "tel" id = "user_phone" class = "user_phone" name = "user_phone" placeholder = "-없이 입력하세요." onblur = "minusCut(this)"/>
+		<div class = "user_birthday_phone"></div>
 		
 		<p>
-			<input type = "submit" id = "user_signUp" name = "user_signUp" value = "회원가입">
+			<input type = "submit" id = "user_signUp" class = "user_signUp"  name = "user_signUp" value = "회원가입">
 		</p>
 	</div>
 
