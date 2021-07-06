@@ -20,11 +20,6 @@
 	function closeNav() {
 		document.getElementById('mysidenav').style.width = '0';
 	}
-	/*$(function (){
-		$("#answerButton").click(function (){
-			$("#noneAnswer").toggle();
-		});
-	});*/
 </script>
 <style>
 	.contentBar {
@@ -98,7 +93,7 @@
 					<a href="mypageViewid=${userInfo.user_id }">커뮤니티</a>
 				</div>
 				<a href = "mypageView?id=${userInfo.user_id }" class = "viewDetail">${userInfo.user_name }님</a>&nbsp;&nbsp;&nbsp;		
-				<a href = "userLogout" class = "viewDetail">로그아웃</a>				
+				<a href = "firstView" class = "viewDetail">로그아웃</a>				
 			</div>
 			<hr align = "center" width = "50%" color = "#C0C0C0">
 		</div>

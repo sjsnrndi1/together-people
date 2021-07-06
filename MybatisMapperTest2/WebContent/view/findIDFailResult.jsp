@@ -46,11 +46,11 @@
 				<a href = "mypageView"class = "viewDetail">커뮤니티</a>
 				<span class="openmenu" onclick='openNav()' style = "font-family:'Hanna';font-size:100%;color:white;padding-left:24%;"><i class="fa fa-angle-double-left fa-5" aria-hidden="true"></i>전체메뉴</span>
 				&nbsp;&nbsp;&nbsp;<div id="mysidenav" class="sidenav">
-					<a href="#">Together People</a>
+					<a href="firstView">Together People</a>
 					<a href="#" class="closebtn" onclick='closeNav()'>x</a>
-					<a href="#">소개</a>
-					<a href="#">공지사항</a>
-					<a href="#">커뮤니티</a>
+					<a href="noticeView">소개</a>
+					<a href="boardView">공지사항</a>
+					<a href="mypageView">커뮤니티</a>
 				</div>
 				<a href = "loginView" class = "viewDetail">로그인</a>&nbsp;&nbsp;&nbsp;
 				<a href = "userRegist" class = "viewDetail">회원가입</a>
