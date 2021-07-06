@@ -300,27 +300,11 @@ public class MybatisController {
 	
 	/*=========== 공지사항 화면 ============*/
 	@RequestMapping(value = "/noticeView")
-	public ModelAndView NoticeView(@RequestParam("id") String user_id) {
+	public ModelAndView NoticeView() {
 		ModelAndView mav = new ModelAndView();
 		List<NoticeInfoVO> noticeList = userInfoService.getNotices();
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if(str[0].equals(user_id)) { 
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
 		mav.addObject("noticeList", noticeList);
 		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
 		mav.setViewName("noticeView");
 		return mav;
 	}

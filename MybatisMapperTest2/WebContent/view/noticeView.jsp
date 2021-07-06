@@ -7,6 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항</title>
+<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet"> <!-- 폰트 -->
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- 제이쿼리 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/sidebar.css"> <!-- 사이드바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/titlebar.css"> <!-- 타이틀바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/footerbar.css"> <!-- 바닥바 -->
 <script>
 	ct = 0;
 	function alarmToggle() {
@@ -54,87 +59,80 @@
 	#tr_title, #tr_content {
 		text-align : center;
 	}
+	.noticeCEOTitle, .noticeAccessTitle {
+		width : 100%;
+		height : 100%;
+		padding-left : 25.5%;
+	}
+	.aboutPhrases {
+		text-align : center;
+		color : #FF7F50;
+		padding-top : 5px;
+		font-size : 130%;
+	}
+	.togetherPeopleIntroduce {
+		width : 100%;
+		height : 50%;
+		border : 1px solid red;
+		background-color : #F5FFFA;
+		padding-bottom : 3%;
+	}
+	.togetherPeoplePhrases {
+		text-align : center;
+		color : #A9A9A9;
+		padding-top : 5px;
+		font-size : 120%;
+	}
 </style>
 </head>
 <body>
-<div style = "float : left; width : 17%; height : 150px;">
-		<a href = "mainView?id=${userInfo.user_id }"><img alt = "title" src = "${togetherPeopleTitle}" style = "width : 100%; height : 150px;"></a>
-	</div>
-	
-	<div style = "float : left; text-align : center; width : 20%; height : 150px;">		
-		<a href = "noticeView?id=${userInfo.user_id }"><img alt = "공지사항" src = "${togetherPeopleNotice }" ></a>
-	</div>
-	
-	<div style = "float : left; text-align : center; width : 25%; height : 150px;">		
-		<a href = "boardView?id=${userInfo.user_id }&subject=all"><img alt = "게시판" src = "${togetherPeopleBoard }" ></a>
-	</div>
-	
-	<div style = "float : left; text-align : left; width : 37.5%; height : 150px; margin-top : 13px;">	
-		<c:if test = "${userInfo.user_id ne 'admin' }">	
-			<a href = "mypageView?id=${userInfo.user_id }"><img alt = "마이페이지" src = "${togetherPeopleMypage }" ></a>
-		</c:if>
-		<c:if test = "${userInfo.user_id eq 'admin' }">
-			<a href = "managementView"><img alt = "관리" src = "${togetherPeopleManagement }" ></a>
-		</c:if>
-	</div>
-		
-<div style = "float : left; width : 100%; height : 60px; text-align : right; position: relative;">
-	<div style = "text-align : center; font-size : 20px;">
-		<MARQUEE behavior="scroll">TOGETHER PEOPLE에 오신것을 환영합니다! 현재 코로나 때문에 힘든 상황이지만 모두 다함께 이겨내보아요! 아자아자 화이팅!</MARQUEE>
-	</div>
-	<div style = "margin-right : 1%;">
-		<c:if test = "${userInfo.user_id ne 'admin' }">	
-			<a href = "mypageView?id=${userInfo.user_id }">${userInfo.user_name }</a>님 
-		</c:if>
-		<c:if test = "${userInfo.user_id eq 'admin' }">	
-			<a href = "managementView">관리자</a>
-		</c:if>
-		<img src = "${alarmClose }" alt = "알람" style = "background : no-repeat; width : 20px; hegith : 20px;" onclick = "alarmToggle()">
-	</div>
-	<div id = "alarm" style = "border : 2px solid black; width : 350px; height : 300px; position: relative; left:80.5%; top: 5px; display:none;">
-		<div style = "text-align : left; width : 100%; height : 80%; overflow : auto;">
-			<c:forEach items = "${alarms }" var = "alarm">
-				<fmt:formatDate var = "alarmDate" value = "${alarm.alarmDate}" pattern="MM월dd일 HH:mm"/>
-				<textarea style = "text-align : left; width : 98%; height : 60px; resize : none; " readonly>
-${alarm.alarmContent }
-						${alarmDate }</textarea>
-			</c:forEach>
+	<div class = "titleBar">
+		<div class = "fixedTitleBar">
+			<div class = "titleBarDetail">
+				<a href = "firstView" class = "viewDetail">TogetherPeople</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href = "noticeView" class = "viewDetail">소개</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href = "boardView" class = "viewDetail">공지사항</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href = "mypageView"class = "viewDetail">커뮤니티</a>
+				<span class="openmenu" onclick='openNav()' style = "font-family:'Hanna';font-size:100%;color:white;padding-left:24%;"><i class="fa fa-angle-double-left fa-5" aria-hidden="true"></i>전체메뉴</span>
+				&nbsp;&nbsp;&nbsp;<div id="mysidenav" class="sidenav">
+					<a href="firstView">Together People</a>
+					<a href="#" class="closebtn" onclick='closeNav()'>x</a>
+					<a href="noticeView">소개</a>
+					<a href="boardView">공지사항</a>
+					<a href="mypageView">커뮤니티</a>
+				</div>
+				<a href = "loginView" class = "viewDetail">로그인</a>&nbsp;&nbsp;&nbsp;						
+				<a href = "userRegist" class = "viewDetail">회원가입</a>					
+			</div>
+			<hr align = "center" width = "50%" color = "#C0C0C0">
 		</div>
-		<hr>
-		<a href = "loginView" style = "margin-right : 5%;">로그아웃</a>
 	</div>
-</div>
-	<hr>
-	<div class = "noticeTitle">
-		공지사항 목록<br><input type = "button" value = "새로고침" onclick = "location.reload()"/>
+	
+	<div class = "togetherPeopleIntroduce">
+		<br>
+		<div class = "aboutPhrases">about TogetherPeople</div><br>
+		<div class = "togetherPeoplePhrases">to get the people together people<br>
+		사람들과 함께함으로써 사람을 얻는 곳</div>
 	</div>
-		<hr>
-	<div style = "overflow : auto; height : 250px; text-align : center;">
-		<table border = '1'>
-			<tr id = "tr_title">
-				<td class = "td_num">번호</td>
-				<td class = "td_writer">작성자</td>
-				<td class = "td_subject">제목</td>
-				<td class = "td_regDate">작성일</td>
-				<td class = "td_readcount">조회수</td>
-			</tr>
-			<c:forEach items = "${noticeList }" var = "notice">
-				<tr id = "tr_content">
-					<td>${notice.noticeRegistNumber }</td>
-					<td>${notice.noticeWriter }</td>
-					<td><a href = "noticeOpen?number=${notice.noticeNumber }&id=${userInfo.user_id}">${notice.noticeTitle }</a></td>
-					<fmt:formatDate var = "notice_date" value = "${notice.noticeDate}" pattern="yyyy-MM-dd HH:mm"/>
-					<td>${notice_date }</td>
-					<td>${notice.noticeReadCount }</td>				
-				</tr>
-			</c:forEach>
-		</table>
+	
+	<div class = "noticeCEOTitle">
+		CEO
+		내 소개
 	</div>
-	<hr>
-	<div style = "text-align : center;">
-		<c:if test = "${userInfo.user_id eq 'admin' }">
-			<a href = "noticeRegist?id=${userInfo.user_id }"><input type = "button"  id = "noticeRegist" name = "noticeRegist" value = "등록"/></a>
-		</c:if>
+	
+	<div class = "noticeAccessTitle">
+		Access
+		오시는 길 (지도)
+	</div>
+	
+	<div class = "floorBar">	
+		<div class = "togetherPeopleLeft">
+			Together People<br>사람들과 함께함으로써 사람을 얻는 곳
+		</div>
+		<div class = "togetherPeopleRight">
+			경상북도 경산시 진량읍 대구대로 299-31 TEL 010-2098-6362(대표번호, MSG)<br>
+			Copyright(c) 2021 Min Sung Graphic All right Reserved.
+		</div>
 	</div>
 </body>
 </html>

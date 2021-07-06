@@ -82,15 +82,15 @@
 			<div class = "titleBarDetail">
 				<a href = "loginMainView?id=${userInfo.user_id }" class = "viewDetail">TogetherPeople</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 				<a href = "noticeView?id=${userInfo.user_id }" class = "viewDetail">소개</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href = "boardViewid=${userInfo.user_id }" class = "viewDetail">공지사항</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href = "mypageViewid=${userInfo.user_id }" class = "viewDetail">커뮤니티</a>
+				<a href = "boardView?id=${userInfo.user_id }" class = "viewDetail">공지사항</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href = "mypageView?id=${userInfo.user_id }" class = "viewDetail">커뮤니티</a>
 				<span class="openmenu" onclick='openNav()' style = "font-family:'Hanna';font-size:100%;color:white;padding-left:24%;"><i class="fa fa-angle-double-left fa-5" aria-hidden="true"></i>전체메뉴</span>
 				&nbsp;&nbsp;&nbsp;<div id="mysidenav" class="sidenav">
 					<a href="loginMainView?id=${userInfo.user_id }">Together People</a>
 					<a href="#" class="closebtn" onclick='closeNav()'>x</a>
-					<a href="boardViewid=${userInfo.user_id }">소개</a>
-					<a href="boardViewid=${userInfo.user_id }">공지사항</a>
-					<a href="mypageViewid=${userInfo.user_id }">커뮤니티</a>
+					<a href="noticeView?id=${userInfo.user_id }">소개</a>
+					<a href="boardView?id=${userInfo.user_id }">공지사항</a>
+					<a href="mypageView?id=${userInfo.user_id }">커뮤니티</a>
 				</div>
 				<a href = "mypageView?id=${userInfo.user_id }" class = "viewDetail">${userInfo.user_name }님</a>&nbsp;&nbsp;&nbsp;		
 				<a href = "firstView" class = "viewDetail">로그아웃</a>				
