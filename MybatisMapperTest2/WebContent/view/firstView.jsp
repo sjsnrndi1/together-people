@@ -90,7 +90,7 @@
 		<div class="dropmenu">
 			<ul>
 				<li><a href="firstView">TogetherPeople</a></li>
-				<li><a href="noticeView" id="current">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소개&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+				<li><a href="noticeView" id="current">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소개&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
 					<ul>
 						<li><a href="noticeView">CEO</a></li>
 						<li><a href="noticeAccessView">ACCESS</a></li>
