@@ -39,7 +39,6 @@ public class MybatisController {
 	public ModelAndView home() {
 		ModelAndView mav = new ModelAndView();
 		List<PostingInfoVO> postingList = userInfoService.getPostings();
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
 		mav.addObject("postingList", postingList);
 		mav.setViewName("firstView");
 		return mav;
@@ -50,7 +49,6 @@ public class MybatisController {
 		ModelAndView mav = new ModelAndView();
 		List<PostingInfoVO> postingList = userInfoService.getPostings();
 		mav.addObject("postingList", postingList);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
 		mav.setViewName("firstView");
 		return mav;
 	}
@@ -62,7 +60,6 @@ public class MybatisController {
 		mav.addObject("postingList", postingList);
 		UserInfoVO userInfo = userInfoService.getUser(user_id);
 		mav.addObject("userInfo", userInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
 		mav.setViewName("loginMainView");
 		return mav;
 	}
@@ -74,14 +71,12 @@ public class MybatisController {
 		ModelAndView mav = new ModelAndView();
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		mav.addObject("userList", userList);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
 		mav.setViewName("loginView");
 		return mav;
 	}
 	@RequestMapping("/user_login")
 	public ModelAndView main(@RequestParam("user_id") String user_id, @RequestParam("user_password") String user_password) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
 		List<PostingInfoVO> postingList = userInfoService.getPostings();
 		mav.addObject("postingList", postingList);
 		UserInfoVO userInfo = userInfoService.getUser(user_id);
@@ -132,7 +127,6 @@ public class MybatisController {
 		ModelAndView mav = new ModelAndView();
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		mav.addObject("userList", userList);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
 		mav.setViewName("userRegist");
 		return mav;
 	}
@@ -143,7 +137,6 @@ public class MybatisController {
 		userInfoService.addUserInfo(userInfo);
 		UserInfoVO user = userInfoService.getUser(userInfo.getUser_id());
 		mav.addObject("user", user);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
 		mav.setViewName("userRegistResult");
 		return mav;
 	}
@@ -151,7 +144,6 @@ public class MybatisController {
 	@RequestMapping(value = "/selectAddress")
 	public ModelAndView SelectAddressForm() {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
 		mav.setViewName("selectAddress");
 		return mav;
 	}
@@ -161,7 +153,6 @@ public class MybatisController {
 	@RequestMapping(value = "/findID")
 	public ModelAndView FindId() {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
 		mav.setViewName("findID");
 		return mav;
 	}
@@ -177,7 +168,6 @@ public class MybatisController {
 		} else {
 			mav.setViewName("findIDFailResult");
 		}
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
 		return mav;
 	}
 	/*=========== 아이디 찾기 화면 ============*/
@@ -188,7 +178,6 @@ public class MybatisController {
 		ModelAndView mav = new ModelAndView();
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		mav.addObject("userList", userList);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
 		mav.setViewName("findPassword");
 		return mav;
 	}
@@ -203,7 +192,6 @@ public class MybatisController {
 		} else {
 			mav.setViewName("findPassword");
 		}
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
 		return mav;
 	}
 	
@@ -212,7 +200,6 @@ public class MybatisController {
 		ModelAndView mav = new ModelAndView();
 		userInfoService.modifyUserPassword(user_password, user_id);
 		mav.addObject("user_id", user_id);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
 		mav.setViewName("findPasswordResult");
 		return mav;
 	}
@@ -298,139 +285,23 @@ public class MybatisController {
 	}
 	/*=========== 포스팅 추천 화면 ============*/
 	
-	/*=========== 공지사항 화면 ============*/
+	/*=========== 소개 화면 ============*/
 	@RequestMapping(value = "/noticeView")
 	public ModelAndView NoticeView() {
 		ModelAndView mav = new ModelAndView();
-		List<NoticeInfoVO> noticeList = userInfoService.getNotices();
-		mav.addObject("noticeList", noticeList);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
 		mav.setViewName("noticeView");
 		return mav;
 	}
-	/*=========== 공지사항 화면 ============*/
+	/*=========== 소개 화면 ============*/
 	
-	/*=========== 공지사항 등록 화면 ============*/
-	@RequestMapping(value = "/noticeRegist")
-	public ModelAndView NoticeRegist(@RequestParam("id") String user_id) {
+	/*=========== 오시는 길 화면 ============*/
+	@RequestMapping(value = "/noticeAccessView")
+	public ModelAndView NoticeAccessView() {
 		ModelAndView mav = new ModelAndView();
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if(str[0].equals(user_id)) { 
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("noticeRegist");
+		mav.setViewName("noticeAccessView");
 		return mav;
 	}
-	
-	@RequestMapping(value = "/noticeRegistForm")
-	public String NoticeRegistForm(@RequestParam("writer") String noticeWriter, @RequestParam("user_id") String user_id,
-			@RequestParam("subject") String noticeTitle, @RequestParam("content") String noticeContent) {
-		if(noticeTitle.equals("")) {
-			return "redirect:/noticeRegist?id=" + user_id;
-		} else if(noticeContent.equals("")) {
-			return "redirect:/noticeRegist?id=" + user_id;
-		} else {
-			userInfoService.addNotice(noticeWriter, noticeTitle, noticeContent);
-			return "redirect:/noticeView?id=" + user_id;
-		}
-	}
-	/*=========== 공지사항 등록 화면 ============*/
-	
-	/*=========== 공지사항 보기 화면 ============*/
-	@RequestMapping(value = "/noticeOpen")
-	public ModelAndView NoticeOpen(@RequestParam("number") int noticeNumber, @RequestParam("id") String user_id) {
-		ModelAndView mav = new ModelAndView();
-		NoticeInfoVO noticeInfo = userInfoService.getNotice(noticeNumber);
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		userInfoService.modifyNoticeReadCount(noticeNumber);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if(str[0].equals(user_id)) { 
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("noticeInfo", noticeInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("noticeOpen");
-		return mav;
-	}
-	/*=========== 공지사항 보기 화면 ============*/
-	
-	/*=========== 공지사항 수정 화면 ============*/
-	@RequestMapping(value = "/noticeModify")
-	public ModelAndView NoticeModify(@RequestParam("number") int noticeNumber, @RequestParam("id") String user_id) {
-		ModelAndView mav = new ModelAndView();
-		NoticeInfoVO noticeInfo = userInfoService.getNotice(noticeNumber);
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if(str[0].equals(user_id)) { 
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("noticeInfo", noticeInfo);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("noticeModify");
-		return mav;
-	}
-	
-	@RequestMapping(value = "/noticeModifyForm")
-	public String NoticeModifyForm(@RequestParam("title") String noticeTitle, @RequestParam("user_id") String user_id, 
-			@RequestParam("noticeNumber") int noticeNumber, @RequestParam("content") String noticeContent) {
-		userInfoService.modifyNotice(noticeTitle, noticeNumber, noticeContent);
-		return "redirect:/noticeView?id=" + user_id;
-	}
-	/*=========== 공지사항 수정 화면 ============*/
-	
-	/*=========== 공지사항 삭제 화면 ============*/
-	@RequestMapping(value = "/noticeDelete")
-	public ModelAndView NoticeDelete(@RequestParam("number") int noticeNumber, @RequestParam("id") String user_id) {
-		ModelAndView mav = new ModelAndView();
-		NoticeInfoVO noticeInfo = userInfoService.getNotice(noticeNumber);
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("noticeInfo", noticeInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.setViewName("noticeDelete");
-		return mav;
-	}
-
-	@RequestMapping(value = "/noticeDeleteForm")
-	public void NoticeDeleteForm(@RequestParam("noticeNumber") int noticeNumber, @RequestParam("user_id") String user_id) {
-		userInfoService.deleteNotice(noticeNumber);
-	}
-	/*=========== 공지사항 삭제 화면 ============*/
+	/*=========== 오시는 길 화면 ============*/
 	
 	/*=========== 게시판 화면 ============*/
 	@RequestMapping(value = "/boardView")

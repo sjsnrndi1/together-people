@@ -9,8 +9,8 @@
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/sidebar.css"> <!-- 사이드바 -->
 <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet"> <!-- 폰트 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/titlebar.css"> <!-- 타이틀바 -->
-<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/togetherPeoplePharse.css"> <!-- 문구바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/footerbar.css"> <!-- 바닥바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
 <script>
 	function check(){
 		let pw = document.getElementById("user_name").value;
@@ -71,7 +71,7 @@
 		text-align : center;
 	}
 	
-	#user_password, #user_passwordCheck {
+	.user_password, .user_passwordCheck {
 		width : 20%;
 		height : 50px;
 		border : 1px solid #A9A9A9;
@@ -90,7 +90,7 @@
 		color : #696969;
 		border : 1px solid #C0C0C0;
 	}
-	#user_password_check, #user_password_setting {
+	.user_password_check, .user_password_setting {
 		width : 100%;
 		height : 10px;
 		text-align : center;
@@ -103,41 +103,41 @@
 <body>
 <form action = "modify_user_password" method = "POST" onsubmit = "return check();">
 	<div class = "titleBar">
-		<div class = "fixedTitleBar">
-			<div class = "titleBarDetail">
-				<a href = "firstView" class = "viewDetail">TogetherPeople</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href = "noticeView" class = "viewDetail">소개</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href = "boardView" class = "viewDetail">공지사항</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href = "mypageView"class = "viewDetail">커뮤니티</a>
-				<span class="openmenu" onclick='openNav()' style = "font-family:'Hanna';font-size:100%;color:white;padding-left:24%;"><i class="fa fa-angle-double-left fa-5" aria-hidden="true"></i>전체메뉴</span>
-				&nbsp;&nbsp;&nbsp;<div id="mysidenav" class="sidenav">
-					<a href="firstView">Together People</a>
-					<a href="#" class="closebtn" onclick='closeNav()'>x</a>
-					<a href="noticeView">소개</a>
-					<a href="boardView">공지사항</a>
-					<a href="mypageView">커뮤니티</a>
-				</div>
-				
-				<a href = "loginView" class = "viewDetail">로그인</a>&nbsp;&nbsp;&nbsp;
-				<a href = "userRegist" class = "viewDetail">회원가입</a>
-			</div>
-			<hr align = "center" width = "50%" color = "#C0C0C0">
+		<div class="dropmenu">
+			<ul>
+				<li><a href="firstView">TogetherPeople</a></li>
+				<li><a href="noticeView" id="current">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소개&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+					<ul>
+						<li><a href="noticeView">CEO</a></li>
+						<li><a href="noticeAccessView">ACCESS</a></li>
+					</ul>
+				</li>
+				<li><a href="boardView">공지사항</a></li>
+				<li><a href="mypageView">커뮤니티</a></li>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+				<li><a href="loginView">로그인</a></li>
+				<li><a href="userRegist">회원가입</a></li>
+				<li><a href ="#" class="openmenu" onclick='openNav()' style = "font-size : 100%;">전체메뉴</a></li>
+			</ul>
 		</div>
-	</div>
-	
-	<div class = "togetherPeopleIntroduce">
-		<img src = "${togetherPeopleTitle }" alt = "togetherPeople" class = "togetherPeopleIntroduceDetail"/>
-		<div class = "togetherPeoplePhrases"><span>to get the people together people</span></div>
-		<div class = "togetherPeoplePhrases"><span>사람들과 함께함으로써 사람을 얻는 곳</span></div>
+		
+		<div id="mysidenav" class="sidenav">
+			<a href="firstView">Together People</a>
+			<a href="#" class="closebtn" onclick='closeNav()'>x</a>
+			<a href="noticeView">소개</a>
+			<a href="boardView">공지사항</a>
+			<a href="mypageView">커뮤니티</a>			
+		</div>					
 	</div>
 	
 	<div class = "userModifyPw">
 		<div class = "userModifyPwDetail">
-			<input type = "hidden" id = "user_id" name = "user_id" value = "${user_id }"/>
-			<p><input type = "password" id = "user_password"  name = "user_password" maxlength = "16" placeholder = "비밀번호" onblur = "userPwSetting()" onKeyUp = "checkCapsLock(event)"/></p>
-			<div id = "user_password_setting"></div>
-			<p><input type = "password" id = "user_passwordCheck" name = "user_passwordCheck" maxlength = "16" placeholder = "비밀번호 확인" onblur = "userPwCheck()" onKeyUp = "checkCapsLock(event)"/></p>
-			<div id = "user_password_check"></div>
+			<input type = "hidden" id = "user_id" class = "user_id" name = "user_id" value = "${user_id }"/>
+			<p><input type = "password" id = "user_password" class = "user_password" name = "user_password" maxlength = "16" placeholder = "비밀번호" onblur = "userPwSetting()" onKeyUp = "checkCapsLock(event)"/></p>
+			<div id = "user_password_setting" class = "user_password_setting"></div>
+			<p><input type = "password" id = "user_passwordCheck" class = "user_passwordCheck" name = "user_passwordCheck" maxlength = "16" placeholder = "비밀번호 확인" onblur = "userPwCheck()" onKeyUp = "checkCapsLock(event)"/></p>
+			<div id = "user_password_check" class = "user_password_check"></div>
 			<p><input type = "submit" class = "userFindId_button" value = "비밀번호 변경"/></p>
 		</div>
 	</div>

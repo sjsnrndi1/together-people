@@ -11,9 +11,9 @@
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- 제이쿼리 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/sidebar.css"> <!-- 사이드바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/titlebar.css"> <!-- 타이틀바 -->
-<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/togetherPeoplePharse.css"> <!-- 문구바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/footerbar.css"> <!-- 바닥바 -->
-<script>
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
+<script>						
 	function openNav() {
 		document.getElementById('mysidenav').style.width = '300px';
 	}
@@ -24,12 +24,11 @@
 <style>
 	.contentBar {
 		width : 50%;
-		height : 390px;
+		height : 600px;
 		background-color : #FFFFFF;
 		margin-left : 25%;
 		color : #696969;
 		font-family: 'Hanna';
-		padding-top : 25px;
 		overflow : auto;
 		-ms-overflow-style: none;
 		scrollbar-width: none;
@@ -75,40 +74,51 @@
 		line-height: 1.2em;
   		height: 3.6em; /* line-height 가 1.2em 이고 3라인을 자르기 때문에 height는 1.2em * 3 = 3.6em */
 	}
+	.postingView {
+		font-size : 140%;
+		width : 100%;
+		float : left;
+		height : auto;
+		margin-left : 25%;
+		padding-top : 1%;
+		color : #696969;
+	}
 </style>
 </head>
 <body>
 	<div class = "titleBar">
-		<div class = "fixedTitleBar">
-			<div class = "titleBarDetail">
-				<a href = "firstView" class = "viewDetail">TogetherPeople</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href = "noticeView" class = "viewDetail">소개</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href = "boardView" class = "viewDetail">공지사항</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href = "mypageView"class = "viewDetail">커뮤니티</a>
-				<span class="openmenu" onclick='openNav()' style = "font-family:'Hanna';font-size:100%;color:white;padding-left:24%;"><i class="fa fa-angle-double-left fa-5" aria-hidden="true"></i>전체메뉴</span>
-				&nbsp;&nbsp;&nbsp;<div id="mysidenav" class="sidenav">
-					<a href="firstView">Together People</a>
-					<a href="#" class="closebtn" onclick='closeNav()'>x</a>
-					<a href="noticeView">소개</a>
-					<a href="boardView">공지사항</a>
-					<a href="mypageView">커뮤니티</a>
-				</div>
-				<a href = "loginView" class = "viewDetail">로그인</a>&nbsp;&nbsp;&nbsp;						
-				<a href = "userRegist" class = "viewDetail">회원가입</a>					
-			</div>
-			<hr align = "center" width = "50%" color = "#C0C0C0">
+		<div class="dropmenu">
+			<ul>
+				<li><a href="firstView">TogetherPeople</a></li>
+				<li><a href="noticeView" id="current">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소개&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+					<ul>
+						<li><a href="noticeView">CEO</a></li>
+						<li><a href="noticeAccessView">ACCESS</a></li>
+					</ul>
+				</li>
+				<li><a href="boardView">공지사항</a></li>
+				<li><a href="mypageView">커뮤니티</a></li>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+				<li><a href="loginView">로그인</a></li>
+				<li><a href="userRegist">회원가입</a></li>
+				<li><a href ="#" class="openmenu" onclick='openNav()' style = "font-size : 100%;">전체메뉴</a></li>
+			</ul>
 		</div>
-	</div>
-	<div class = "togetherPeopleIntroduce">
-		<img src = "${togetherPeopleTitle }" alt = "togetherPeople" class = "togetherPeopleIntroduceDetail"/>
-		<div class = "togetherPeoplePhrases"><span>to get the people together people</span></div>
-		<div class = "togetherPeoplePhrases"><span>사람들과 함께함으로써 사람을 얻는 곳</span></div>
+		
+		<div id="mysidenav" class="sidenav">
+			<a href="firstView">Together People</a>
+			<a href="#" class="closebtn" onclick='closeNav()'>x</a>
+			<a href="noticeView">소개</a>
+			<a href="boardView">공지사항</a>
+			<a href="mypageView">커뮤니티</a>			
+		</div>					
 	</div>
 <!-- 실시간 포스팅 / 공지사항 / 이용후기 / 진행중인 모임 -->
+	<div class = "postingView">
+		포스팅<small style = "font-size : 70%;">(당신의 일상을 모두와 자유롭게 공유하세요.)</small>
+	</div>
 	<div class = "contentBar">
-			<div style = "font-size : 140%; width : 100%; float : left; height : auto;">
-				포스팅<small style = "font-size : 70%;">(당신의 일상을 모두와 자유롭게 공유하세요.)</small>
-			</div>
 			<!-- <div style = "width : 6%; font-size : 110%; float : left; text-align : right;">
 				<a href = "#" style = "text-decoration: none;">더보기 ></a>
 			</div> -->
