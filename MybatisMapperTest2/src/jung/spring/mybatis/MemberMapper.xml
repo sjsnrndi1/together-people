@@ -34,9 +34,9 @@
 			SELECT * FROM userInfo WHERE user_id = #{user_id}
 		</select>
 		
-		<insert id = "addMember" parameterType = "user">
+		<insert id = "addMember" parameterType = "map">
 			INSERT INTO userInfo VALUES(userInfo_seq.nextval, #{user_id}, #{user_password}, #{user_postCode}, #{user_roadAddress}, #{user_jibunAddress}, #{user_detailAddress}, 
-			#{user_name}, #{user_gender}, #{user_birthday_year}, #{user_birthday_month}, #{user_birthday_day}, #{user_email}, #{user_phone}, #{user_reportNumber}, #{user_date})
+			#{user_name}, #{user_gender}, #{user_birthday_year}, #{user_birthday_month}, #{user_birthday_day}, #{user_email}, #{user_phone}, #{user_date})
 		</insert>
 		
 		<select id = "selectUserId" resultType = "user" parameterType = "map">

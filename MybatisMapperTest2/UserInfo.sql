@@ -1,19 +1,18 @@
 CREATE TABLE userInfo (
 	user_re_level NUMBER NOT NULL,
-	user_id VARCHAR2(20) NOT NULL,
-	user_password VARCHAR2(20) NOT NULL,
+	user_id VARCHAR2(100) NOT NULL,
+	user_password VARCHAR2(100) NOT NULL,
 	user_postCode NUMBER NOT NULL,
-	user_roadAddress VARCHAR2(100) NOT NULL,
-	user_jibunAddress VARCHAR2(100) NOT NULL,
-	user_detailAddress VARCHAR2(100) NOT NULL,
-	user_name VARCHAR2(30) NOT NULL,
+	user_roadAddress VARCHAR2(1000) NOT NULL,
+	user_jibunAddress VARCHAR2(1000) NOT NULL,
+	user_detailAddress VARCHAR2(1000) NOT NULL,
+	user_name VARCHAR2(1000) NOT NULL,
 	user_gender VARCHAR2(50) NOT NULL,
-	user_birthday_year VARCHAR2(10) NOT NULL,
-	user_birthday_month VARCHAR2(10) NOT NULL,
-	user_birthday_day VARCHAR2(10) NOT NULL,
-	user_email VARCHAR2(50),
+	user_birthday_year VARCHAR2(100) NOT NULL,
+	user_birthday_month VARCHAR2(100) NOT NULL,
+	user_birthday_day VARCHAR2(100) NOT NULL,
+	user_email VARCHAR2(300),
 	user_phone NUMBER NOT NULL,
-	user_reportNumber NUMBER,
 	user_date DATE NOT NULL,
 	
 	PRIMARY KEY(user_id, user_phone)
@@ -22,10 +21,10 @@ CREATE TABLE userInfo (
 CREATE SEQUENCE userInfo_seq;
 
 INSERT INTO userInfo VALUES(userInfo_seq.nextval, 'admin', 'admin', '38455', '경북 경산시 진량읍 대구대로 299-31', '경북 경산시 진량읍 평사리 430-8', '아이파크원룸 210호', 
-'관리자', '남성', '1996', '2', '1', 'sjsnrndi12@naver.com', '6362', 0, sysdate);
+'관리자', '남성', '1996', '2', '1', 'sjsnrndi12@naver.com', '6362', sysdate);
 
 INSERT INTO userInfo VALUES(userInfo_seq.nextval, 'sjsnrndi12', 'tkfkd465!@', '38455', '경북 경산시 진량읍 대구대로 299-31', '경북 경산시 진량읍 평사리 430-8', '아이파크원룸 210호', 
-'김민성', '남성', '1996', '2', '1', 'sjsnrndi12@naver.com', '2098', 0, sysdate);
+'김민성', '남성', '1996', '2', '1', 'sjsnrndi12@naver.com', '2098', sysdate);
 
 CREATE TABLE postingInfo(
 	postingNumber NUMBER PRIMARY KEY,

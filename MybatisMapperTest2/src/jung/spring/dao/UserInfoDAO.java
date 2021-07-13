@@ -1,6 +1,8 @@
 package jung.spring.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import jung.spring.vo.AlarmInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.BoardJoinUserInfoVO;
@@ -20,9 +22,10 @@ public interface UserInfoDAO {
 	ArrayList<PostingInfoVO> getPostings();
 	
 	ArrayList<UserInfoVO> getMembers();
-
-	void addUser(UserInfoVO userInfo);
 	
+	/* 회원가입 */
+	boolean addUser(HashMap<Object,Object> map);
+	/* 회원가입 */
 	
 	/* 아이디 찾기 */
 	boolean checkUserEmail(String user_name, int user_phone);

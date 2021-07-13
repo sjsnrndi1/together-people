@@ -86,12 +86,11 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	
 	/*===========유저 정보 저장하는 서비스============*/
 	@Override
-	public void addUser(UserInfoVO userInfo) {
+	public boolean addUser(HashMap<Object, Object> map) {
 		// TODO Auto-generated method stub
 		MemberMapper userMapper = sqlSession.getMapper(MemberMapper.class);
-		userInfo.setUser_reportNumber(0);
-		userInfo.setUser_date(new Date());
-		userMapper.addMember(userInfo);
+		boolean check = userMapper.addMember(map);
+		return check;
 	}
 	/*===========유저 정보 저장하는 서비스============*/
 	

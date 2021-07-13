@@ -233,10 +233,12 @@
 	.sample4_postcode {
 		width : 15%;
 		height : 30px;
+		border : 1px solid red;
 	}
 	.sample4_roadAddress {
 		width : 79%;
 		height : 30px;
+		border : 1px solid blue;
 	}
 	.sample4_detailAddress, .sample4_jibunAddress {
 		width : 97.5%;
@@ -320,15 +322,15 @@
 	<section class = "title">
 		<p class = "user_id_title">아이디</p>
 		<input type = "text" id = "user_id" class = "user_id" name = "user_id" maxlength = "16" onblur = "userIdCheck()"/>
-		<div class = "user_id_check"></div>
+		<div class = "user_id_check" id = "user_id_check"></div>
 		
 		<p class = "user_password_title">비밀번호</p>
 		<input type = "password" id = "user_password" class = "user_password" name = "user_password" maxlength = "16" onblur = "userPwSetting()" onKeyUp = "checkCapsLock(event)"/>
-		<div class = "user_password_setting"></div>
+		<div class = "user_password_setting" id = "user_password_setting"></div>
 		
 		<p class = "user_passwordCheck_title">비밀번호 확인</p>
 		<input type = "password" id = "user_passwordCheck" class = "user_passwordCheck" name = "user_passwordCheck" maxlength = "16" onblur = "userPwCheck()" onKeyUp = "checkCapsLock(event)"/>
-		<div class = "user_password_check"></div>
+		<div class = "user_password_check" id = "user_password_check"></div>
 		
 		<p class = "user_address_title">주소 &nbsp;&nbsp;<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"></p>
 			<input type = "text" id = "sample4_postcode" class = "sample4_postcode" name = "sample4_postcode" placeholder = "우편번호">

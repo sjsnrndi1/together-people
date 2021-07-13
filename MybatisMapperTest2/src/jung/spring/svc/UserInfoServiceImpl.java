@@ -1,6 +1,7 @@
 package jung.spring.svc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,8 +67,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 	
 	/*===========유저 정보 저장하는 서비스============*/
 	@Override
-	public void addUserInfo(UserInfoVO userInfo) {
-		userInfoDAO.addUser(userInfo);
+	public boolean addUserInfo(HashMap<Object, Object> map) {
+		boolean check = userInfoDAO.addUser(map);
+		return check;
 	}
 	/*===========유저 정보 저장하는 서비스============*/
 	

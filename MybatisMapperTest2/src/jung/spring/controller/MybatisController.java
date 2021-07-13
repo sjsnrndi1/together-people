@@ -1,6 +1,8 @@
 package jung.spring.controller;
 
+import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +42,7 @@ public class MybatisController {
 		ModelAndView mav = new ModelAndView();
 		List<PostingInfoVO> postingList = userInfoService.getPostings();
 		mav.addObject("postingList", postingList);
-		mav.setViewName("firstView");
+		mav.setViewName("Tp_firstView");
 		return mav;
 	}
 	
@@ -49,7 +51,7 @@ public class MybatisController {
 		ModelAndView mav = new ModelAndView();
 		List<PostingInfoVO> postingList = userInfoService.getPostings();
 		mav.addObject("postingList", postingList);
-		mav.setViewName("firstView");
+		mav.setViewName("Tp_firstView");
 		return mav;
 	}
 	
@@ -60,7 +62,7 @@ public class MybatisController {
 		mav.addObject("postingList", postingList);
 		UserInfoVO userInfo = userInfoService.getUser(user_id);
 		mav.addObject("userInfo", userInfo);
-		mav.setViewName("loginMainView");
+		mav.setViewName("Tp_loginMainView");
 		return mav;
 	}
 	/*=========== 기본 화면 ============*/
@@ -71,7 +73,7 @@ public class MybatisController {
 		ModelAndView mav = new ModelAndView();
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		mav.addObject("userList", userList);
-		mav.setViewName("loginView");
+		mav.setViewName("Tp_loginView");
 		return mav;
 	}
 	@RequestMapping("/user_login")
@@ -81,7 +83,7 @@ public class MybatisController {
 		mav.addObject("postingList", postingList);
 		UserInfoVO userInfo = userInfoService.getUser(user_id);
 		mav.addObject("userInfo", userInfo);
-		mav.setViewName("loginMainView");
+		mav.setViewName("Tp_loginMainView");
 		return mav;
 	}
 	/*=========== 로그인 화면 ============*/
@@ -127,26 +129,35 @@ public class MybatisController {
 		ModelAndView mav = new ModelAndView();
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		mav.addObject("userList", userList);
-		mav.setViewName("userRegist");
+		mav.setViewName("Tp_userRegist");
 		return mav;
 	}
 	
 	@RequestMapping(value = "/user_info_regist")
-	public ModelAndView userRegistForm(UserInfoVO userInfo) {
+	public ModelAndView userRegistForm(@RequestParam("user_id") String user_id, @RequestParam("user_password") String user_password, @RequestParam("sample4_postcode") String sample4_postcode,
+			@RequestParam("sample4_roadAddress") String sample4_roadAddress, @RequestParam("sample4_jibunAddress") String sample4_jibunAddress,
+			@RequestParam("sample4_detailAddress") String sample4_detailAddress, @RequestParam("user_name") String user_name, @RequestParam("user_gender") String user_gender,
+			@RequestParam("user_birthday_year") String user_birthday_year, @RequestParam("user_birthday_month") String user_birthday_month,
+			@RequestParam("user_birthday_day") String user_birthday_day, @RequestParam("user_email") String user_email, @RequestParam("user_phone") String user_phone) {
 		ModelAndView mav = new ModelAndView();
-		userInfoService.addUserInfo(userInfo);
-		UserInfoVO user = userInfoService.getUser(userInfo.getUser_id());
-		mav.addObject("user", user);
-		mav.setViewName("userRegistResult");
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("user_id", user_id); map.put("user_password", user_password); map.put("user_postCode", sample4_postcode); map.put("user_roadAddress", sample4_roadAddress);
+		map.put("user_jibunAddress", sample4_jibunAddress); map.put("user_detailAddress", sample4_detailAddress); map.put("user_name", user_name); map.put("user_gender", user_gender);
+		map.put("user_birthday_year", user_birthday_year); map.put("user_birthday_month", user_birthday_month); map.put("user_birthday_day", user_birthday_day);
+		map.put("user_email", user_email); map.put("user_phone", user_phone); map.put("user_date", new Date());
+		boolean check = userInfoService.addUserInfo(map);
+		mav.addObject("check", check);
+		mav.addObject("user_name", user_name);
+		mav.setViewName("Tp_userRegistResult");
 		return mav;
 	}
-	
+	/*
 	@RequestMapping(value = "/selectAddress")
 	public ModelAndView SelectAddressForm() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("selectAddress");
 		return mav;
-	}
+	}*/
 	/*=========== 회원가입 화면 ============*/
 	
 	/*=========== 아이디 찾기 화면 ============*/

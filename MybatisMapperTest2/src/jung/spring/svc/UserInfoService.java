@@ -1,5 +1,6 @@
 package jung.spring.svc;
 
+import java.util.HashMap;
 import java.util.List;
 import jung.spring.vo.AlarmInfoVO;
 import jung.spring.vo.BoardInfoVO;
@@ -20,8 +21,10 @@ public interface UserInfoService {
 	List<PostingInfoVO> getPostings(); // 포스팅 가져오기
 	
 	List<UserInfoVO> getMembers();
-
-	void addUserInfo(UserInfoVO userInfo);
+	
+	/* 회원가입 */
+	boolean addUserInfo(HashMap<Object, Object> map);
+	/* 회원가입 */
 	
 	/* 아이디 찾기 */
 	boolean checkUserEmail(String user_name, int user_phone);

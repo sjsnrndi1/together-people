@@ -11,7 +11,7 @@ public interface MemberMapper {
 
 	ArrayList<UserInfoVO> getMembers(); // 회원정보 가져오기
 	
-	void addMember(UserInfoVO userInfo);
+	boolean addMember(HashMap<Object, Object> map); // 회원가입
 	
 	UserInfoVO selectUserId(HashMap<Object, Object> map); // 아이디 찾기
 	
