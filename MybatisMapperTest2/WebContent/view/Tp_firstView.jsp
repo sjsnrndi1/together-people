@@ -200,6 +200,7 @@
 				</div>
 				</c:forEach>
 	</div>
+
 	<div class = "floorBar">	
 		<div class = "togetherPeopleLeft">
 			Together People<br>사람들과 함께함으로써 사람을 얻는 곳
@@ -209,5 +210,6 @@
 			Copyright(c) 2021 Min Sung Graphic All right Reserved.
 		</div>
 	</div>
+
 </body>
 </html>
