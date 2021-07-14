@@ -96,10 +96,10 @@
 						<li><a href="noticeAccessView">ACCESS</a></li>
 					</ul>
 				</li>
-				<li><a href="#">가이드</a>
+				<li><a href="userTpView">가이드</a>
 					<ul>
-						<li><a href="#">이용방법</a></li>
-						<li><a href="#">카테고리정보</a></li>
+						<li><a href="userTpView">참여방법</a></li>
+						<li><a href="userRegistAndLogin">회원가입 및 로그인</a></li>
 					</ul>
 				</li>
 				<li><a href="#">커뮤니티</a>
@@ -127,7 +127,7 @@
 			<a href="firstView">Together People</a>
 			<a href="#" class="closebtn" onclick='closeNav()'>x</a>
 			<a href="noticeView">소개</a>
-			<a href="#">가이드</a>
+			<a href="userTpView">가이드</a>
 			<a href="#">커뮤니티</a>
 			<a href="#">고객지원</a>
 		</div>					

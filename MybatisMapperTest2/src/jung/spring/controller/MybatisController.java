@@ -164,7 +164,7 @@ public class MybatisController {
 	@RequestMapping(value = "/findID")
 	public ModelAndView FindId() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("findID");
+		mav.setViewName("Tp_findID");
 		return mav;
 	}
 
@@ -175,9 +175,9 @@ public class MybatisController {
 		if(idCheck) {
 			UserInfoVO userInfo = userInfoService.selectUserId(user_name, user_phone);
 			mav.addObject("userInfo", userInfo);
-			mav.setViewName("findIDResult");			
+			mav.setViewName("Tp_findIDResult");			
 		} else {
-			mav.setViewName("findIDFailResult");
+			mav.setViewName("Tp_findIDFailResult");
 		}
 		return mav;
 	}
@@ -189,7 +189,7 @@ public class MybatisController {
 		ModelAndView mav = new ModelAndView();
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		mav.addObject("userList", userList);
-		mav.setViewName("findPassword");
+		mav.setViewName("Tp_findPassword");
 		return mav;
 	}
 
@@ -199,9 +199,9 @@ public class MybatisController {
 		boolean pwCheck = userInfoService.selectUserPassword(user_id, user_name, user_phone);
 		mav.addObject("user_id", user_id);
 		if(pwCheck) {
-			mav.setViewName("modifyPassword");
+			mav.setViewName("Tp_modifyPassword");
 		} else {
-			mav.setViewName("findPassword");
+			mav.setViewName("Tp_findPassword");
 		}
 		return mav;
 	}
@@ -211,7 +211,7 @@ public class MybatisController {
 		ModelAndView mav = new ModelAndView();
 		userInfoService.modifyUserPassword(user_password, user_id);
 		mav.addObject("user_id", user_id);
-		mav.setViewName("findPasswordResult");
+		mav.setViewName("Tp_findPasswordResult");
 		return mav;
 	}
 	/*=========== 비밀번호 찾기 화면 ============*/
@@ -296,23 +296,55 @@ public class MybatisController {
 	}
 	/*=========== 포스팅 추천 화면 ============*/
 	
-	/*=========== 소개 화면 ============*/
+	/*=========== 소개(CEO) 화면 ============*/
 	@RequestMapping(value = "/noticeView")
 	public ModelAndView NoticeView() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("noticeView");
+		mav.setViewName("Tp_noticeView");
 		return mav;
 	}
-	/*=========== 소개 화면 ============*/
+	/*=========== 소개(CEO) 화면 ============*/
 	
 	/*=========== 오시는 길 화면 ============*/
 	@RequestMapping(value = "/noticeAccessView")
 	public ModelAndView NoticeAccessView() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("noticeAccessView");
+		mav.setViewName("Tp_noticeAccessView");
 		return mav;
 	}
 	/*=========== 오시는 길 화면 ============*/
+	
+	/*=========== 이용방법 화면 ============*/
+	@RequestMapping(value="/userTpView")
+	public ModelAndView UserTpView() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("Tp_userTpView");
+		return mav;
+	}
+	/*=========== 이용방법 화면 ============*/
+	
+	/*=========== 회원가입 및 로그인 화면 ============*/
+	@RequestMapping(value="/userRegistAndLogin")
+	public ModelAndView UserRistAndLogin() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("Tp_userRegistAndLogin");
+		return mav;
+	}
+	/*=========== 회원가입 및 로그인 화면 ============*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/*=========== 게시판 화면 ============*/
 	@RequestMapping(value = "/boardView")

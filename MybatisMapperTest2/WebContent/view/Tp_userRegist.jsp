@@ -233,12 +233,10 @@
 	.sample4_postcode {
 		width : 15%;
 		height : 30px;
-		border : 1px solid red;
 	}
 	.sample4_roadAddress {
 		width : 79%;
 		height : 30px;
-		border : 1px solid blue;
 	}
 	.sample4_detailAddress, .sample4_jibunAddress {
 		width : 97.5%;
@@ -290,7 +288,7 @@
 </head>
 <body>
 <form action = "user_info_regist" name = "userRegistInfo" method = "POST" onsubmit="return check()">
-	<header class = "titleBar">
+	<div class = "titleBar">
 		<div class="dropmenu">
 			<ul>
 				<li><a href="firstView">TogetherPeople</a></li>
@@ -300,10 +298,27 @@
 						<li><a href="noticeAccessView">ACCESS</a></li>
 					</ul>
 				</li>
-				<li><a href="boardView">공지사항</a></li>
-				<li><a href="mypageView">커뮤니티</a></li>
-				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+				<li><a href="userTpView">가이드</a>
+					<ul>
+						<li><a href="userTpView">이용방법</a></li>
+						<li><a href="#">카테고리정보</a></li>
+					</ul>
+				</li>
+				<li><a href="#">커뮤니티</a>
+					<ul>
+						<li><a href="#">자유게시판</a></li>
+						<li><a href="#">참여게시판</a></li>
+						<li><a href="#">이용후기</a></li>
+					</ul>
+				</li>
+				<li><a href="#">고객지원</a>
+					<ul>
+						<li><a href="#">도움말</a></li>
+						<li><a href="#">1:1문의</a></li>
+						<li><a href="#">신고</a></li>
+					</ul>
+				</li>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
 				<li><a href="loginView">로그인</a></li>
 				<li><a href="userRegist">회원가입</a></li>
 				<li><a href ="#" class="openmenu" onclick='openNav()' style = "font-size : 100%;">전체메뉴</a></li>
@@ -314,10 +329,11 @@
 			<a href="firstView">Together People</a>
 			<a href="#" class="closebtn" onclick='closeNav()'>x</a>
 			<a href="noticeView">소개</a>
-			<a href="boardView">공지사항</a>
-			<a href="mypageView">커뮤니티</a>			
+			<a href="userTpView">가이드</a>
+			<a href="#">커뮤니티</a>
+			<a href="#">고객지원</a>
 		</div>					
-	</header>
+	</div>
 	
 	<section class = "title">
 		<p class = "user_id_title">아이디</p>
