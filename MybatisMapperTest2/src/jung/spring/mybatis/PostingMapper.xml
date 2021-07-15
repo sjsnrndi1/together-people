@@ -7,9 +7,10 @@
 			<result property = "postingNumber" column = "POSTINGNUMBER"/>
 			<result property = "userId" column = "USERID"/>
 			<result property = "userName" column = "USERNAME"/>
+			<result property = "postingTitle" column = "POSTINGTITLE"/>
 			<result property = "postingContent" column = "POSTINGCONTENT"/>
 			<result property = "postingRecommandCount" column = "POSTINGRECOMMANDCOUNT"/>
-			<result property = "postingAnswer" column = "POSTINGANSWER"/>
+			<result property = "postingAnswerCount" column = "POSTINGANSWERCOUNT"/>
 			<result property = "postingDate" column = "POSTINGDATE"/>
 		</resultMap>
 		

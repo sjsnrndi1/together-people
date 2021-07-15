@@ -15,12 +15,28 @@
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/popupbar.css"> <!-- 전화서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/submenubar.css"> <!-- 우측서브메뉴바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/postingpopupbar.css"> <!-- 포스팅서브메뉴바 -->
 <script>						
 	function openNav() {
 		document.getElementById('mysidenav').style.width = '300px';
 	}
 	function closeNav() {
 		document.getElementById('mysidenav').style.width = '0';
+	}
+	function showPostingPopup(hasFilter) {
+		const popup = document.querySelector('#postingPopup');
+	  
+		if (hasFilter) {
+	  		popup.classList.add('has-filter');
+	  	} else {
+	  		popup.classList.remove('has-filter');
+	  	}
+	  
+	  	popup.classList.remove('hide');
+	}
+	function closePostingPopup() {
+		const popup = document.querySelector('#postingPopup');
+	  	popup.classList.add('hide');
 	}
 	function showPopup(hasFilter) {
 		const popup = document.querySelector('#popup');
@@ -98,13 +114,21 @@
 	}
 	.postingView {
 		font-size : 140%;
-		width : 100%;
+		width : 49.2%;
 		float : left;
 		height : auto;
 		margin-left : 25%;
 		padding-top : 1%;
 		color : #696969;
 	}
+	.postingView a {
+		float : right;
+		text-decoration : none;
+	}
+	.postingView a:link { text-decoration : none; color : #696969;}
+	.postingView a:visited { text-decoration : none;color : #696969;}
+	.postingView a:active {text-decoration : none; color : #2F4F4F; }
+	.postingView a:hover { text-decoration : none; color : #2F4F4F;}
 </style>
 </head>
 <body>
@@ -157,7 +181,22 @@
 <!-- 실시간 포스팅 / 공지사항 / 이용후기 / 진행중인 모임 -->
 	<div class = "postingView">
 		포스팅<small style = "font-size : 70%;">(당신의 일상을 모두와 자유롭게 공유하세요.)</small>
+		<a href = "#" onclick = "showPostingPopup(false)">작성</a>
 	</div>
+	
+	<div id="postingPopup" class="hide">
+		<div class="content">
+			<p style = "width : 100%;">
+				<input type = "text" maxlength = "20" value = "" placeholder = "포스팅 제목" class = "content-title">
+				<button class = "closeBtn" style = "margin : 0; float : right;" onclick="closePostingPopup()">x</button>
+				<input type = "file" value = "이미지 등록" style = "float : right; margin-right : 2%; width : 37%;"/>
+			</p>
+			<textarea rows = "6" cols = "68" class = "content-content"></textarea>
+		<hr>
+		<button onclick="closePostingPopup()">등록</button>
+		</div>
+	</div>
+	
 	<div class = "contentBar">
 			<!-- <div style = "width : 6%; font-size : 110%; float : left; text-align : right;">
 				<a href = "#" style = "text-decoration: none;">더보기 ></a>
@@ -175,9 +214,18 @@
 					<tr>
 						<td style = "width : 75%; height : 36px;">
 							<div class = "userImgCir">
-							<a href="#" style = "text-decoration: none;">
-								<img src = "http://sjsnrndi12.dothome.co.kr/images/siba.png" alt = "없음" class = "userImg" />
-							</a>
+								<c:set var = "loop_flag" value = "false" />
+								<c:forEach items = "${userList }" var = "user">
+									<c:if test = "${posting.userId eq user.user_id }">
+										<a href="#" style = "text-decoration: none;">
+											<img src = "http://sjsnrndi12.dothome.co.kr/images/siba.png" alt = "없음" class = "userImg" />
+										</a>
+										<c:set var = "loop_flag" value = "true" />
+									</c:if>
+								</c:forEach>
+								<!-- <a href="#" style = "text-decoration: none;">
+									<img src = "http://sjsnrndi12.dothome.co.kr/images/siba.png" alt = "없음" class = "userImg" />
+								</a> -->
 							</div>
 							<div style = "padding-left : 6%;">
 							<a href="#" style = "text-decoration: none;">
@@ -196,7 +244,7 @@
 					</tr>
 					<tr>
 						<td style = "font-size : 110%; height : 36px;">
-							포스팅 제목
+							${posting.postingTitle }
 						</td>
 					</tr>
 					<tr>

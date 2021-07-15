@@ -25,17 +25,17 @@
 	function showPopup(hasFilter) {
 		const popup = document.querySelector('#popup');
 	  
-	  if (hasFilter) {
-	  	popup.classList.add('has-filter');
-	  } else {
-	  	popup.classList.remove('has-filter');
-	  }
+		if (hasFilter) {
+	  		popup.classList.add('has-filter');
+	  	} else {
+	  		popup.classList.remove('has-filter');
+	  	}
 	  
-	  popup.classList.remove('hide');
+	  	popup.classList.remove('hide');
 	}
 	function closePopup() {
 		const popup = document.querySelector('#popup');
-	  popup.classList.add('hide');
+	  	popup.classList.add('hide');
 	}
 	$(function (){
 		$("#chat-app").click(function (){
@@ -158,7 +158,7 @@
 	<div class = "postingView">
 		포스팅<small style = "font-size : 70%;">(당신의 일상을 모두와 자유롭게 공유하세요.)</small>
 	</div>
-			
+	
 <!-- 실시간 포스팅 / 공지사항 / 이용후기 / 진행중인 모임 -->
 	<div class = "contentBar">
 			<!-- <div style = "width : 6%; font-size : 110%; float : left; text-align : right;">

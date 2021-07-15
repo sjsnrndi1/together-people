@@ -40,6 +40,8 @@ public class MybatisController {
 	@RequestMapping(value="/")
 	public ModelAndView home() {
 		ModelAndView mav = new ModelAndView();
+		List<UserInfoVO> userList = userInfoService.getMembers();
+		mav.addObject("userList", userList);
 		List<PostingInfoVO> postingList = userInfoService.getPostings();
 		mav.addObject("postingList", postingList);
 		mav.setViewName("Tp_firstView");
@@ -49,6 +51,8 @@ public class MybatisController {
 	@RequestMapping(value="/firstView")
 	public ModelAndView first() {
 		ModelAndView mav = new ModelAndView();
+		List<UserInfoVO> userList = userInfoService.getMembers();
+		mav.addObject("userList", userList);
 		List<PostingInfoVO> postingList = userInfoService.getPostings();
 		mav.addObject("postingList", postingList);
 		mav.setViewName("Tp_firstView");

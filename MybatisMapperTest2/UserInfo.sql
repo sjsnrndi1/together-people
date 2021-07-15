@@ -14,7 +14,7 @@ CREATE TABLE userInfo (
 	user_email VARCHAR2(300),
 	user_phone NUMBER NOT NULL,
 	user_date DATE NOT NULL,
-	
+	/* »çÁøµî·Ï */
 	PRIMARY KEY(user_id, user_phone)
 );
 
@@ -30,19 +30,23 @@ CREATE TABLE postingInfo(
 	postingNumber NUMBER PRIMARY KEY,
 	userId VARCHAR2(20),
 	userName VARCHAR2(20),
+	postingTitle VARCHAR2(100) NOT NULL,
 	postingContent VARCHAR2(3000) NOT NULL,
 	postingRecommandCount NUMBER NOT NULL,
-	postingAnswer VARCHAR2(1000) NOT NULL,
+	postingAnswerCount NUMBER NOT NULL,
 	postingDate DATE NOT NULL
+	/* »çÁøµî·Ï */
+	
 )
 
 CREATE SEQUENCE postingNumber_seq;
 
-INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'sjsnrndi12', '±è¹Î¼º', '¤¾¤·1', 0, 'a', sysdate);
-INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'sjsnrndi12', '±è¹Î¼º', '¤¾¤·2', 0, 'b', sysdate);
-INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'sjsnrndi12', '±è¹Î¼º', '¤¾¤·3', 0, 'c', sysdate);
-INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'sjsnrndi12', '±è¹Î¼º', '¤¾¤·4', 0, 'd', sysdate);
-INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'sjsnrndi12', '±è¹Î¼º', '¤¾¤·5', 0, 'e', sysdate);
+INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'sjsnrndi12', '±è¹Î¼º', 'Æ÷½ºÆÃ Á¦¸ñ1', '¤¾¤·1', 0, 0, sysdate);
+INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'sjsnrndi12', '±è¹Î¼º', 'Æ÷½ºÆÃ Á¦¸ñ2', '¤¾¤·2', 0, 0, sysdate);
+INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'sjsnrndi12', '±è¹Î¼º', 'Æ÷½ºÆÃ Á¦¸ñ3', '¤¾¤·3', 0, 0, sysdate);
+INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'sjsnrndi12', '±è¹Î¼º', 'Æ÷½ºÆÃ Á¦¸ñ4', '¤¾¤·4', 0, 0, sysdate);
+INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'sjsnrndi12', '±è¹Î¼º', 'Æ÷½ºÆÃ Á¦¸ñ5', '¤¾¤·5', 0, 0, sysdate);
+INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'sjsnrndi1', '±è¹Î¼º', 'Æ÷½ºÆÃ Á¦¸ñ6', '¤¾¤·6', 0, 0, sysdate);
 COMMIT
 
 CREATE TABLE postingRecommandInfo(
