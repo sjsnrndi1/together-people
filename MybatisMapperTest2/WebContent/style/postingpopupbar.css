@@ -1,0 +1,60 @@
+	button {
+		height: 2.5em;
+		cursor: pointer;
+		margin-left : 46%;
+		border : 0;
+		border-radius : 5px;
+		text-align : center;
+		background-color : #000000;
+		color : #ffffff;
+	}
+	.closeBtn {
+		height : 20px;
+		/*height: 2.5em;*/
+		cursor: pointer;
+		border : 0;
+		border-radius : 5px;
+		text-align : center;
+		background-color : #000000;
+		color : #ffffff;
+	}
+	#postingPopup {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, .7);
+		z-index: 1;
+	}
+	#postingPopup.hide {
+		display: none;
+	}
+	#postingPopup.has-filter {
+		backdrop-filter: blur(4px);
+		-webkit-backdrop-filter: blur(4px);
+	}
+	#postingPopup .content {
+		padding: 20px;
+		background: #fff;
+		border-radius: 5px;
+		width : 500px;
+		height : 200px;
+		box-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+	}
+	#postingPopup .content-title {
+		width : 53%;
+		font-size : 90%;
+		color : #000000;
+	}
+	#postingPopup input::placeholder {
+		font-size : 90%;
+		color : #696969;
+	}
+	#postingPopup .content-content {
+		resize: none;
+		color : #696969;
+	}
