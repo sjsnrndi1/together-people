@@ -96,23 +96,6 @@
 		top : 1px;
 		left : 58%;
 	}
-	.submenu-frame img:hover {
-		width : 80%;
-		height : 80%;
-		transition: all 0.5s ease-in-out;
-	}
-	.submenu-chat-frame {
-		position : fixed;
-		left : 76vw;
-		bottom : 26vh;
-		width : 350px;
-		height : 450px;1
-		margin : 0;
-		padding : 0;
-		border : 1px solid 	#DCDCDC	;
-		display : none;
-		background-color : #FFFAFA;
-	}
 </style>
 </head>
 <body>
