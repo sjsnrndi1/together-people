@@ -148,7 +148,6 @@
 		</div>
 	</div>
 
-
 	<div class = "floorBar">	
 		<div class = "togetherPeopleLeft">
 			Together People<br>사람들과 함께함으로써 사람을 얻는 곳
