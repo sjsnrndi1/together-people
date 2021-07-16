@@ -44,13 +44,6 @@
 	});
 </script>
 <style>
-	body {
-		overflow-y : scroll;
-		-ms-overflow-style : none;
-	}
-	::-webkit-scrollbar { 
-		display : none;
-	}
 	.userRigistAndLoginTitle {
 		width : 100%;
 		padding-left : 25.5%;

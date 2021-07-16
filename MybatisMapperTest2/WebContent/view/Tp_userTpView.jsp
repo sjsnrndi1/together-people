@@ -151,7 +151,7 @@
 				<ul>
 					<li class = "content">마음에 드시는 곳을 찾으셨다면 우측 하단에 보이는 '참여신청'버튼을 눌러보세요!</li>
 					<li class = "content">참! 먼저 회원가입을 하신 후 로그인한 상태에서만 '참여신청'이 가능하답니다.</li>
-					<li class = "content"><a href = "userRistAndLogin" style = "text-decoration : none; color : #DA70D6;">회원가입 및 로그인</a> 방법이 궁금하시다면 눌러주세요!</li>
+					<li class = "content"><a href = "userRegistAndLogin" style = "text-decoration : none; color : #DA70D6;">회원가입 및 로그인</a> 방법이 궁금하시다면 눌러주세요!</li>
 					<li class = "content" style = "margin-bottom : 2.5%;">기다림없이 바로 참여가 가능하실 거에요!</li>
 				</ul>
 			</li>
