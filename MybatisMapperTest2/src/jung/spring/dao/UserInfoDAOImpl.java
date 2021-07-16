@@ -1,5 +1,6 @@
 package jung.spring.dao;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,7 +26,6 @@ import jung.spring.vo.PostingInfoVO;
 import jung.spring.vo.PostingRecommandInfoVO;
 import jung.spring.vo.QnaInfoVO;
 import jung.spring.vo.UserIdPasswordVO;
-import jung.spring.vo.UserInfoPasswordVO;
 import jung.spring.vo.UserInfoVO;
 
 @Repository
@@ -159,6 +159,35 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	/*===========유저 pw 찾는 서비스============*/
 	
 	/*===========유저 포스팅 등록하는 서비스============*/
+	@Override
+	public void addPosting(String content_title, String content_content, File content_picture, UserInfoVO userInfo) {
+		// TODO Auto-generated method stub
+		PostingMapper postingMapper = sqlSession.getMapper(PostingMapper.class);
+		String cp = String.valueOf(content_picture);
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("userId", userInfo.getUser_id());
+		map.put("userName", userInfo.getUser_name());
+		map.put("postingTitle", content_title);
+		map.put("postingContent", content_content);
+		map.put("postingPictureTitle", cp);
+		map.put("postingRecommandCount", 0);
+		map.put("postingAnswerCount", 0);
+		map.put("postingDate", new Date());
+		postingMapper.addPosting(map);
+	}
+	
+	@Override
+	public String getNowRegistPosting(String user_id) {
+		// TODO Auto-generated method stub
+		PostingMapper postingMapper = sqlSession.getMapper(PostingMapper.class);
+		ArrayList<PostingInfoVO> user_id_postings = postingMapper.getNowRegistPosting(user_id);
+		int count = user_id_postings.get(user_id_postings.size()-1).getPostingNumber();
+		return String.valueOf(count);
+	}
+	
+	
+	
+	
 	@Override
 	public PostingInfoVO addUserPostingInfo(String user_id, String user_name, String postingContent) {
 		// TODO Auto-generated method stub

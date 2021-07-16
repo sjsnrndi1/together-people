@@ -1,25 +1,36 @@
 package jung.spring.controller;
 
+import org.apache.commons.net.PrintCommandListener;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
 import java.util.HashMap;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.SocketException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 import jung.spring.svc.UserInfoService;
 import jung.spring.vo.AlarmInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.BoardJoinUserInfoVO;
 import jung.spring.vo.ChatInfoVO;
-import jung.spring.vo.NoticeInfoVO;
 import jung.spring.vo.PostingInfoVO;
 import jung.spring.vo.PostingRecommandInfoVO;
 import jung.spring.vo.QnaInfoVO;
-import jung.spring.vo.UserInfoPasswordVO;
 import jung.spring.vo.UserInfoVO;
 
 @Controller
@@ -27,6 +38,13 @@ public class MybatisController {
 
 	@Autowired
 	private UserInfoService userInfoService;
+	
+	@Bean
+	public MultipartResolver multipartResolver() {
+	  org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
+	  multipartResolver.setMaxUploadSize(10485760); // 1024 * 1024 * 10
+	  return multipartResolver;
+	}
 	
 	private String togetherPeopleTitle = "http://sjsnrndi12.dothome.co.kr/images/bg.png";
 	private String togetherPeopleBoard = "http://sjsnrndi12.dothome.co.kr/images/board.png";
@@ -41,8 +59,8 @@ public class MybatisController {
 	public ModelAndView home() {
 		ModelAndView mav = new ModelAndView();
 		List<UserInfoVO> userList = userInfoService.getMembers();
-		mav.addObject("userList", userList);
 		List<PostingInfoVO> postingList = userInfoService.getPostings();
+		mav.addObject("userList", userList);
 		mav.addObject("postingList", postingList);
 		mav.setViewName("Tp_firstView");
 		return mav;
@@ -221,7 +239,88 @@ public class MybatisController {
 	/*=========== 비밀번호 찾기 화면 ============*/
 	
 	/*=========== 포스팅 등록 화면 ============*/
-	@RequestMapping(value = "/postingRegist")
+	@RequestMapping(value = "/user_posting_regist")
+	public ModelAndView UserPostingRegist(@RequestParam("ct_ti") String content_title, @RequestParam("ct_ct") String content_content, @RequestParam("ct_pt") File content_picture,
+	@RequestParam("user_posting_id") String user_id) throws SocketException, IOException {
+		ModelAndView mav = new ModelAndView();
+		UserInfoVO userInfo = userInfoService.getUser(user_id);
+		userInfoService.addPosting(content_title, content_content, content_picture, userInfo);
+		String count = userInfoService.getNowRegistPosting(user_id);
+		
+		FTPClient ftp = null;
+		ftp = new FTPClient();
+		try {
+			ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(content_picture)));
+			ftp = new FTPClient();
+			ftp.connect("sjsnrndi12.dothome.co.kr", 21);
+			int reply = 0;
+			reply = ftp.getReplyCode();
+			if(!FTPReply.isPositiveCompletion(reply)) {
+				ftp.disconnect();
+			} else {
+				Date from = new Date();
+				//지금시간
+				SimpleDateFormat nowDateHHmmss = new SimpleDateFormat ("HHmmss");
+				SimpleDateFormat nowDateymd = new SimpleDateFormat ("yyyyMMdd");
+				
+				String nowHHmmss = nowDateHHmmss.format(from);
+				String nowymd = nowDateymd.format(from);
+				//로그인
+				ftp.login("sjsnrndi12", "tkfkd465!#");
+				showServerReply(ftp);
+				
+				//ftp 디렉터리 생성
+				ftp.makeDirectory("/html/user_pictures/"+nowymd);
+				showServerReply(ftp);
+				
+				ftp.makeDirectory("/html/user_pictures/"+nowymd+"/"+count);//nowHHmmss
+				showServerReply(ftp);
+				
+				//ftp 디렉터리 변경
+				ftp.changeWorkingDirectory("/html/user_pictures/"+nowymd+"/"+count);//nowHHmmss
+				showServerReply(ftp);
+				
+				//Active Mode -> PassiveMode로 변경
+				ftp.enterLocalPassiveMode();
+				showServerReply(ftp);
+				
+				FileInputStream fis = null;
+				fis = new FileInputStream(content_picture);
+				
+				ftp.setFileType(FTP.BINARY_FILE_TYPE);
+				
+				//ftp에 파일 업로드
+				boolean isSuccess = ftp.storeFile(content_picture.getName(), fis);
+				
+				//업로드 성공 시
+				if(isSuccess) {
+					System.out.println("업로드 성공");
+				}
+			}
+		} catch (FileNotFoundException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+		List<UserInfoVO> userList = userInfoService.getMembers();
+		mav.addObject("userList", userList);
+		List<PostingInfoVO> postingList = userInfoService.getPostings();
+		mav.addObject("postingList", postingList);
+		mav.setViewName("Tp_firstView");
+		return mav;
+	}
+	
+	private static void showServerReply(FTPClient ftp) {
+		String[] replies = ftp.getReplyStrings();
+		if(replies != null && replies.length > 0) {
+			for(String aReply : replies) {
+				System.out.println("SERVER: " + aReply);
+			}
+		}
+	}
+	
+	/*@RequestMapping(value = "/postingRegist")
 	public ModelAndView PostingRegist(@RequestParam("id") String user_id) {
 		ModelAndView mav = new ModelAndView();
 		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
@@ -241,7 +340,7 @@ public class MybatisController {
 			userInfoService.addUserPosting(postingInfo);
 			return "redirect:/mainView?id=" + user_id;
 		}
-	}
+	}*/
 	/*=========== 포스팅 등록 화면 ============*/
 	
 	/*=========== 포스팅 수정 화면 ============*/
