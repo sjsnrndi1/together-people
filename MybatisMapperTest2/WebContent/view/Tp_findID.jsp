@@ -68,6 +68,9 @@
 		color : #696969;
 		border : 1px solid #C0C0C0;
 	}
+	.floorBar {
+		position : absolute;
+	}
 </style>
 </head>
 <body>

@@ -102,6 +102,9 @@
 		font-size : 120%;
 		color : #C0C0C0;
 	}
+	.floorBar {
+		position : absolute;
+	}
 </style>
 </head>
 <body>

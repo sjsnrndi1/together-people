@@ -288,7 +288,7 @@ public class MybatisController {
 				fis = new FileInputStream(content_picture);
 				
 				ftp.setFileType(FTP.BINARY_FILE_TYPE);
-				
+
 				//ftp에 파일 업로드
 				boolean isSuccess = ftp.storeFile(content_picture.getName(), fis);
 				
@@ -302,6 +302,8 @@ public class MybatisController {
 			e.printStackTrace();
 		} catch (SocketException e) {
 			e.printStackTrace();
+		} finally {
+			ftp.disconnect();
 		}
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		mav.addObject("userList", userList);

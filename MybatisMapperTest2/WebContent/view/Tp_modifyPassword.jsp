@@ -98,6 +98,9 @@
 		border:none;
 		font-size : 100%;
 	}
+	.floorBar {
+		position : absolute;
+	}
 </style>
 </head>
 <body>

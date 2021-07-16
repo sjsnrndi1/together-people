@@ -197,7 +197,7 @@
 		<a href = "#" onclick = "showPostingPopup(false)">작성</a>
 	</div>
 	
-	<form action = "user_posting_regist" name = "userPostingRegist" method = "GET" onsubmit = "return check()"> <!-- enctype = "multipart/form-data"  -->
+	<form action = "user_posting_regist" name = "userPostingRegist" method = "POST" onsubmit = "return check()">
 		<div id="postingPopup" class="hide">
 			<div class="content">
 				<p style = "width : 100%;">

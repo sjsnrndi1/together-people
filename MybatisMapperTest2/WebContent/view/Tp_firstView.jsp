@@ -196,7 +196,7 @@
 									<c:set var = "loop_flag" value = "false" />
 									<c:forEach items = "${userList }" var = "user">
 										<c:choose>
-											<c:when test="${posting.userId ne user.user_id }">
+											<c:when test="${posting.userId eq user.user_id }">
 												<a href="#" style = "text-decoration: none;">
 													<img src = "http://sjsnrndi12.dothome.co.kr/images/siba.png" alt = "없음" class = "userImg" />
 												</a>
