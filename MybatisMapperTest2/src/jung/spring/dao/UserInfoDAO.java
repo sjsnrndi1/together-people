@@ -1,5 +1,6 @@
 package jung.spring.dao;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,16 +13,20 @@ import jung.spring.vo.PostingInfoVO;
 import jung.spring.vo.PostingRecommandInfoVO;
 import jung.spring.vo.QnaInfoVO;
 import jung.spring.vo.UserIdPasswordVO;
-import jung.spring.vo.UserInfoPasswordVO;
 import jung.spring.vo.UserInfoVO;
 
 public interface UserInfoDAO {
 
 	boolean selectUserInfo(String user_password, String user_id);
 	UserInfoVO getUserInfo(UserIdPasswordVO userIdPassword);
-	ArrayList<PostingInfoVO> getPostings();
 	
+	/* 포스팅 가져오기 */
+	ArrayList<PostingInfoVO> getPostings();
+	/* 포스팅 가져오기 */
+	
+	/* 회원들 정보가져오기 */
 	ArrayList<UserInfoVO> getMembers();
+	/* 회원들 정보가져오기 */
 	
 	/* 회원가입 */
 	boolean addUser(HashMap<Object,Object> map);
@@ -38,6 +43,10 @@ public interface UserInfoDAO {
 	UserInfoVO selectUserPassword(String user_id);
 	/* 비밀번호 찾기 */
 	
+	/* 포스팅 등록 */
+	void addPosting(String content_title, String content_content, File content_picture, UserInfoVO user_id);
+	String getNowRegistPosting(String user_id);
+	/* 포스팅 등록 */
 	
 	void addUserPosting(PostingInfoVO postingInfo);
 	PostingInfoVO addUserPostingInfo(String user_id, String user_name, String postingContent);

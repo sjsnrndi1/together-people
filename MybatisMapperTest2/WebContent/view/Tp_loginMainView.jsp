@@ -15,6 +15,7 @@
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/popupbar.css"> <!-- 전화서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/submenubar.css"> <!-- 우측서브메뉴바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/postingpopupbar.css"> <!-- 포스팅서브메뉴바 -->
 <script>
 	function openNav() {
 		document.getElementById('mysidenav').style.width = '300px';
@@ -42,19 +43,47 @@
 			$("#submenu-chat-frame").toggle();
 		});
 	});
+	function showPostingPopup(hasFilter) {
+		const popup = document.querySelector('#postingPopup');
+	  
+		if (hasFilter) {
+	  		popup.classList.add('has-filter');
+	  	} else {
+	  		popup.classList.remove('has-filter');
+	  	}
+	  
+	  	popup.classList.remove('hide');
+	}
+	function closePostingPopup() {
+		const popup = document.querySelector('#postingPopup');
+	  	popup.classList.add('hide');
+	}
+	function check(){
+		if(userPostingRegist.ct_ti.value == ""){
+			alert("제목을 입력해주세요.");
+			userPostingRegist.ct_ti.focus();
+			return false;
+		} else if(userPostingRegist.ct_ct.value == ""){
+			alert("내용제목을 입력해주세요.");
+			userPostingRegist.ct_ct.focus();
+			return false;
+		} else {
+			return true;
+		}
+	}
 </script>
 <style>
 	.contentBar {
 		width : 50%;
-		height : 390px;
+		height : 600px;
 		background-color : #FFFFFF;
 		margin-left : 25%;
 		color : #696969;
 		font-family: 'Hanna';
-		padding-top : 25px;
 		overflow : auto;
 		-ms-overflow-style: none;
 		scrollbar-width: none;
+		padding-bottom : 1%;
 	}
 	.contentBar::-webkit-scrollbar {
 		display: none;
@@ -98,13 +127,21 @@
 	}
 	.postingView {
 		font-size : 140%;
-		width : 100%;
+		width : 49.2%;
 		float : left;
 		height : auto;
 		margin-left : 25%;
 		padding-top : 1%;
 		color : #696969;
 	}
+	.postingView a {
+		float : right;
+		text-decoration : none;
+	}
+	.postingView a:link { text-decoration : none; color : #696969;}
+	.postingView a:visited { text-decoration : none;color : #696969;}
+	.postingView a:active {text-decoration : none; color : #2F4F4F; }
+	.postingView a:hover { text-decoration : none; color : #2F4F4F;}
 </style>
 </head>
 <body>
@@ -120,8 +157,8 @@
 				</li>
 				<li><a href="userTpView">가이드</a>
 					<ul>
-						<li><a href="userTpView">이용방법</a></li>
-						<li><a href="#">카테고리정보</a></li>
+						<li><a href="userTpView">참여방법</a></li>
+						<li><a href="userRegistAndLogin">회원가입 및 로그인</a></li>
 					</ul>
 				</li>
 				<li><a href="#">커뮤니티</a>
@@ -139,8 +176,8 @@
 					</ul>
 				</li>
 				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-				<li><a href="loginView">로그인</a></li>
-				<li><a href="userRegist">회원가입</a></li>
+				<li><a href="loginView">${userInfo.user_name }님</a></li>
+				<li><a href="userRegist">로그아웃</a></li>
 				<li><a href ="#" class="openmenu" onclick='openNav()' style = "font-size : 100%;">전체메뉴</a></li>
 			</ul>
 		</div>
@@ -157,7 +194,24 @@
 	
 	<div class = "postingView">
 		포스팅<small style = "font-size : 70%;">(당신의 일상을 모두와 자유롭게 공유하세요.)</small>
+		<a href = "#" onclick = "showPostingPopup(false)">작성</a>
 	</div>
+	
+	<form action = "user_posting_regist" name = "userPostingRegist" method = "GET" onsubmit = "return check()"> <!-- enctype = "multipart/form-data"  -->
+		<div id="postingPopup" class="hide">
+			<div class="content">
+				<p style = "width : 100%;">
+					<input type = "hidden" value = "${userInfo.user_id }" id = "user_posting_id" name = "user_posting_id" />
+					<input type = "text" maxlength = "20" value = "" placeholder = "포스팅 제목" class = "content-title" id = "ct_ti" name = "ct_ti">
+					<button type = "button" class = "closeBtn" style = "margin : 0; float : right;" onclick="closePostingPopup()">x</button>
+					<input type = "file" value = "이미지 등록"  id = "ct_pt" name = "ct_pt" accept = "image/*" style = "float : right; margin-right : 2%; width : 37%;"/>
+				</p>
+				<textarea rows = "6" cols = "68" class = "content-content" id = "ct_ct" name = "ct_ct"></textarea>
+			<hr>
+			<input type = "submit" value = "등록">
+			</div>
+		</div>
+	</form>
 	
 <!-- 실시간 포스팅 / 공지사항 / 이용후기 / 진행중인 모임 -->
 	<div class = "contentBar">

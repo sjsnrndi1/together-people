@@ -1,5 +1,6 @@
 package jung.spring.svc;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,6 @@ import jung.spring.vo.PostingInfoVO;
 import jung.spring.vo.PostingRecommandInfoVO;
 import jung.spring.vo.QnaInfoVO;
 import jung.spring.vo.UserIdPasswordVO;
-import jung.spring.vo.UserInfoPasswordVO;
 import jung.spring.vo.UserInfoVO;
 
 @Service
@@ -110,8 +110,23 @@ public class UserInfoServiceImpl implements UserInfoService {
 		userInfoDAO.modifyPassword(user_id, user_password);
 	}
 	/*===========유저 pw 찾는 서비스============*/
-	
+		
 	/*===========유저 포스팅 등록하는 서비스============*/
+	@Override
+	public void addPosting(String content_title, String content_content, File content_picture, UserInfoVO user_id) {
+		// TODO Auto-generated method stub
+		userInfoDAO.addPosting(content_title, content_content, content_picture, user_id);
+	}
+	@Override
+	public String getNowRegistPosting(String user_id) {
+		// TODO Auto-generated method stub
+		String count = userInfoDAO.getNowRegistPosting(user_id);
+		return count;
+	}
+	
+	
+	
+	
 	@Override
 	public void addUserPosting(PostingInfoVO postingInfo) {
 		// TODO Auto-generated method stub

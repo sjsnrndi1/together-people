@@ -9,10 +9,20 @@
 			<result property = "userName" column = "USERNAME"/>
 			<result property = "postingTitle" column = "POSTINGTITLE"/>
 			<result property = "postingContent" column = "POSTINGCONTENT"/>
+			<result property = "postingPictureTitle" column = "POSTINGPICTURETITLE"/>
 			<result property = "postingRecommandCount" column = "POSTINGRECOMMANDCOUNT"/>
 			<result property = "postingAnswerCount" column = "POSTINGANSWERCOUNT"/>
 			<result property = "postingDate" column = "POSTINGDATE"/>
 		</resultMap>
+		
+		<insert id = "addPosting" parameterType = "map">
+			INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, #{userId}, #{userName}, #{postingTitle}, #{postingContent}, #{postingPictureTitle}, #{postingRecommandCount}, #{postingAnswerCount}, #{postingDate})
+		</insert>
+		
+		
+		<select id = "getNowRegistPosting" parameterType = "string" resultType = "jung.spring.vo.PostingInfoVO">
+			SELECT * FROM postingInfo WHERE userId = #{user_id} ORDER BY postingNumber
+		</select>
 		
 		<select id = "getPostings" resultType = "jung.spring.vo.PostingInfoVO">
 			SELECT * FROM postingInfo ORDER BY postingNumber DESC

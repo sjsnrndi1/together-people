@@ -8,12 +8,19 @@ public class PostingInfoVO {
 	private String userName;
 	private String postingTitle;
 	private String postingContent;
+	private String postingPictureTitle;
 	private int postingRecommandCount;
 	private int postingAnswerCount;
 	private Date postingDate;
-	
+
 	public String getPostingContent() {
 		return postingContent;
+	}
+	public String getPostingPictureTitle() {
+		return postingPictureTitle;
+	}
+	public void setPostingPictureTitle(String postingPictureTitle) {
+		this.postingPictureTitle = postingPictureTitle;
 	}
 	public void setPostingContent(String postingContent) {
 		this.postingContent = postingContent;

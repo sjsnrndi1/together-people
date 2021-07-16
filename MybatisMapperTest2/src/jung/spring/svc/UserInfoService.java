@@ -1,5 +1,6 @@
 package jung.spring.svc;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import jung.spring.vo.AlarmInfoVO;
@@ -11,16 +12,20 @@ import jung.spring.vo.PostingInfoVO;
 import jung.spring.vo.PostingRecommandInfoVO;
 import jung.spring.vo.QnaInfoVO;
 import jung.spring.vo.UserIdPasswordVO;
-import jung.spring.vo.UserInfoPasswordVO;
 import jung.spring.vo.UserInfoVO;
 
 public interface UserInfoService {
 
 	boolean selectUserInfo(String user_password, String user_id);
 	UserInfoVO getUserInfo(UserIdPasswordVO userIdPassword);
-	List<PostingInfoVO> getPostings(); // 포스팅 가져오기
 	
+	/* 포스팅 가져오기 */
+	List<PostingInfoVO> getPostings();
+	/* 포스팅 가져오기 */
+	
+	/* 회원들 정보가져오기 */
 	List<UserInfoVO> getMembers();
+	/* 회원들 정보 가져오기*/
 	
 	/* 회원가입 */
 	boolean addUserInfo(HashMap<Object, Object> map);
@@ -36,6 +41,14 @@ public interface UserInfoService {
 	UserInfoVO selectUserPassword(String user_id);
 	void modifyUserPassword(String user_id, String user_password);
 	/* 비밀번호  찾기 */
+	
+	/* 포스팅 등록 */
+	void addPosting(String content_title, String content_content, File content_picture, UserInfoVO userInfo);
+	String getNowRegistPosting(String user_id);
+	/* 포스팅 등록 */
+	
+	
+	
 	
 	void addUserPosting(PostingInfoVO postingInfo);
 	PostingInfoVO addUserPostingInfo(String user_id, String user_name, String postingContent);
@@ -157,5 +170,9 @@ public interface UserInfoService {
 	void addAlarmQna(String user_id, String qnaTitle, String qnaContent);
 	
 	PostingRecommandInfoVO getPosting(String user_id, int postingNumber);
+	
+
+	
+
 	
 }
