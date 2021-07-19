@@ -253,7 +253,7 @@ public class MybatisController {
 		try {
 			ftps = new FTPSClient("TLS", false);
 			ftps.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
-			ftps.connect("192.168.0.3", 2121);
+			ftps.connect("192.168.1.178", 2121);
 			int reply = 0;
 			reply = ftps.getReplyCode();
 			if(!FTPReply.isPositiveCompletion(reply)) {
@@ -276,14 +276,14 @@ public class MybatisController {
 				ftps.execPROT("P");
 				
 				//ftp 디렉터리 생성
-				ftps.makeDirectory("/html/user_posting_pictures/"+nowymd);
+				ftps.makeDirectory("/user_posting_pictures/"+nowymd);
 				showServerReply(ftps);
 				
-				ftps.makeDirectory("/html/user_posting_pictures/"+nowymd+"/"+postingNumber);//nowHHmmss
+				ftps.makeDirectory("/user_posting_pictures/"+nowymd+"/"+postingNumber);//nowHHmmss
 				showServerReply(ftps);
 				
 				//ftp 디렉터리 변경
-				ftps.changeWorkingDirectory("/html/user_posting_pictures/"+nowymd+"/"+postingNumber);//nowHHmmss
+				ftps.changeWorkingDirectory("/user_posting_pictures/"+nowymd+"/"+postingNumber);//nowHHmmss
 				showServerReply(ftps);
 				
 				//Active Mode -> PassiveMode로 변경
