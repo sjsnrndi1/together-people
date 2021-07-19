@@ -44,7 +44,8 @@ public interface UserInfoService {
 	
 	/* 포스팅 등록 */
 	void addPosting(String content_title, String content_content, File content_picture, UserInfoVO userInfo);
-	String getNowRegistPosting(String user_id);
+	String getLastPostingNumber();
+	void deletePostingFail(String postingNumber);
 	/* 포스팅 등록 */
 	
 	
@@ -170,9 +171,5 @@ public interface UserInfoService {
 	void addAlarmQna(String user_id, String qnaTitle, String qnaContent);
 	
 	PostingRecommandInfoVO getPosting(String user_id, int postingNumber);
-	
-
-	
-
 	
 }

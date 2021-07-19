@@ -163,7 +163,7 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	public void addPosting(String content_title, String content_content, File content_picture, UserInfoVO userInfo) {
 		// TODO Auto-generated method stub
 		PostingMapper postingMapper = sqlSession.getMapper(PostingMapper.class);
-		String cp = String.valueOf(content_picture);
+		String cp = content_picture.getName();
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put("userId", userInfo.getUser_id());
 		map.put("userName", userInfo.getUser_name());
@@ -177,13 +177,23 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	}
 	
 	@Override
-	public String getNowRegistPosting(String user_id) {
+	public String getLastPostingNumber() {
 		// TODO Auto-generated method stub
 		PostingMapper postingMapper = sqlSession.getMapper(PostingMapper.class);
-		ArrayList<PostingInfoVO> user_id_postings = postingMapper.getNowRegistPosting(user_id);
-		int count = user_id_postings.get(user_id_postings.size()-1).getPostingNumber();
+		ArrayList<PostingInfoVO> getLastPostingNumber = postingMapper.getLastPostingNumber();
+		int count = (getLastPostingNumber.get(getLastPostingNumber.size() - 1).getPostingNumber());			
 		return String.valueOf(count);
 	}
+	
+	@Override
+	public void deletePostingFail(String posting_Number) {
+		// TODO Auto-generated method stub
+		PostingMapper postingMapper = sqlSession.getMapper(PostingMapper.class);
+		int postingNumber = Integer.parseInt(posting_Number);
+		postingMapper.deletePostingFail(postingNumber);
+	}
+	
+	
 	
 	
 	

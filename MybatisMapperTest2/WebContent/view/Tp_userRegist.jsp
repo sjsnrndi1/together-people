@@ -357,7 +357,7 @@
 			<script src = "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 		<p class = "user_name_title">이름</p>
-		<input type = "text" id = "user_name" class = "user_name" name = "user_name"/>
+		<input type = "text" id = "user_name" class = "user_name" name = "user_name" />
 		
 		<p class = "user_gender_title">성별</p>
 		<select id = "user_gender" class = "user_gender" name = 'user_gender'>

@@ -121,6 +121,9 @@
 		padding-top : 1%;
 		color : #696969;
 	}
+	.floorBar {
+		position : absolute;
+	}
 </style>
 </head>
 <body>
@@ -184,7 +187,6 @@
 			<div style = "float : left; width : 94.3%;">
 				<hr color = "#DCDCDC">
 			</div>
-			
 				<!-- 작성자 사진 / 작성자 / 시간 / 제목 / 내용 / 공감 / 댓글 / 사진 / 이전 1,2,3 ... , 10 다음 / 5개씩 나누기 -->
 				<c:forEach items = "${postingList }" var = "posting">
 				<c:choose>
@@ -222,7 +224,7 @@
 							<td rowspan = "4">
 								<a href="#" style = "text-decoration: none;">
 									<fmt:formatDate var = "postingDate" value = "${posting.postingDate}" pattern="yyyyMMdd"/>
-									<img src = "http://sjsnrndi12.dothome.co.kr/user_pictures/${postingDate}/${posting.postingNumber}/${posting.postingPictureTitle}" alt = "없음" style = "padding-left : 5%; width : 94%; height : 170px;"/>
+									<img src = "http://localhost:18060/filezilaFolder/html/user_posting_pictures/${postingDate}/${posting.postingNumber}/${posting.postingPictureTitle}" alt = "없음" style = "padding-left : 5%; width : 94%; height : 170px;"/>
 								</a>
 							</td>
 						</tr>
@@ -260,7 +262,7 @@
 	
 	<div class = "submenu-frame">
 		<div class = "submenu-phone-app">
-			<a href = "#" onclick = "showPopup(false)"><img src = "http://sjsnrndi12.dothome.co.kr/images/phoneImg.PNG" 
+			<a href = "#" onclick = "showPopup(false)"><img src = "http://sjsnrndi12.dothome.co.kr/images/phoneImg.PNG"
 			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/phoneHoverImg.png'" 
 			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/phoneImg.PNG'" alt = "전화"/></a>
 		</div>
@@ -274,7 +276,7 @@
 			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
 			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" id = "chat-app" alt = "채팅"/>
 		</div>
-		<div class = "submenu-top-app" onclick = "location.href='userRegistAndLogin'">
+		<div class = "submenu-top-app" onclick = "location.href='firstView'">
 			∧<br>top
 		</div>
 	</div>
@@ -296,22 +298,25 @@
 	</div>
 	
 	<div id = "submenu-chat-frame" class = "submenu-chat-frame">
-		<div class = "submenu-chat-title" style = "border : 1px solid red; width : 100%; height : 8%; font-size : 120%;">
-			Together people 톡
-		</div>
-		<div class = "submenu-chat-content-frame" style = "border : 1px solid red; width : 100%; height : 92%;">
-			<div class = "submenu-chat-content-content" style = "border : 1px solid red; width : 100%; height : 80%;">
-				내용
+		<div style = "position : relative; width : 100%; height : 100%;">
+			<div class = "submenu-chat-title" style = "position : absolute; text-align : center; color : #696969; padding-top : 10px;border : 1px solid red; width : 100%; height : 8%; font-size : 120%;">
+				Together people 톡
 			</div>
-			<div class = "submenu-chat-content-input" style = "border : 1px solid red; width : 100%; height : 20%; color : #808080;">
-				<div style = "float : left; border : 1px solid red; width : 18%;">
-					<input type = "text" value = "사진등록" style = "width : 92%;"/>
+			<div class = "submenu-chat-content-frame" style = "position : relative; padding-top : 13%; border : 1px solid red; width : 100%; height : 75%;">
+				<div class = "submenu-chat-content-content" style = "margin : 5px; float : right; border : 1px solid red; width : 50%; height : auto; border-radius : 5px;">
+					내가 쓴 글
 				</div>
-				<div style = "float : left; border : 1px solid red; width : 60%; height : 95%;">
+				<div class = "submenu-chat-content-content" style = "margin : 5px; float : left; border : 1px solid red; width : 50%; height : auto; border-radius : 5px;">
+					관리자가 쓴 글
+				</div>
+			</div>
+			<div class = "submenu-chat-input-frame" style = "position : relative; border : 1px solid red; width : 100%; height : 14%;">
+				<!-- <div class = "submenu-chat-content-input" style = "border : 1px solid red; width : 100%; height : 20%; color : #808080;"> -->
+				<div style = "float : left; border : 1px solid red; width : 80%; height : 95%; margin-left : 2px;">
 					메세지 입력 칸
 				</div>
-				<div style = "float : left; border : 1px solid red; width : 18%;">
-					<input type ="text" value = "입력" style = "width : 92%;"/>
+				<div style = "float : left; border : 1px solid red; width : 18%; height : 100%;">
+					<input type ="text" value = "입력" style = "width : 80%;  border-radius : 3px;"/>
 				</div>
 			</div>
 		</div>

@@ -4,6 +4,8 @@ import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
+import org.apache.commons.net.ftp.FTPSClient;
+
 import java.util.HashMap;
 import java.io.File;
 import java.io.FileInputStream;
@@ -245,52 +247,62 @@ public class MybatisController {
 		ModelAndView mav = new ModelAndView();
 		UserInfoVO userInfo = userInfoService.getUser(user_id);
 		userInfoService.addPosting(content_title, content_content, content_picture, userInfo);
-		String count = userInfoService.getNowRegistPosting(user_id);
+		String postingNumber = userInfoService.getLastPostingNumber();
 		
-		FTPClient ftp = null;
-		ftp = new FTPClient();
+		FTPSClient ftps = null;
 		try {
-			ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(content_picture)));
-			ftp = new FTPClient();
-			ftp.connect("sjsnrndi12.dothome.co.kr", 21);
+			ftps = new FTPSClient("TLS", false);
+			ftps.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
+			ftps.connect("192.168.0.3", 2121);
 			int reply = 0;
-			reply = ftp.getReplyCode();
+			reply = ftps.getReplyCode();
 			if(!FTPReply.isPositiveCompletion(reply)) {
-				ftp.disconnect();
+				ftps.disconnect();
 			} else {
 				Date from = new Date();
 				//지금시간
-				SimpleDateFormat nowDateHHmmss = new SimpleDateFormat ("HHmmss");
+				//SimpleDateFormat nowDateHHmmss = new SimpleDateFormat ("HHmmss");
 				SimpleDateFormat nowDateymd = new SimpleDateFormat ("yyyyMMdd");
 				
-				String nowHHmmss = nowDateHHmmss.format(from);
+				//String nowHHmmss = nowDateHHmmss.format(from);
 				String nowymd = nowDateymd.format(from);
+				
 				//로그인
-				ftp.login("sjsnrndi12", "tkfkd465!#");
-				showServerReply(ftp);
+				ftps.login("sjsnrndi12", "tkfkd465!@");
+				showServerReply(ftps);
+				
+				//데이터 보안
+				ftps.execPBSZ(0);
+				ftps.execPROT("P");
 				
 				//ftp 디렉터리 생성
-				ftp.makeDirectory("/html/user_pictures/"+nowymd);
-				showServerReply(ftp);
+				ftps.makeDirectory("/html/user_posting_pictures/"+nowymd);
+				showServerReply(ftps);
 				
-				ftp.makeDirectory("/html/user_pictures/"+nowymd+"/"+count);//nowHHmmss
-				showServerReply(ftp);
+				ftps.makeDirectory("/html/user_posting_pictures/"+nowymd+"/"+postingNumber);//nowHHmmss
+				showServerReply(ftps);
 				
 				//ftp 디렉터리 변경
-				ftp.changeWorkingDirectory("/html/user_pictures/"+nowymd+"/"+count);//nowHHmmss
-				showServerReply(ftp);
+				ftps.changeWorkingDirectory("/html/user_posting_pictures/"+nowymd+"/"+postingNumber);//nowHHmmss
+				showServerReply(ftps);
 				
 				//Active Mode -> PassiveMode로 변경
-				ftp.enterLocalPassiveMode();
-				showServerReply(ftp);
+				ftps.enterLocalPassiveMode();
+				showServerReply(ftps);
 				
 				FileInputStream fis = null;
 				fis = new FileInputStream(content_picture);
+				showServerReply(ftps);
 				
-				ftp.setFileType(FTP.BINARY_FILE_TYPE);
-
-				//ftp에 파일 업로드
-				boolean isSuccess = ftp.storeFile(content_picture.getName(), fis);
+				ftps.setFileType(FTP.BINARY_FILE_TYPE);
+				showServerReply(ftps);
+				
+				ftps.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
+				showServerReply(ftps);
+				
+				//ftps에 파일 업로드
+				boolean isSuccess = ftps.storeFile(content_picture.getName(), fis);
+				showServerReply(ftps);
 				
 				//업로드 성공 시
 				if(isSuccess) {
@@ -303,7 +315,19 @@ public class MybatisController {
 		} catch (SocketException e) {
 			e.printStackTrace();
 		} finally {
-			ftp.disconnect();
+			try
+	        {
+	            if (ftps.isConnected())
+	            {
+	                ftps.logout();
+	                ftps.disconnect();
+	            }
+	        }
+	        catch (IOException ex)
+	        {
+	        	userInfoService.deletePostingFail(postingNumber);
+	            ex.printStackTrace();
+	        }
 		}
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		mav.addObject("userList", userList);
@@ -313,8 +337,8 @@ public class MybatisController {
 		return mav;
 	}
 	
-	private static void showServerReply(FTPClient ftp) {
-		String[] replies = ftp.getReplyStrings();
+	private static void showServerReply(FTPSClient ftps) {
+		String[] replies = ftps.getReplyStrings();
 		if(replies != null && replies.length > 0) {
 			for(String aReply : replies) {
 				System.out.println("SERVER: " + aReply);

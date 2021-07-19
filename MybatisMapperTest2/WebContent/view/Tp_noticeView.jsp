@@ -181,7 +181,7 @@
 			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
 			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" id = "chat-app" alt = "채팅"/>
 		</div>
-		<div class = "submenu-top-app" onclick = "location.href='userRegistAndLogin'">
+		<div class = "submenu-top-app" onclick = "location.href='noticeView'">
 			∧<br>top
 		</div>
 	</div>

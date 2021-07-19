@@ -117,12 +117,25 @@ public class UserInfoServiceImpl implements UserInfoService {
 		// TODO Auto-generated method stub
 		userInfoDAO.addPosting(content_title, content_content, content_picture, user_id);
 	}
+	
 	@Override
-	public String getNowRegistPosting(String user_id) {
+	public String getLastPostingNumber() {
 		// TODO Auto-generated method stub
-		String count = userInfoDAO.getNowRegistPosting(user_id);
+		String count = userInfoDAO.getLastPostingNumber();
 		return count;
 	}
+	
+	@Override
+	public void deletePostingFail(String postingNumber) {
+		// TODO Auto-generated method stub
+		String posting_Number = postingNumber;
+		userInfoDAO.deletePostingFail(posting_Number);
+	}
+	
+	
+	
+	
+	
 	
 	
 	

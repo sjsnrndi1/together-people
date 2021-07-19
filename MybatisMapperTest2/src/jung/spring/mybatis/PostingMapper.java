@@ -9,7 +9,8 @@ public interface PostingMapper {
 	
 	/* 포스팅 등록 */
 	void addPosting(HashMap<Object, Object> map);
-	ArrayList<PostingInfoVO> getNowRegistPosting(String user_id);
+	ArrayList<PostingInfoVO> getLastPostingNumber();
+	void deletePostingFail(int postingNumber);
 	/* 포스팅 등록 */
 	
 	ArrayList<PostingInfoVO> getPostings();
@@ -31,5 +32,6 @@ public interface PostingMapper {
 	void userSecession(String userId);
 
 	void adminDeletePosting(int postingNumber);
+
 
 }

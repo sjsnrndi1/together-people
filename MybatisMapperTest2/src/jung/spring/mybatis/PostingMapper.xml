@@ -19,14 +19,21 @@
 			INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, #{userId}, #{userName}, #{postingTitle}, #{postingContent}, #{postingPictureTitle}, #{postingRecommandCount}, #{postingAnswerCount}, #{postingDate})
 		</insert>
 		
-		
-		<select id = "getNowRegistPosting" parameterType = "string" resultType = "jung.spring.vo.PostingInfoVO">
-			SELECT * FROM postingInfo WHERE userId = #{user_id} ORDER BY postingNumber
+		<select id = "getLastPostingNumber" resultType = "jung.spring.vo.PostingInfoVO">
+			SELECT * FROM postingInfo ORDER BY postingNumber
 		</select>
 		
 		<select id = "getPostings" resultType = "jung.spring.vo.PostingInfoVO">
 			SELECT * FROM postingInfo ORDER BY postingNumber DESC
 		</select>
+		
+		<delete id = "deletePostingFail" parameterType = "int">
+			DELETE postingInfo WHERE postingNumber = #{postingNumber}
+		</delete>
+		
+		
+		
+		
 		
 		<select id = "getUserPosting" resultType = "jung.spring.vo.PostingInfoVO" parameterType = "int">
 			SELECT * FROM postingInfo WHERE postingNumber = #{postingNumber}

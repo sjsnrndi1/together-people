@@ -122,7 +122,7 @@
 				<li><a href="userTpView">가이드</a>
 					<ul>
 						<li><a href="userTpView">이용방법</a></li>
-						<li><a href="#">카테고리정보</a></li>
+						<li><a href="userRegistAndLogin">회원가입 및 로그인</a></li>
 					</ul>
 				</li>
 				<li><a href="#">커뮤니티</a>
@@ -190,7 +190,7 @@
 			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
 			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" id = "chat-app" alt = "채팅"/>
 		</div>
-		<div class = "submenu-top-app" onclick = "location.href='userRegistAndLogin'">
+		<div class = "submenu-top-app" onclick = "location.href='loginView'">
 			∧<br>top
 		</div>
 	</div>

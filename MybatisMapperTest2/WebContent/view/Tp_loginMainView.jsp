@@ -142,6 +142,9 @@
 	.postingView a:visited { text-decoration : none;color : #696969;}
 	.postingView a:active {text-decoration : none; color : #2F4F4F; }
 	.postingView a:hover { text-decoration : none; color : #2F4F4F;}
+	.floorBar {
+		position : absolute;
+	}
 </style>
 </head>
 <body>
@@ -295,7 +298,7 @@
 			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
 			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" id = "chat-app" alt = "채팅"/>
 		</div>
-		<div class = "submenu-top-app" onclick = "location.href='userRegistAndLogin'">
+		<div class = "submenu-top-app" onclick = "location.href='loginMainView'">
 			∧<br>top
 		</div>
 	</div>

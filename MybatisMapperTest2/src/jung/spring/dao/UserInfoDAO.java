@@ -45,8 +45,13 @@ public interface UserInfoDAO {
 	
 	/* 포스팅 등록 */
 	void addPosting(String content_title, String content_content, File content_picture, UserInfoVO user_id);
-	String getNowRegistPosting(String user_id);
+	String getLastPostingNumber();
+	void deletePostingFail(String posting_Number);
 	/* 포스팅 등록 */
+	
+	
+	
+	
 	
 	void addUserPosting(PostingInfoVO postingInfo);
 	PostingInfoVO addUserPostingInfo(String user_id, String user_name, String postingContent);

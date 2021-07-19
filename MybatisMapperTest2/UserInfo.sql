@@ -14,7 +14,8 @@ CREATE TABLE userInfo (
 	user_email VARCHAR2(300),
 	user_phone NUMBER NOT NULL,
 	user_date DATE NOT NULL,
-	/*user_picture 사진등록 */
+	user_picture VARCHAR2(300),
+	
 	PRIMARY KEY(user_id, user_phone)
 );
 
@@ -41,6 +42,8 @@ CREATE TABLE postingInfo(
 	postingDate DATE NOT NULL
 	
 )
+
+select * from postingInfo
 
 CREATE SEQUENCE postingNumber_seq;
 
