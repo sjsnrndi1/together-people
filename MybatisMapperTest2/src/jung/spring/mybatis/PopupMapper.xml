@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace = "jung.spring.mybatis.PopupMapper">
+		<resultMap type = "jung.spring.vo.PopupInfoVO" id = "PopupResultMap">
+			<result property = "popupNumber" column = "POPUPNUMBER"/>
+			<result property = "userId" column = "USERID"/>
+		</resultMap>
+		<!-- resultMap = "MemberResultMap" -->
+		
+		<select id = "getPopupNumber" parameterType = "string" resultType = "int">
+			SELECT popupNumber FROM popupInfo WHERE userId = #{user_id}
+		</select>
+		
+		<insert id = "addUserPopup" parameterType = "string">
+			INSERT INTO popupInfo VALUES(popupNumber_seq.nextval, #{user_id})
+		</insert>
+	</mapper>
