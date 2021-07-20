@@ -9,14 +9,13 @@
 <title>TOGETHER PEOPLE</title>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- 제이쿼리 -->
 <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css"> <!-- 폰트 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/sidebar.css"> <!-- 사이드바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/titlebar.css"> <!-- 타이틀바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/footerbar.css"> <!-- 바닥바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/dropmenubar.css"> <!-- 서브메뉴바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/popupbar.css"> <!-- 전화서브메뉴바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/submenubar.css"> <!-- 우측서브메뉴바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/postingpopupbar.css"> <!-- 포스팅서브메뉴바 -->
-
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/sidebar.css"> <!-- 사이드바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/titlebar.css"> <!-- 타이틀바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/footerbar.css"> <!-- 바닥바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/popupbar.css"> <!-- 전화서브메뉴바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/submenubar.css"> <!-- 우측서브메뉴바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/postingpopupbar.css"> <!-- 포스팅서브메뉴바 -->
 <script>						
 	function openNav() {
 		document.getElementById('mysidenav').style.width = '300px';
@@ -40,12 +39,6 @@
 	  popup.classList.add('hide');
 	}
 	
-	$(function (){
-		$("#chat-app").click(function (){
-			$("#submenu-chat-frame").toggle();
-		});
-	});
-	
 	function check(){
 		if(userPostingRegist.ct_ti.value == ""){
 			alert("제목을 입력해주세요.");
@@ -58,6 +51,9 @@
 		} else {
 			return true;
 		}
+	}
+	function popup(){
+		alert("로그인 후 이용해주세요.");	
 	}
 </script>
 <style>
@@ -225,7 +221,8 @@
 							<td rowspan = "4">
 								<a href="#" style = "text-decoration: none;">
 									<fmt:formatDate var = "postingDate" value = "${posting.postingDate}" pattern="yyyyMMdd"/>
-									<img src = "http://121.181.36.139:8020/filezilaFolder/user_posting_pictures/${postingDate}/${posting.postingNumber}/${posting.postingPictureTitle}" alt = "없음" style = "padding-left : 5%; width : 94%; height : 170px;"/>
+									<!-- <img src = "http://121.181.36.139:8020/filezilaFolder/user_posting_pictures/${postingDate}/${posting.postingNumber}/${posting.postingPictureTitle}" alt = "없음" style = "padding-left : 5%; width : 94%; height : 170px;"/>  -->
+									<img src = "http://sjsnrndi12.dothome.co.kr/images/siba.png" alt = "없음" style = "padding-left : 5%; width : 94%; height : 170px;"/>
 								</a>
 							</td>
 						</tr>
@@ -275,7 +272,7 @@
 		<div id = "submenu-chat-app" class = "submenu-chat-app">
 			<img src = "http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG" 
 			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
-			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" id = "chat-app" alt = "채팅"/>
+			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" onclick = "popup()" id = "chat-app" alt = "채팅"/>
 		</div>
 		<div class = "submenu-top-app" onclick = "location.href='firstView'">
 			∧<br>top
@@ -295,61 +292,6 @@
 		<hr>
 		<br>
 		<button onclick="closePopup()">확인</button>
-		</div>
-	</div>
-	
-	<div id = "submenu-chat-frame" class = "submenu-chat-frame">
-		<div style = "position : relative; width : 100%; height : 100%;">
-			<c:set var="now" value="<%= new java.util.Date() %>" />
-			<div class = "submenu-chat-title" style = "text-align : center; color : #fffff0; padding-top : 10px; width : 100%; height : 8%; font-size : 120%;">
-				Together people 톡
-			</div>
-			<div class = "submenu-chat-content-frame" style = "overflow-y : scroll; overflow-x : hidden; background-color : #FFFAFA; width : 100%; height : 75%;">
-				
-				<!-- c:if문 써서 날짜 바뀔때 마다 넣기 -->
-				<div style = "text-align : center; padding : 0;">
-					<div style = "float : left; width : 95px; border : 1px solid #696969; margin-top : 6px;"></div>
-					<fmt:formatDate value="${now}" type="date" dateStyle="full" />
-					<div style = "float : right; width : 95px; border : 1px solid #696969; margin-top : 6px;"></div>
-				</div>
-				
-				<!-- c:foreach / c:if문 써서 날짜마다 넣기 / fmt로 현재시간 넣는거 소환 -->
-				<div class = "submenu-chat-content-content" style = "margin : 3px; float : right; width : 90%; height : auto; border-radius : 5px;">
-					<div style = "float : right; text-align : right; max-width : 80%; height : auto; border-radius : 5px;">
-						<div style = "font-size : 100%; padding : 4px; background-color : #666; color : #fffff0; text-align : right; width : auto; border : 1px solid #DCDCDC; height : auto; border-radius : 5px;">
-							내가 쓴 글
-						</div>
-					</div>
-					<div style = "float : right; margin-right : 3px; text-align : right; width : 18%; border-radius : 5px;">
-						<div style = "font-size : 80%; width : 100%; height : auto; color : black; text-align : right; border-radius : 5px;">
-							<fmt:formatDate value="${now}" pattern="a h:mm" />
-						</div>
-					</div>
-				</div>
-				
-				<!-- c:foreach / c:if문 써서 날짜마다 넣기 / fmt로 현재시간 넣는거 소환 -->
-				<div class = "submenu-chat-content-content" style = "margin : 3px; float : left; width : 90%; height : auto; border-radius : 5px;">
-					<div style = "float : left; text-align : left; max-width : 80%; height : auto; border-radius : 5px;">
-						<div style = "font-size : 100%; padding : 4px; background-color : #666; color : #fffff0; text-align : left; width : auto; border : 1px solid #DCDCDC; height : auto; border-radius : 5px;">
-							관리자가 쓴 글
-						</div>
-					</div>
-					<div style = "float : left; margin-right : 3px; text-align : left; width : 18%; border-radius : 5px;">
-						<div style = "font-size : 80%; width : 100%; height : auto; color : black; text-align : right; border-radius : 5px;">
-							<fmt:formatDate value="${now}" pattern="a h:mm" />
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class = "submenu-chat-input-frame" style = "position : relative; border : 1px solid red; width : 100%; height : 14%;">
-				<!-- <div class = "submenu-chat-content-input" style = "border : 1px solid red; width : 100%; height : 20%; color : #808080;"> -->
-				<div style = "float : left; border : 1px solid red; width : 80%; height : 95%; margin-left : 2px;">
-					메세지 입력 칸
-				</div>
-				<div style = "float : left; border : 1px solid red; width : 18%; height : 100%;">
-					<input type ="text" value = "입력" style = "width : 80%;  border-radius : 3px;"/>
-				</div>
-			</div>
 		</div>
 	</div>
 	

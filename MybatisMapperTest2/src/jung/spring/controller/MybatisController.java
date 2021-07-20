@@ -30,6 +30,7 @@ import jung.spring.vo.AlarmInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.BoardJoinUserInfoVO;
 import jung.spring.vo.ChatInfoVO;
+import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
 import jung.spring.vo.PostingRecommandInfoVO;
 import jung.spring.vo.QnaInfoVO;
@@ -87,6 +88,7 @@ public class MybatisController {
 		UserInfoVO userInfo = userInfoService.getUser(user_id);
 		mav.addObject("userInfo", userInfo);
 		mav.setViewName("Tp_loginMainView");
+		
 		return mav;
 	}
 	/*=========== 기본 화면 ============*/
@@ -112,41 +114,6 @@ public class MybatisController {
 	}
 	/*=========== 로그인 화면 ============*/
 	
-	/*=========== 메인 화면 ============*/
-	/*@RequestMapping("/mainView")
-	public ModelAndView mainView(@RequestParam("id") String user_id) {
-		ModelAndView mav = new ModelAndView();
-		UserInfoVO userInfo = userInfoService.getUser(user_id);
-		List<PostingInfoVO> postingList = userInfoService.getPostings();
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if(str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("postingList", postingList);
-		mav.addObject("alarms", alarms);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("togetherPeopleBeforeRecommand", togetherPeopleBeforeRecommand);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("mainView");
-		return mav;
-	}
-	
-	@RequestMapping("/mainViewAlarm")
-	public String mainViewAlarm(@RequestParam("id") String user_id) {
-		//알람 온 오프 여부
-		return "redirect:/mainView?id=" + user_id;
-	}*/
-	/*=========== 메인 화면 ============*/
-	
 	/*=========== 회원가입 화면 ============*/
 	@RequestMapping(value = "/userRegist")
 	public ModelAndView userRegist() {
@@ -170,18 +137,12 @@ public class MybatisController {
 		map.put("user_birthday_year", user_birthday_year); map.put("user_birthday_month", user_birthday_month); map.put("user_birthday_day", user_birthday_day);
 		map.put("user_email", user_email); map.put("user_phone", user_phone); map.put("user_date", new Date());
 		boolean check = userInfoService.addUserInfo(map);
+		userInfoService.addUserPopup(user_id);
 		mav.addObject("check", check);
 		mav.addObject("user_name", user_name);
 		mav.setViewName("Tp_userRegistResult");
 		return mav;
 	}
-	/*
-	@RequestMapping(value = "/selectAddress")
-	public ModelAndView SelectAddressForm() {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("selectAddress");
-		return mav;
-	}*/
 	/*=========== 회원가입 화면 ============*/
 	
 	/*=========== 아이디 찾기 화면 ============*/
@@ -345,28 +306,6 @@ public class MybatisController {
 			}
 		}
 	}
-	
-	/*@RequestMapping(value = "/postingRegist")
-	public ModelAndView PostingRegist(@RequestParam("id") String user_id) {
-		ModelAndView mav = new ModelAndView();
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.setViewName("postingRegist");
-		return mav;
-	}
-	
-	@RequestMapping(value = "/postingRegistForm")
-	public String PostingRegistForm(@RequestParam("user_id") String user_id, 
-			@RequestParam("user_name") String user_name, @RequestParam("postingContent") String postingContent) {
-		PostingInfoVO postingInfo = userInfoService.addUserPostingInfo(user_id, user_name, postingContent);
-		if(postingContent.equals("")) {
-			return "redirect:/postingRegist?id=" + user_id;
-		} else {
-			userInfoService.addUserPosting(postingInfo);
-			return "redirect:/mainView?id=" + user_id;
-		}
-	}*/
 	/*=========== 포스팅 등록 화면 ============*/
 	
 	/*=========== 포스팅 수정 화면 ============*/
@@ -460,6 +399,36 @@ public class MybatisController {
 		return mav;
 	}
 	/*=========== 회원가입 및 로그인 화면 ============*/
+	
+	/*=========== 팝업 창 톡톡 화면 ============*/
+	@RequestMapping(value="/popup")
+	public ModelAndView Popup(@RequestParam("user_id") String user_id) {
+		ModelAndView mav = new ModelAndView();
+		int popupNumber = userInfoService.getPopupNumber(user_id); 
+		List<PopupChatInfoVO> popupChatList = userInfoService.getPopupChats(popupNumber);
+		mav.addObject("user_id", user_id);
+		mav.addObject("popupChatList", popupChatList);
+		mav.setViewName("Tp_popup");
+		return mav;
+	}
+	/*=========== 팝업 창 톡톡 화면 ============*/
+	
+	/*=========== 팝업 창 톡톡 사용자 입력 ============*/
+	@RequestMapping(value="/popup_user_chat_input_form")
+	public ModelAndView Popup_user_chat_input_form(@RequestParam("user_chat") String user_chat, @RequestParam("user_id") String user_id) {
+		ModelAndView mav = new ModelAndView();
+		int popupNumber = userInfoService.getPopupNumber(user_id);
+		userInfoService.addPopupUserChat(user_id, popupNumber, user_chat);
+		List<PopupChatInfoVO> popupChatList = userInfoService.getPopupChats(popupNumber);
+		mav.addObject("user_id", user_id);
+		mav.addObject("popupChatList", popupChatList);
+		mav.setViewName("Tp_popup");
+		return mav;
+	}
+	/*=========== 팝업 창 톡톡 사용자 입력 ============*/
+	
+	
+	
 	
 	
 	

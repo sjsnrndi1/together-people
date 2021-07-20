@@ -5,11 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>아이디 확인</title>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- 제이쿼리 -->
 <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css"> <!-- 폰트 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/sidebar.css"> <!-- 사이드바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/titlebar.css"> <!-- 타이틀바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/footerbar.css"> <!-- 바닥바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/dropmenubar.css"> <!-- 서브메뉴바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/sidebar.css"> <!-- 사이드바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/titlebar.css"> <!-- 타이틀바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/footerbar.css"> <!-- 바닥바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
 <script>
 	function openNav() {
 		document.getElementById('mysidenav').style.width = '300px';

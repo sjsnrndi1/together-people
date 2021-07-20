@@ -12,6 +12,7 @@ import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.BoardJoinUserInfoVO;
 import jung.spring.vo.ChatInfoVO;
 import jung.spring.vo.NoticeInfoVO;
+import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
 import jung.spring.vo.PostingRecommandInfoVO;
 import jung.spring.vo.QnaInfoVO;
@@ -153,6 +154,55 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return postingInfo;
 	}
 	/*===========유저 포스팅 등록하는 서비스============*/
+	
+	/*===========사용자에 맞는 톡 번호 가져오는 서비스============*/
+	@Override
+	public int getPopupNumber(String user_id) {
+		// TODO Auto-generated method stub
+		int popupNumber = userInfoDAO.getPopupNumber(user_id);
+		return popupNumber;
+	}
+	/*===========사용자에 맞는 톡 번호 가져오는 서비스============*/
+	
+	/*===========사용자 팝업창 생성 서비스============*/
+	@Override
+	public void addUserPopup(String user_id) {
+		// TODO Auto-generated method stub
+		userInfoDAO.addUserPopup(user_id);
+	}
+	/*===========사용자 팝업창 생성 서비스============*/
+	
+	/*===========사용자 팝업 채팅 내용 가져오는 서비스============*/
+	@Override
+	public List<PopupChatInfoVO> getPopupChats(int popupNumber) {
+		// TODO Auto-generated method stub
+		ArrayList<PopupChatInfoVO> popupChatList = userInfoDAO.getPopupChats(popupNumber);
+		return popupChatList;
+	}
+	/*===========사용자 팝업 채팅 내용 가져오는 서비스============*/
+	
+	/*===========사용자 팝업 채팅 입력 서비스============*/
+	@Override
+	public void addPopupUserChat(String user_id, int popupNumber, String user_chat) {
+		// TODO Auto-generated method stub
+		userInfoDAO.addPopupUserChat(user_id, popupNumber, user_chat);
+	}
+	/*===========사용자 팝업 채팅 입력 서비스============*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/*===========유저 포스팅 수정하는 서비스============*/
 	@Override

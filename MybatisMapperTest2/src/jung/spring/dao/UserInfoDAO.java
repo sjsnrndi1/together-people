@@ -9,6 +9,7 @@ import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.BoardJoinUserInfoVO;
 import jung.spring.vo.ChatInfoVO;
 import jung.spring.vo.NoticeInfoVO;
+import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
 import jung.spring.vo.PostingRecommandInfoVO;
 import jung.spring.vo.QnaInfoVO;
@@ -20,35 +21,29 @@ public interface UserInfoDAO {
 	boolean selectUserInfo(String user_password, String user_id);
 	UserInfoVO getUserInfo(UserIdPasswordVO userIdPassword);
 	
-	/* 포스팅 가져오기 */
-	ArrayList<PostingInfoVO> getPostings();
-	/* 포스팅 가져오기 */
+	/********** 회원정보 **********/
+	boolean addUser(HashMap<Object,Object> map); //회원가입
+	ArrayList<UserInfoVO> getMembers(); //회원 목록 가져오기
+	boolean checkUserEmail(String user_name, int user_phone); //이메일 확인
+	UserInfoVO selectUserId(String user_name, int user_phone); //아이디 찾기
+	boolean selectUserPassword(String user_id, String user_name, int user_phone); //비밀번호 찾기 확인
+	UserInfoVO selectUserPassword(String user_id); //비밀번호 찾기
+	void modifyPassword(String user_id, String user_password); //비밀번호 변경
+	/********** 회원정보 **********/
 	
-	/* 회원들 정보가져오기 */
-	ArrayList<UserInfoVO> getMembers();
-	/* 회원들 정보가져오기 */
+	/********** 포스팅 **********/
+	ArrayList<PostingInfoVO> getPostings(); //포스팅 가져오기
+	void addPosting(String content_title, String content_content, File content_picture, UserInfoVO user_id); //포스팅 등록
+	String getLastPostingNumber(); //포스팅 마지막번호 가져오기
+	void deletePostingFail(String posting_Number); //등록 실패지 포스팅 삭제
+	/********** 포스팅 **********/
 	
-	/* 회원가입 */
-	boolean addUser(HashMap<Object,Object> map);
-	/* 회원가입 */
-	
-	/* 아이디 찾기 */
-	boolean checkUserEmail(String user_name, int user_phone);
-	UserInfoVO selectUserId(String user_name, int user_phone);
-	/* 아이디 찾기 */
-	
-	/* 비밀번호 찾기 */
-	boolean selectUserPassword(String user_id, String user_name, int user_phone);
-	void modifyPassword(String user_id, String user_password);
-	UserInfoVO selectUserPassword(String user_id);
-	/* 비밀번호 찾기 */
-	
-	/* 포스팅 등록 */
-	void addPosting(String content_title, String content_content, File content_picture, UserInfoVO user_id);
-	String getLastPostingNumber();
-	void deletePostingFail(String posting_Number);
-	/* 포스팅 등록 */
-	
+	/********** 팝업 창 **********/
+	void addUserPopup(String user_id); //사용자 별 팝업 창  생성
+	int getPopupNumber(String user_id); //팝업 번호 가져오기
+	ArrayList<PopupChatInfoVO> getPopupChats(int popupNumber); // 팝업 채팅 내용 가져오기
+	void addPopupUserChat(String user_id, int popupNumber, String user_chat); // 팝업 채팅 입력
+	/********** 팝업 창 **********/
 	
 	
 	

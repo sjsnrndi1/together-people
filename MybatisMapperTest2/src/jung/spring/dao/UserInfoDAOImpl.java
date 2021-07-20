@@ -14,6 +14,8 @@ import jung.spring.mybatis.BoardMapper;
 import jung.spring.mybatis.ChatMapper;
 import jung.spring.mybatis.MemberMapper;
 import jung.spring.mybatis.NoticeMapper;
+import jung.spring.mybatis.PopupChatMapper;
+import jung.spring.mybatis.PopupMapper;
 import jung.spring.mybatis.PostingMapper;
 import jung.spring.mybatis.PostingRecommandMapper;
 import jung.spring.mybatis.QnaMapper;
@@ -22,6 +24,7 @@ import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.BoardJoinUserInfoVO;
 import jung.spring.vo.ChatInfoVO;
 import jung.spring.vo.NoticeInfoVO;
+import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
 import jung.spring.vo.PostingRecommandInfoVO;
 import jung.spring.vo.QnaInfoVO;
@@ -218,6 +221,79 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 		
 	}
 	/*===========유저 포스팅 등록하는 서비스============*/
+	
+	/*===========사용자 별 팝업 창 생성============*/
+	@Override
+	public void addUserPopup(String user_id) {
+		// TODO Auto-generated method stub
+		PopupMapper popupMapper = sqlSession.getMapper(PopupMapper.class);
+		PopupChatMapper popupChatMapper = sqlSession.getMapper(PopupChatMapper.class);
+		popupMapper.addUserPopup(user_id);
+		int popupNumber = popupMapper.getPopupNumber(user_id);
+		String userChatContent = "";
+		String adminChatContent = "안녕하세요.<br>Together people입니다.<br>궁금하신 사항 있으시면 질문해 주세요.<br>감사합니다.";
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("popupNumber", popupNumber);
+		map.put("userId", user_id);
+		map.put("userChatContent", userChatContent);
+		map.put("adminChatContent", adminChatContent);
+		map.put("chat_date", new Date());
+		popupChatMapper.addPopupUserChat(map);
+	}
+	/*===========사용자 별 팝업 창 생성============*/
+	
+	/*===========사용자에 맞는 톡 번호 가져오는 서비스============*/
+	@Override
+	public int getPopupNumber(String user_id) {
+		// TODO Auto-generated method stub
+		PopupMapper popupMapper = sqlSession.getMapper(PopupMapper.class);
+		int popupNumber = popupMapper.getPopupNumber(user_id);
+		return popupNumber;
+	}
+	/*===========사용자에 맞는 톡 번호 가져오는 서비스============*/
+	
+	/*===========사용자 팝업 채팅 내용 가져오는 서비스============*/
+	@Override
+	public ArrayList<PopupChatInfoVO> getPopupChats(int popupNumber) {
+		// TODO Auto-generated method stub
+		PopupChatMapper popupChatMapper = sqlSession.getMapper(PopupChatMapper.class);
+		ArrayList<PopupChatInfoVO> popupChatList = popupChatMapper.getPopupChats(popupNumber);
+		return popupChatList;
+	}
+	/*===========사용자 팝업 채팅 내용 가져오는 서비스============*/
+	
+	/*===========사용자 팝업 채팅 입력 서비스============*/
+	@Override
+	public void addPopupUserChat(String user_id, int popupNumber, String user_chat) {
+		// TODO Auto-generated method stub
+		PopupChatMapper popupChatMapper = sqlSession.getMapper(PopupChatMapper.class);
+		String adminChatContent = "";
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("popupNumber", popupNumber);
+		map.put("userId", user_id);
+		map.put("userChatContent", user_chat);
+		map.put("adminChatContent", adminChatContent);
+		map.put("chat_date", new Date());
+		popupChatMapper.addPopupUserChat(map);
+	}
+	/*===========사용자 팝업 채팅 입력 서비스============*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/*===========유저 포스팅 수정하는 서비스============*/
 	@Override

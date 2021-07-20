@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<% response.setHeader("Cache-Control","no-store");
+   response.setHeader("Pragma","no-cache");
+   response.setDateHeader("Expires",0);
+   if (request.getProtocol().equals("HTTP/1.1")) response.setHeader("Cache-Control", "no-cache"); 
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,13 +14,13 @@
 <title>TOGETHER PEOPLE</title>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- 제이쿼리 -->
 <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css"> <!-- 폰트 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/sidebar.css"> <!-- 사이드바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/titlebar.css"> <!-- 타이틀바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/footerbar.css"> <!-- 바닥바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/dropmenubar.css"> <!-- 서브메뉴바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/popupbar.css"> <!-- 전화서브메뉴바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/submenubar.css"> <!-- 우측서브메뉴바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/postingpopupbar.css"> <!-- 포스팅서브메뉴바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/sidebar.css"> <!-- 사이드바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/titlebar.css"> <!-- 타이틀바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/footerbar.css"> <!-- 바닥바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/popupbar.css"> <!-- 전화서브메뉴바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/submenubar.css"> <!-- 우측서브메뉴바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/postingpopupbar.css"> <!-- 포스팅서브메뉴바 -->
 <script>
 	function openNav() {
 		document.getElementById('mysidenav').style.width = '300px';
@@ -38,11 +43,23 @@
 		const popup = document.querySelector('#popup');
 	  	popup.classList.add('hide');
 	}
-	$(function (){
-		$("#chat-app").click(function (){
-			$("#submenu-chat-frame").toggle();
-		});
-	});
+	function popup() {
+		var popupWindow = "";
+		var fr = document.getElementById("popupForm");
+		
+		var url = "popup";
+        var name = "popup test";
+        var option = "width = 450, height = 800, top = 100, left = 200, location = no, resizable = no";
+        
+        popupWindow = window.open("", name, option);
+        popupWindow.focus();
+        
+        fr.action = url;
+        fr.method = "post";
+        fr.target = name;
+        fr.submit();
+        fr.target = "_self";
+	}
 	function showPostingPopup(hasFilter) {
 		const popup = document.querySelector('#postingPopup');
 	  
@@ -293,15 +310,19 @@
 			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/gomapHoverImg.png'" 
 			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/gomapImg.PNG'" alt = "오시는 길"/></a>
 		</div>
-		<div id = "submenu-chat-app" class = "submenu-chat-app">
-			<img src = "http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG" 
-			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
-			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" id = "chat-app" alt = "채팅"/>
-		</div>
+		<form name = "popupForm" id = "popupForm" method = "POST">
+			<div id = "submenu-chat-app" class = "submenu-chat-app">
+				<input type = "hidden" value = "${userInfo.user_id }" id = "user_id" name = "user_id"/>
+				<img src = "http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG" 
+				onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
+				onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" onclick = "popup()" id = "chat-app" alt = "채팅"/>
+			</div>
+		</form>
 		<div class = "submenu-top-app" onclick = "location.href='loginMainView'">
 			∧<br>top
 		</div>
 	</div>
+	
 	
 	<div id="popup" class="hide">
 		<div class="content">
@@ -316,28 +337,6 @@
 		<hr>
 		<br>
 		<button onclick="closePopup()">확인</button>
-		</div>
-	</div>
-	
-	<div id = "submenu-chat-frame" class = "submenu-chat-frame">
-		<div class = "submenu-chat-title" style = "border : 1px solid red; width : 100%; height : 8%; font-size : 120%;">
-			Together people 톡
-		</div>
-		<div class = "submenu-chat-content-frame" style = "border : 1px solid red; width : 100%; height : 92%;">
-			<div class = "submenu-chat-content-content" style = "border : 1px solid red; width : 100%; height : 80%;">
-				내용
-			</div>
-			<div class = "submenu-chat-content-input" style = "border : 1px solid red; width : 100%; height : 20%; color : #808080;">
-				<div style = "float : left; border : 1px solid red; width : 18%;">
-					<input type = "text" value = "사진등록" style = "width : 92%;"/>
-				</div>
-				<div style = "float : left; border : 1px solid red; width : 60%; height : 95%;">
-					메세지 입력 칸
-				</div>
-				<div style = "float : left; border : 1px solid red; width : 18%;">
-					<input type ="text" value = "입력" style = "width : 92%;"/>
-				</div>
-			</div>
 		</div>
 	</div>
 	

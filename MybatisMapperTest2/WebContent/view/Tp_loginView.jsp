@@ -9,13 +9,11 @@
 <title>TOGETHER PEOPLE Login</title>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- 제이쿼리 -->
 <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css"> <!-- 폰트 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/sidebar.css"> <!-- 사이드바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/titlebar.css"> <!-- 타이틀바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/footerbar.css"> <!-- 바닥바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/dropmenubar.css"> <!-- 서브메뉴바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/popupbar.css"> <!-- 전화서브메뉴바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/submenubar.css"> <!-- 우측서브메뉴바 -->
-<link rel = "stylesheet" href = "http://121.181.36.139:8020/filezilaFolder/style/postingpopupbar.css"> <!-- 포스팅서브메뉴바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/sidebar.css"> <!-- 사이드바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/titlebar.css"> <!-- 타이틀바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/footerbar.css"> <!-- 바닥바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
+
 <script>
 	function check(){
 		let id = document.getElementById("user_id").value;
@@ -47,26 +45,6 @@
 	function closeNav() {
 		document.getElementById('mysidenav').style.width = '0';
 	}
-	function showPopup(hasFilter) {
-		const popup = document.querySelector('#popup');
-	  
-	  if (hasFilter) {
-	  	popup.classList.add('has-filter');
-	  } else {
-	  	popup.classList.remove('has-filter');
-	  }
-	  
-	  popup.classList.remove('hide');
-	}
-	function closePopup() {
-		const popup = document.querySelector('#popup');
-	  popup.classList.add('hide');
-	}
-	$(function (){
-		$("#chat-app").click(function (){
-			$("#submenu-chat-frame").toggle();
-		});
-	});
 </script>
 <style>
 	.loginBar, .userFindBar {
@@ -172,65 +150,6 @@
 			<a href = "findPassword" class = "userFind_pw">비밀번호찾기</a>&nbsp;
 			<span style = "color : #DCDCDC;">|</span>&nbsp;
 			<a href = "userRegist" class = "userRegistButton">회원가입</a>
-		</div>
-	</div>
-	
-	<div class = "submenu-frame">
-		<div class = "submenu-phone-app">
-			<a href = "#" onclick = "showPopup(false)"><img src = "http://sjsnrndi12.dothome.co.kr/images/phoneImg.PNG" 
-			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/phoneHoverImg.png'" 
-			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/phoneImg.PNG'" alt = "전화"/></a>
-		</div>
-		<div class = "submenu-map-app">
-			<a href = "noticeAccessView"><img src = "http://sjsnrndi12.dothome.co.kr/images/gomapImg.PNG" 
-			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/gomapHoverImg.png'" 
-			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/gomapImg.PNG'" alt = "오시는 길"/></a>
-		</div>
-		<div id = "submenu-chat-app" class = "submenu-chat-app">
-			<img src = "http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG" 
-			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
-			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" id = "chat-app" alt = "채팅"/>
-		</div>
-		<div class = "submenu-top-app" onclick = "location.href='loginView'">
-			∧<br>top
-		</div>
-	</div>
-	
-	<div id="popup" class="hide">
-		<div class="content">
-			<p>
-				<span class = "content-title">전화번호</span><br><br>
-			</p>
-			<p class = "content-content">
-				<span class = "content-tp">"together people"입니다.</span><br><br>
-				<span class = "content-phone">010-2098-6362</span><br><br>
-				<span class = "content-ct">전화연결은 휴대폰으로 가능합니다</span><br><br>
-			</p>
-		<hr>
-		<br>
-		<button onclick="closePopup()">확인</button>
-		</div>
-	</div>
-	
-	<div id = "submenu-chat-frame" class = "submenu-chat-frame">
-		<div class = "submenu-chat-title" style = "border : 1px solid red; width : 100%; height : 8%; font-size : 120%;">
-			Together people 톡
-		</div>
-		<div class = "submenu-chat-content-frame" style = "border : 1px solid red; width : 100%; height : 92%;">
-			<div class = "submenu-chat-content-content" style = "border : 1px solid red; width : 100%; height : 80%;">
-				내용
-			</div>
-			<div class = "submenu-chat-content-input" style = "border : 1px solid red; width : 100%; height : 20%; color : #808080;">
-				<div style = "float : left; border : 1px solid red; width : 18%;">
-					<input type = "text" value = "사진등록" style = "width : 92%;"/>
-				</div>
-				<div style = "float : left; border : 1px solid red; width : 60%; height : 95%;">
-					메세지 입력 칸
-				</div>
-				<div style = "float : left; border : 1px solid red; width : 18%;">
-					<input type ="text" value = "입력" style = "width : 92%;"/>
-				</div>
-			</div>
 		</div>
 	</div>
 	
