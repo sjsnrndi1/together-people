@@ -88,6 +88,7 @@
 </head>
 <body>
 <form action = "user_login" method = "POST" onsubmit="return check()">
+	<input type = "hidden" value = "${ssVar}" id = "user_id_session" name = "user_id_session"/>
 	<div class = "titleBar">
 		<div class="dropmenu">
 			<ul>

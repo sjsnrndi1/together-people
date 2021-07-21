@@ -19,7 +19,7 @@ public class UserInfoVO {
 	private int user_phone;
 	private int user_reportNumber;
 	private Date user_date;
-	
+	private String user_picture;
 	
 	public int getUser_re_level() {
 		return user_re_level;
@@ -146,5 +146,11 @@ public class UserInfoVO {
 	}
 	public void setUser_date(Date user_date) {
 		this.user_date = user_date;
+	}
+	public String getUser_picture() {
+		return user_picture;
+	}
+	public void setUser_picture(String user_picture) {
+		this.user_picture = user_picture;
 	}
 }

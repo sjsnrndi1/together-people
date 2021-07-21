@@ -37,11 +37,9 @@
 		const popup = document.querySelector('#popup');
 	  popup.classList.add('hide');
 	}
-	$(function (){
-		$("#chat-app").click(function (){
-			$("#submenu-chat-frame").toggle();
-		});
-	});
+	function popup(){
+		alert("로그인 후 이용해주세요.");	
+	}
 </script>
 <style>
 	.aboutPhrases {
@@ -179,7 +177,7 @@
 		<div id = "submenu-chat-app" class = "submenu-chat-app">
 			<img src = "http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG" 
 			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
-			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" id = "chat-app" alt = "채팅"/>
+			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" onclick = "popup()" id = "chat-app" alt = "채팅"/>
 		</div>
 		<div class = "submenu-top-app" onclick = "location.href='noticeView'">
 			∧<br>top
@@ -199,28 +197,6 @@
 		<hr>
 		<br>
 		<button onclick="closePopup()">확인</button>
-		</div>
-	</div>
-	
-	<div id = "submenu-chat-frame" class = "submenu-chat-frame">
-		<div class = "submenu-chat-title" style = "border : 1px solid red; width : 100%; height : 8%; font-size : 120%;">
-			Together people 톡
-		</div>
-		<div class = "submenu-chat-content-frame" style = "border : 1px solid red; width : 100%; height : 92%;">
-			<div class = "submenu-chat-content-content" style = "border : 1px solid red; width : 100%; height : 80%;">
-				내용
-			</div>
-			<div class = "submenu-chat-content-input" style = "border : 1px solid red; width : 100%; height : 20%; color : #808080;">
-				<div style = "float : left; border : 1px solid red; width : 18%;">
-					<input type = "text" value = "사진등록" style = "width : 92%;"/>
-				</div>
-				<div style = "float : left; border : 1px solid red; width : 60%; height : 95%;">
-					메세지 입력 칸
-				</div>
-				<div style = "float : left; border : 1px solid red; width : 18%;">
-					<input type ="text" value = "입력" style = "width : 92%;"/>
-				</div>
-			</div>
 		</div>
 	</div>
 	

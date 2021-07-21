@@ -21,7 +21,7 @@ public interface UserInfoService {
 	UserInfoVO getUserInfo(UserIdPasswordVO userIdPassword);
 	
 	/********** 회원정보 **********/
-	boolean addUserInfo(HashMap<Object, Object> map); //회원가입
+	void addUserInfo(HashMap<Object, Object> map); //회원가입
 	List<UserInfoVO> getMembers(); //회원 목록 가져오기
 	boolean checkUserEmail(String user_name, int user_phone); //이메일 확인
 	UserInfoVO selectUserId(String user_name, int user_phone); //아이디 찾기

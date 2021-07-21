@@ -22,7 +22,7 @@ public interface UserInfoDAO {
 	UserInfoVO getUserInfo(UserIdPasswordVO userIdPassword);
 	
 	/********** 회원정보 **********/
-	boolean addUser(HashMap<Object,Object> map); //회원가입
+	void addUser(HashMap<Object,Object> map); //회원가입
 	ArrayList<UserInfoVO> getMembers(); //회원 목록 가져오기
 	boolean checkUserEmail(String user_name, int user_phone); //이메일 확인
 	UserInfoVO selectUserId(String user_name, int user_phone); //아이디 찾기

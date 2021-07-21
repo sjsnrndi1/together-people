@@ -5,6 +5,7 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.ftp.FTPSClient;
+import org.apache.tomcat.jni.User;
 
 import java.util.HashMap;
 import java.io.File;
@@ -17,12 +18,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 import jung.spring.svc.UserInfoService;
@@ -37,17 +44,11 @@ import jung.spring.vo.QnaInfoVO;
 import jung.spring.vo.UserInfoVO;
 
 @Controller
+@SessionAttributes("user")
 public class MybatisController {
 
 	@Autowired
 	private UserInfoService userInfoService;
-	
-	@Bean
-	public MultipartResolver multipartResolver() {
-	  org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
-	  multipartResolver.setMaxUploadSize(10485760); // 1024 * 1024 * 10
-	  return multipartResolver;
-	}
 	
 	private String togetherPeopleTitle = "http://sjsnrndi12.dothome.co.kr/images/bg.png";
 	private String togetherPeopleBoard = "http://sjsnrndi12.dothome.co.kr/images/board.png";
@@ -56,39 +57,50 @@ public class MybatisController {
 	private String togetherPeopleManagement = "http://sjsnrndi12.dothome.co.kr/images/management.png";
 	private String togetherPeopleBeforeRecommand = "http://sjsnrndi12.dothome.co.kr/images/recommand2.png";
 	private String alarmClose = "http://sjsnrndi12.dothome.co.kr/images/alarm.png";
-	
+
 	/*=========== 기본 화면 ============*/
 	@RequestMapping(value="/")
-	public ModelAndView home() {
+	public ModelAndView home(HttpServletRequest request) throws Exception {
+		
+		HttpSession session = request.getSession();
+		String name = (String) session.getAttribute("ssVar");
+		session.setAttribute("ssVar", name);
+		
+		
 		ModelAndView mav = new ModelAndView();
 		List<UserInfoVO> userList = userInfoService.getMembers();
-		List<PostingInfoVO> postingList = userInfoService.getPostings();
 		mav.addObject("userList", userList);
+		List<PostingInfoVO> postingList = userInfoService.getPostings();
 		mav.addObject("postingList", postingList);
+		
+		if(name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+		
 		mav.setViewName("Tp_firstView");
 		return mav;
 	}
 	
 	@RequestMapping(value="/firstView")
-	public ModelAndView first() {
+	public ModelAndView first(HttpServletRequest request) throws Exception {
+		
+		HttpSession session = request.getSession();
+		String name = (String) session.getAttribute("ssVar");
+		session.setAttribute("ssVar", name);
+
 		ModelAndView mav = new ModelAndView();
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		mav.addObject("userList", userList);
 		List<PostingInfoVO> postingList = userInfoService.getPostings();
 		mav.addObject("postingList", postingList);
-		mav.setViewName("Tp_firstView");
-		return mav;
-	}
-	
-	@RequestMapping(value="/loginMainView")
-	public ModelAndView loginFirst(@RequestParam("id") String user_id) {
-		ModelAndView mav = new ModelAndView();
-		List<PostingInfoVO> postingList = userInfoService.getPostings();
-		mav.addObject("postingList", postingList);
-		UserInfoVO userInfo = userInfoService.getUser(user_id);
-		mav.addObject("userInfo", userInfo);
-		mav.setViewName("Tp_loginMainView");
 		
+		if(name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+		
+		mav.setViewName("Tp_firstView");
 		return mav;
 	}
 	/*=========== 기본 화면 ============*/
@@ -96,6 +108,7 @@ public class MybatisController {
 	/*=========== 로그인 화면 ============*/
 	@RequestMapping("/loginView")
 	public ModelAndView login() {
+		
 		ModelAndView mav = new ModelAndView();
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		mav.addObject("userList", userList);
@@ -103,20 +116,46 @@ public class MybatisController {
 		return mav;
 	}
 	@RequestMapping("/user_login")
-	public ModelAndView main(@RequestParam("user_id") String user_id, @RequestParam("user_password") String user_password) {
+	public ModelAndView main(HttpServletRequest request, @RequestParam("user_id") String user_id, @RequestParam("user_password") String user_password) throws Exception {
+		
+		HttpSession session = request.getSession();
+		//String name = (String) session.getAttribute("ssVar");
+		String name = user_id;
+		session.setAttribute("ssVar", name);
+		
 		ModelAndView mav = new ModelAndView();
+		List<UserInfoVO> userList = userInfoService.getMembers();
+		mav.addObject("userList", userList);
 		List<PostingInfoVO> postingList = userInfoService.getPostings();
 		mav.addObject("postingList", postingList);
 		UserInfoVO userInfo = userInfoService.getUser(user_id);
 		mav.addObject("userInfo", userInfo);
-		mav.setViewName("Tp_loginMainView");
+		mav.setViewName("Tp_firstView");
 		return mav;
 	}
 	/*=========== 로그인 화면 ============*/
 	
+	/*=========== 로그아웃 ============*/
+	@RequestMapping("/user_loginOut")
+	public ModelAndView loginOut(HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		
+		ModelAndView mav = new ModelAndView();
+		List<UserInfoVO> userList = userInfoService.getMembers();
+		mav.addObject("userList", userList);
+		List<PostingInfoVO> postingList = userInfoService.getPostings();
+		mav.addObject("postingList", postingList);
+
+		mav.setViewName("Tp_firstView");
+		return mav;
+	}
+	/*=========== 로그아웃 ============*/
+	
 	/*=========== 회원가입 화면 ============*/
 	@RequestMapping(value = "/userRegist")
 	public ModelAndView userRegist() {
+		
 		ModelAndView mav = new ModelAndView();
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		mav.addObject("userList", userList);
@@ -135,12 +174,16 @@ public class MybatisController {
 		map.put("user_id", user_id); map.put("user_password", user_password); map.put("user_postCode", sample4_postcode); map.put("user_roadAddress", sample4_roadAddress);
 		map.put("user_jibunAddress", sample4_jibunAddress); map.put("user_detailAddress", sample4_detailAddress); map.put("user_name", user_name); map.put("user_gender", user_gender);
 		map.put("user_birthday_year", user_birthday_year); map.put("user_birthday_month", user_birthday_month); map.put("user_birthday_day", user_birthday_day);
-		map.put("user_email", user_email); map.put("user_phone", user_phone); map.put("user_date", new Date());
-		boolean check = userInfoService.addUserInfo(map);
+		map.put("user_email", user_email); map.put("user_phone", user_phone); map.put("user_date", new Date()); map.put("user_picture", "");
+		userInfoService.addUserInfo(map);
 		userInfoService.addUserPopup(user_id);
-		mav.addObject("check", check);
 		mav.addObject("user_name", user_name);
-		mav.setViewName("Tp_userRegistResult");
+		
+		List<UserInfoVO> userList = userInfoService.getMembers();
+		List<PostingInfoVO> postingList = userInfoService.getPostings();
+		mav.addObject("userList", userList);
+		mav.addObject("postingList", postingList);
+		mav.setViewName("Tp_firstView");
 		return mav;
 	}
 	/*=========== 회원가입 화면 ============*/
@@ -391,7 +434,7 @@ public class MybatisController {
 	}
 	/*=========== 이용방법 화면 ============*/
 	
-	/*=========== 회원가입 및 로그인 화면 ============*/
+	/*=========== 회원가입 및 로그인 가이드 화면 ============*/
 	@RequestMapping(value="/userRegistAndLogin")
 	public ModelAndView UserRistAndLogin() {
 		ModelAndView mav = new ModelAndView();
@@ -402,11 +445,16 @@ public class MybatisController {
 	
 	/*=========== 팝업 창 톡톡 화면 ============*/
 	@RequestMapping(value="/popup")
-	public ModelAndView Popup(@RequestParam("user_id") String user_id) {
+	public ModelAndView Popup(HttpServletRequest request) throws Exception {
+		
+		HttpSession session = request.getSession();
+		String name = (String) session.getAttribute("ssVar");
+		session.setAttribute("ssVar", name);
+		
 		ModelAndView mav = new ModelAndView();
-		int popupNumber = userInfoService.getPopupNumber(user_id); 
+		int popupNumber = userInfoService.getPopupNumber(name); 
 		List<PopupChatInfoVO> popupChatList = userInfoService.getPopupChats(popupNumber);
-		mav.addObject("user_id", user_id);
+		mav.addObject("user_id", name);
 		mav.addObject("popupChatList", popupChatList);
 		mav.setViewName("Tp_popup");
 		return mav;

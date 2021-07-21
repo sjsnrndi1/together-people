@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<% String userName = request.getParameter("ssVar"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +39,21 @@
 		const popup = document.querySelector('#popup');
 	  popup.classList.add('hide');
 	}
-	
+	function showPostingPopup(hasFilter) {
+		const popup = document.querySelector('#postingPopup');
+	  
+		if (hasFilter) {
+	  		popup.classList.add('has-filter');
+	  	} else {
+	  		popup.classList.remove('has-filter');
+	  	}
+	  
+	  	popup.classList.remove('hide');
+	}
+	function closePostingPopup() {
+		const popup = document.querySelector('#postingPopup');
+	  	popup.classList.add('hide');
+	}
 	function check(){
 		if(userPostingRegist.ct_ti.value == ""){
 			alert("제목을 입력해주세요.");
@@ -52,8 +67,25 @@
 			return true;
 		}
 	}
-	function popup(){
+	function login_before_popup() {
 		alert("로그인 후 이용해주세요.");	
+	}
+	function login_after_popup() {
+		var popupWindow = "";
+		var fr = document.getElementById("popupForm");
+		
+		var url = "popup";
+        var name = "popup test";
+        var option = "width = 450, height = 800, top = 100, left = 200, location = no, resizable = no";
+        
+        popupWindow = window.open("", name, option);
+        popupWindow.focus();
+        
+        fr.action = url;
+        fr.method = "post";
+        fr.target = name;
+        fr.submit();
+        fr.target = "_self";
 	}
 </script>
 <style>
@@ -118,12 +150,21 @@
 		padding-top : 1%;
 		color : #696969;
 	}
+	.postingView a {
+		float : right;
+		text-decoration : none;
+	}
+	.postingView a:link { text-decoration : none; color : #696969;}
+	.postingView a:visited { text-decoration : none;color : #696969;}
+	.postingView a:active {text-decoration : none; color : #2F4F4F; }
+	.postingView a:hover { text-decoration : none; color : #2F4F4F;}
 	.floorBar {
 		position : absolute;
 	}
 </style>
 </head>
 <body>
+	<input type = "hidden" value = "${ssVar}" id = "user_id_session" name = "user_id_session"/>
 	<div class = "titleBar">
 		<div class="dropmenu">
 			<ul>
@@ -155,8 +196,16 @@
 					</ul>
 				</li>
 				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-				<li><a href="loginView">로그인</a></li>
-				<li><a href="userRegist">회원가입</a></li>
+				<c:choose>
+					<c:when test = "${ssVar eq null }">
+						<li><a href="loginView">로그인</a></li>
+						<li><a href="userRegist">회원가입</a></li>
+					</c:when>
+					<c:when test = "${ssVar ne null }">
+						<li><a href="myPageView">${userInfo.user_name }님</a></li>
+						<li><a href="user_loginOut">로그아웃</a></li>
+					</c:when>
+				</c:choose>
 				<li><a href ="#" class="openmenu" onclick='openNav()' style = "font-size : 100%;">전체메뉴</a></li>
 			</ul>
 		</div>
@@ -173,7 +222,27 @@
 	
 	<div class = "postingView">
 		포스팅<small style = "font-size : 70%;">(당신의 일상을 모두와 자유롭게 공유하세요.)</small>
+		<c:if test = "${ssVar ne null }">
+			<a href = "#" onclick = "showPostingPopup(false)">작성</a>
+		</c:if>
 	</div>
+	
+	<form action = "user_posting_regist" name = "userPostingRegist" method = "POST" onsubmit = "return check()">
+		<div id="postingPopup" class="hide">
+			<div class="content">
+				<p style = "width : 100%;">
+					<input type = "hidden" value = "${userInfo.user_id }" id = "user_posting_id" name = "user_posting_id" />
+					<input type = "text" maxlength = "20" value = "" placeholder = "포스팅 제목" class = "content-title" id = "ct_ti" name = "ct_ti">
+					<button type = "button" class = "closeBtn" style = "margin : 0; float : right;" onclick="closePostingPopup()">x</button>
+					<input type = "file" value = "이미지 등록"  id = "ct_pt" name = "ct_pt" accept = "image/*" style = "float : right; margin-right : 2%; width : 37%;"/>
+				</p>
+				<textarea rows = "6" cols = "68" class = "content-content" id = "ct_ct" name = "ct_ct"></textarea>
+			<hr>
+			<input type = "submit" value = "등록">
+			</div>
+		</div>
+	</form>
+	
 	<div class = "contentBar">
 			<!-- <div style = "width : 6%; font-size : 110%; float : left; text-align : right;">
 				<a href = "#" style = "text-decoration: none;">더보기 ></a>
@@ -269,11 +338,24 @@
 			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/gomapHoverImg.png'" 
 			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/gomapImg.PNG'" alt = "오시는 길"/></a>
 		</div>
-		<div id = "submenu-chat-app" class = "submenu-chat-app">
-			<img src = "http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG" 
-			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
-			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" onclick = "popup()" id = "chat-app" alt = "채팅"/>
-		</div>
+		<form name = "popupForm" id = "popupForm" method = "POST">
+			<c:choose>
+				<c:when test = "${ssVar eq null }">
+					<div id = "submenu-chat-app" class = "submenu-chat-app">
+						<img src = "http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG" 
+						onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
+						onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" onclick = "login_before_popup()" id = "chat-app" alt = "채팅"/>
+					</div>
+				</c:when>
+				<c:when test = "${ssVar ne null }">
+					<div id = "submenu-chat-app" class = "submenu-chat-app">
+						<img src = "http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG" 
+						onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
+						onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" onclick = "login_after_popup()" id = "chat-app" alt = "채팅"/>
+					</div>
+				</c:when>
+			</c:choose>
+		</form>
 		<div class = "submenu-top-app" onclick = "location.href='firstView'">
 			∧<br>top
 		</div>

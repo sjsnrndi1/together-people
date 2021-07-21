@@ -26,12 +26,6 @@ select * from userInfo
 INSERT INTO userInfo VALUES(userInfo_seq.nextval, 'admin', 'admin', '38455', '경북 경산시 진량읍 대구대로 299-31', '경북 경산시 진량읍 평사리 430-8', '아이파크원룸 210호', 
 '관리자', '남성', '1996', '2', '1', 'sjsnrndi12@naver.com', '6362', sysdate, 'null');
 
-INSERT INTO userInfo VALUES(userInfo_seq.nextval, 'sjsnrndi12', 'tkfkd465!@', '38455', '경북 경산시 진량읍 대구대로 299-31', '경북 경산시 진량읍 평사리 430-8', '아이파크원룸 210호', 
-'김민성', '남성', '1996', '2', '1', 'sjsnrndi12@naver.com', '2098', sysdate);
-
-INSERT INTO userInfo VALUES(userInfo_seq.nextval, 'sjsnrndi1', 'tkfkd465!@', '38455', '경북 경산시 진량읍 대구대로 299-31', '경북 경산시 진량읍 평사리 430-8', '아이파크원룸 210호', 
-'김민성', '남성', '1996', '2', '1', 'sjsnrndi12@naver.com', '20986362', sysdate);
-
 CREATE TABLE postingInfo(
 	postingNumber NUMBER PRIMARY KEY,
 	userId VARCHAR2(100),
@@ -45,16 +39,9 @@ CREATE TABLE postingInfo(
 	
 )
 
-select * from postingInfo
-
 CREATE SEQUENCE postingNumber_seq;
 
-INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'sjsnrndi12', '김민성', '포스팅 제목1', 'ㅎㅇ1', 'siba.png', 0, 0, sysdate);
-INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'sjsnrndi12', '김민성', '포스팅 제목2', 'ㅎㅇ2', 0, 0, sysdate);
-INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'sjsnrndi12', '김민성', '포스팅 제목3', 'ㅎㅇ3', 0, 0, sysdate);
-INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'sjsnrndi1', '김민성', '포스팅 제목4', 'ㅎㅇ4', 0, 0, sysdate);
-INSERT INTO postingInfo VALUES(postingNumber_seq.nextval, 'admin', '김민성', '포스팅 제목5', 'ㅎㅇ5', 0, 0, sysdate);
-COMMIT
+select * from postingInfo
 
 create table popupInfo (
 	popupNumber NUMBER NOT NULL,
@@ -62,16 +49,15 @@ create table popupInfo (
 	
 	PRIMARY KEY(popupNumber, userId)
 )
-
 create sequence popupNumber_seq
 
-insert into popupInfo values(popupNumber_seq.nextval, 'admin');
+select * from popupInfo
 
 create table popupChatInfo (
 	popupChatNumber NUMBER NOT NULL,
 	popupNumber NUMBER NOT NULL,
 	userId VARCHAR2(100) NOT NULL,
-	userChatContent VARCHAR2(2000) NOT NULL,
+	userChatContent VARCHAR2(2000),
 	adminChatContent VARCHAR2(2000),
 	chat_date DATE NOT NULL,
 	
@@ -80,8 +66,7 @@ create table popupChatInfo (
 create sequence popupChatNumber_seq
 
 select * from popupChatInfo
-insert into popupChatInfo values(popupChatNumber_seq.nextval, 1, 'admin', '안녕하세요. 뭐 좀 물어볼려고요.', '네. 말씀하세요.', sysdate);
-insert into popupChatInfo values(popupChatNumber_seq.nextval, 1, 'admin', '안녕하세요. 뭐 좀 물어볼려고요.', null , sysdate);
+
 
 
 

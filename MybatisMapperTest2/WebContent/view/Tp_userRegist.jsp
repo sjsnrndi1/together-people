@@ -195,6 +195,7 @@
 			userRegistInfo.user_phone.focus();
 			return false;
 		} else {
+			alert(userRegistInfo.user_name.value + "님\n회원가입을 되셨습니다.\n로그인 후 이용 부탁드리겠습니다.");
 			return true;
 		}
 	}
@@ -301,7 +302,7 @@
 				<li><a href="userTpView">가이드</a>
 					<ul>
 						<li><a href="userTpView">이용방법</a></li>
-						<li><a href="#">카테고리정보</a></li>
+						<li><a href="userRegistAndLogin">회원가입 및 로그인</a></li>
 					</ul>
 				</li>
 				<li><a href="#">커뮤니티</a>

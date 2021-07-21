@@ -68,9 +68,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 	
 	/*===========유저 정보 저장하는 서비스============*/
 	@Override
-	public boolean addUserInfo(HashMap<Object, Object> map) {
-		boolean check = userInfoDAO.addUser(map);
-		return check;
+	public void addUserInfo(HashMap<Object, Object> map) {
+		userInfoDAO.addUser(map);
 	}
 	/*===========유저 정보 저장하는 서비스============*/
 	
