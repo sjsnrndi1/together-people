@@ -15,7 +15,7 @@
 		<!-- resultMap = "PopupChatResultMap" -->
 		
 		<select id = "getPopupChats" parameterType = "int" resultType = "jung.spring.vo.PopupChatInfoVO">
-			SELECT * FROM popupChatInfo WHERE popupNumber = #{popupNumber}
+			SELECT * FROM popupChatInfo WHERE popupNumber = #{popupNumber} ORDER BY popupChatNumber
 		</select>
 		
 		<insert id = "addPopupUserChat" parameterType = "map">

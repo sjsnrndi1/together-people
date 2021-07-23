@@ -11,51 +11,60 @@
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/submenubar.css"> <!-- 우측서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/popupChatbar.css"> <!-- 팝업 창 화면바 -->
 </head>
+<style>
+	.popup-chat-content-frame {
+		overflow-x : hidden;
+	}
+</style>
 <body>
 	<input type = "hidden" value = "${ssVar}"/>
-	<c:set var="now" value="<%= new java.util.Date() %>" /> <!-- 날짜 고치기 -->
 	<div class = "popup-frame"> 
 		<div class = "popup-chat-title">
 			Together people 톡
 		</div>
 		<div class = "popup-chat-content-frame">
-			
-			<c:forEach items = "${popupChatList }" var = "popupChat">
-				<div class = "popup-fulltime-frame">
-					<div class = "popup-fulltime-line-left"></div>
-					<fmt:formatDate var = "nowdate" value="${popupChat.chat_date}" type = "DATE" pattern = "yyyy-MM-dd"/>
-					<!-- <fmt:formatDate var = "nowdate" value="${now}" type = "DATE" pattern = "yyyy-MM-dd"/> -->
-					${nowdate }
-					<div class = "popup-fulltime-line-right"></div>
-				</div>
-				<c:if test = "${popupChat.userChatContent ne null }">
-					<div class = "popup-chat-user-frame">
-						<div class = "popup-chat-user-frame-right">
-							<div class = "popup-chat-user-content">
-								${popupChat.userChatContent }
-							</div>
+			<c:forEach items = "${popupChatList }" var = "popupChat" varStatus = "status">
+					<c:if test = "${yMd_list_ResultMap.yMd_Result_Date[status.index] ne 'noDate' }">
+						<div class = "popup-fulltime-frame">
+							<div class = "popup-fulltime-line-left"></div>
+								${yMd_list_ResultMap.yMd_Result_Date[status.index] }
+							<div class = "popup-fulltime-line-right"></div>
 						</div>
-						<div class = "popup-chat-user-time-frame-right">
-							<div class = "popup-chat-user-time-content">
-								<fmt:formatDate value="${popupChat.chat_date}" pattern="a h:mm" />
+					</c:if>
+					<c:if test = "${popupChat.userChatContent ne null }">
+						<fmt:formatDate var = "nowDate" value="${popupChat.chat_date}" pattern="yyyy-MM-dd" />
+						<c:if test = "${nowDate eq yMd_listMap.yMdDate[status.index]}">
+							<div class = "popup-chat-user-frame">
+								<div class = "popup-chat-user-frame-right">
+									<div class = "popup-chat-user-content">
+										${popupChat.userChatContent }
+									</div>
+								</div>
+								<div class = "popup-chat-user-time-frame-right">
+									<div class = "popup-chat-user-time-content">
+										<fmt:formatDate value="${popupChat.chat_date}" pattern="a h:mm" />
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
-				</c:if>
-				<c:if test = "${popupChat.adminChatContent ne null }">
-					<div class = "popup-chat-admin-frame">
-						<div class = "popup-chat-admin--frame-left">
-							<div class = "popup-chat-admin-content">
-								${popupChat.adminChatContent }
+						</c:if>
+					</c:if>
+					<c:if test = "${popupChat.adminChatContent ne null }">
+						<fmt:formatDate var = "nowDate" value="${popupChat.chat_date}" pattern="yyyy-MM-dd" />
+						<c:if test = "${nowDate eq yMd_listMap.yMdDate[status.index]}">
+							<div class = "popup-chat-admin-frame">
+								<div class = "popup-chat-admin--frame-left">
+									<div class = "popup-chat-admin-content">
+										${popupChat.adminChatContent }
+									</div>
+								</div>
+								<div class = "popup-chat-admin-time-frame-left">
+									<div class = "popup-chat-admin-time-content">
+										<fmt:formatDate value="${popupChat.chat_date}" pattern="a h:mm" />
+									</div>
+								</div>
 							</div>
-						</div>
-						<div class = "popup-chat-admin-time-frame-left">
-							<div class = "popup-chat-admin-time-content">
-								<fmt:formatDate value="${popupChat.chat_date}" pattern="a h:mm" />
-							</div>
-						</div>
-					</div>
-				</c:if>
+						</c:if>
+					</c:if>
 			</c:forEach>
 		</div>
 		

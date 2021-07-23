@@ -37,8 +37,25 @@
 		const popup = document.querySelector('#popup');
 	  popup.classList.add('hide');
 	}
-	function popup(){
+	function login_before_popup() {
 		alert("로그인 후 이용해주세요.");	
+	}
+	function login_after_popup() {
+		var popupWindow = "";
+		var fr = document.getElementById("popupForm");
+		
+		var url = "popup";
+        var name = "popup test";
+        var option = "width = 450, height = 800, top = 100, left = 200, location = no, resizable = no";
+        
+        popupWindow = window.open("", name, option);
+        popupWindow.focus();
+        
+        fr.action = url;
+        fr.method = "post";
+        fr.target = name;
+        fr.submit();
+        fr.target = "_self";
 	}
 </script>
 <style>
@@ -70,6 +87,7 @@
 </style>
 </head>
 <body>
+	<input type = "hidden" value = "${ssVar}" id = "user_id_session" name = "user_id_session"/>
 	<div class = "titleBar">
 		<div class="dropmenu">
 			<ul>
@@ -101,8 +119,16 @@
 					</ul>
 				</li>
 				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-				<li><a href="loginView">로그인</a></li>
-				<li><a href="userRegist">회원가입</a></li>
+				<c:choose>
+					<c:when test = "${ssVar eq null }">
+						<li><a href="loginView">로그인</a></li>
+						<li><a href="userRegist">회원가입</a></li>
+					</c:when>
+					<c:when test = "${ssVar ne null }">
+						<li><a href="myPageView">${userInfo.user_name }님</a></li>
+						<li><a href="user_loginOut">로그아웃</a></li>
+					</c:when>
+				</c:choose>
 				<li><a href ="#" class="openmenu" onclick='openNav()' style = "font-size : 100%;">전체메뉴</a></li>
 			</ul>
 		</div>
@@ -177,11 +203,24 @@
 			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/gomapHoverImg.png'" 
 			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/gomapImg.PNG'" alt = "오시는 길"/></a>
 		</div>
-		<div id = "submenu-chat-app" class = "submenu-chat-app">
-			<img src = "http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG" 
-			onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
-			onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'"  onclick = "popup()" id = "chat-app" alt = "채팅"/>
-		</div>
+		<form name = "popupForm" id = "popupForm" method = "POST">
+			<c:choose>
+				<c:when test = "${ssVar eq null }">
+					<div id = "submenu-chat-app" class = "submenu-chat-app">
+						<img src = "http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG" 
+						onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
+						onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" onclick = "login_before_popup()" id = "chat-app" alt = "채팅"/>
+					</div>
+				</c:when>
+				<c:when test = "${ssVar ne null }">
+					<div id = "submenu-chat-app" class = "submenu-chat-app">
+						<img src = "http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG" 
+						onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
+						onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" onclick = "login_after_popup()" id = "chat-app" alt = "채팅"/>
+					</div>
+				</c:when>
+			</c:choose>
+		</form>
 		<div class = "submenu-top-app" onclick = "location.href='userTpView'">
 			∧<br>top
 		</div>

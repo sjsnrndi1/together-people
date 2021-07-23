@@ -1,7 +1,10 @@
 	body {
 		margin : 0;
 		padding : 0;
-		overflow : hidden;
+		-ms-overflow-style: none;
+	}
+	::-webkit-scrollbar {
+		display: none;
 	}
 	.popup-frame {
 		width : 450px;
@@ -19,10 +22,12 @@
 	.popup-chat-content-frame {
 		padding-top : 10px; 
 		height : 84%; 
-		overflow-y : scroll; 
-		overflow : hidden; 
 		background-color : #FFFAFA;
 		width : 100%;
+		overflow-y : scroll;
+	}
+	.popup-chat-content-frame::-webkit-scrollbar {
+	    display: none;
 	}
 	.popup-fulltime-frame {
 		text-align : center;

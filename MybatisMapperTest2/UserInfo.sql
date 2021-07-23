@@ -74,8 +74,6 @@ select * from popupChatInfo
 
 
 
-
-
 CREATE TABLE postingRecommandInfo(
 	postingRecommandNumber NUMBER PRIMARY KEY,
 	postingNumber NUMBER,
