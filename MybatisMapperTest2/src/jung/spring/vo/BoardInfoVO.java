@@ -3,24 +3,14 @@ package jung.spring.vo;
 import java.util.Date;
 
 public class BoardInfoVO {
-	private int boardRegistNumber;
 	private int boardNumber;
 	private String boardUserId;
 	private String boardTitle;
 	private String boardWriter;
 	private String boardContent;
 	private Date boardDate;
-	private int boardJoinUserNumber;
 	private String boardSubject;
-	private String boardFavorites;
-	private String boardJoins;
 	
-	public int getBoardRegistNumber() {
-		return boardRegistNumber;
-	}
-	public void setBoardRegistNumber(int boardRegistNumber) {
-		this.boardRegistNumber = boardRegistNumber;
-	}
 	public int getBoardNumber() {
 		return boardNumber;
 	}
@@ -57,28 +47,10 @@ public class BoardInfoVO {
 	public void setBoardDate(Date boardDate) {
 		this.boardDate = boardDate;
 	}
-	public int getBoardJoinUserNumber() {
-		return boardJoinUserNumber;
-	}
-	public void setBoardJoinUserNumber(int boardJoinUserNumber) {
-		this.boardJoinUserNumber = boardJoinUserNumber;
-	}
 	public String getBoardSubject() {
 		return boardSubject;
 	}
 	public void setBoardSubject(String boardSubject) {
 		this.boardSubject = boardSubject;
-	}
-	public String getBoardFavorites() {
-		return boardFavorites;
-	}
-	public void setBoardFavorites(String boardFavorites) {
-		this.boardFavorites = boardFavorites;
-	}
-	public String getBoardJoins() {
-		return boardJoins;
-	}
-	public void setBoardJoins(String boardJoins) {
-		this.boardJoins = boardJoins;
 	}
 }

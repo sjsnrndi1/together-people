@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
@@ -62,6 +63,76 @@
 	.floorBar {
 		position : absolute;
 	}
+	.commu_frame {
+		width : 50%;
+		height : 600px;
+		margin-top : 1%;
+		margin-left : 26%;
+		color : #696969;
+	}
+	.commu_title_frame {
+		width : 99.3%;
+		height : 7.4%;
+		margin : 2px;
+		border-top : 2px solid #BC8F8F;
+		border-bottom : 2px solid #BC8F8F;
+	}
+	.commu_content_frame {
+		width : 99.3%;
+		height : 85%;
+		margin : 2px;
+		border-bottom : 2px solid #BC8F8F;
+	}
+	.commu_footer_frame {
+		width : 99.3%;
+		height : 5%;
+		margin : 2px;
+	}
+	.commu_title_table {
+		width : 100%;
+		text-align : center;
+		padding-top : 10px;
+	}
+	.commu_board_table {
+		width : 99.3%;
+		text-align : center;
+		padding-top : 10px;
+		margin : 2px;
+		height : 9.1%;
+		border-bottom : 1px solid #BC8F8F;
+	}
+	
+	.commu_board_table a:link { color: #696969; text-decoration: none;}
+	.commu_board_table a:visited { color: #696969; text-decoration: none;}
+ 	.commu_board_table a:hover { color: black; text-decoration: none;}
+	.commu_footer_frame a:link { color: #696969; text-decoration: none;}
+	.commu_footer_frame a:visited { color: #696969; text-decoration: none;}
+ 	.commu_footer_frame a:hover { color: black; text-decoration: none;}
+ 	
+ 	.commu_left_frame {
+ 		margin : 2px;
+ 		float : left;
+ 		width : 19%;
+ 		height : 80%;
+ 		border : 1px solid red;
+ 		text-align : right;
+ 	}
+ 	.commu_number_frame{	
+ 		margin : 2px;
+ 		float : left;
+ 		width : 60%;
+ 		height : 80%;
+ 		border : 1px solid red;
+ 		text-align : center;
+ 	}
+ 	.commu_right_frame{
+ 		margin : 2px;
+ 		float : left;
+ 		width : 19%;
+ 		height : 80%;
+ 		border : 1px solid red;
+ 		text-align : left;
+ 	}
 </style>
 </head>
 <body>
@@ -84,7 +155,7 @@
 				</li>
 				<li><a href="communityView">커뮤니티</a>
 					<ul>
-						<li><a href="#">자유게시판</a></li>
+						<li><a href="communityView">자유게시판</a></li>
 						<li><a href="#">참여게시판</a></li>
 						<li><a href="#">이용후기</a></li>
 					</ul>
@@ -120,6 +191,59 @@
 			<a href="#">고객지원</a>
 		</div>					
 	</div>
+	
+	
+	
+	<div class = "commu_frame">
+		<div class = "commu_title_frame">
+			<table class = "commu_title_table">
+				<thead>
+					<tr>
+						<td style = "width : 5%; border-right : 1px solid #BC8F8F;">No.</td>
+						<td style = "width : 60%; border-right : 1px solid #BC8F8F;">제목</td>
+						<td style = "width : 12%; border-right : 1px solid #BC8F8F;">작성자</td>
+						<td style = "width : 10%; border-right : 1px solid #BC8F8F;">작성일</td>
+						<td style = "width : 10%;">조회수</td>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div class = "commu_content_frame">
+			<c:forEach items = "${boardList }" var = "board" varStatus = "status">
+				<c:if test = "${board.boardSubject eq '자유' }">
+					<table class = "commu_board_table">
+						<thead>
+							<tr>
+								<td style = "width : 5%;">${fn:length(boardList) - status.index}</td>
+								<td style = "width : 60%;"><a href = "communityContentView?boardNumber=${board.boardNumber }">${board.boardTitle}</a></td>
+								<td style = "width : 12%;">${board.boardWriter}</td>
+								<fmt:formatDate var = "date" value="${board.boardDate}" pattern="yyyy-MM-dd" />
+								<td style = "width : 10%;">${date}</td>
+								<td style = "width : 10%;">조회수</td>
+							</tr>
+						</thead>
+					</table>
+				</c:if>
+			</c:forEach>
+		</div>
+		<div class = "commu_footer_frame">
+			<div class = "commu_left_frame">
+				<a href = "#"> ◀ </a>
+			</div>
+			<div class = "commu_number_frame" >
+				<table>
+					<tr>
+						<td style = "border-right : 1px solid #BC8F8F;">1</td>
+					</tr>
+				</table>
+			</div>
+			<div class = "commu_right_frame">
+				<a href = "#"> ▶ </a>
+			</div>
+		</div>
+	</div>
+	
+	
 	
 	<div class = "submenu-frame">
 		<div class = "submenu-phone-app">

@@ -4,72 +4,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace = "jung.spring.mybatis.BoardMapper">
 		<resultMap type = "jung.spring.vo.BoardInfoVO" id = "BoardResultMap">			
-			<result property = "boardRegistNumber" column = "BOARDREGISTNUMBER"/>
 			<result property = "boardNumber" column = "BOARDNUMBER"/>
 			<result property = "boardUserId" column = "BOARDUSERID"/>
 			<result property = "boardTitle" column = "BOARDTITLE"/>
 			<result property = "boardWriter" column = "BOARDWRITER"/>
 			<result property = "boardContent" column = "BOARDCONTENT"/>
 			<result property = "boardDate" column = "BOARDDATE"/>
-			<result property = "boardJoinUserNumber" column = "BOARDJOINUSERNUMBER"/>
 			<result property = "boardSubject" column = "BOARDSUBJECT"/>
-			<result property = "boardFavorites" column = "BOARDFAVORITES"/>
-			<result property = "boardJoins" column = "BOARDJOINS"/>
 		</resultMap>
 		
 		<select id = "getBoards" resultType = "jung.spring.vo.BoardInfoVO">
-			SELECT * FROM boardInfo ORDER BY boardRegistNumber DESC
+			SELECT * FROM boardInfo ORDER BY boardNumber DESC
 		</select>
-		
-		<select id = "getMakeBoard" resultType = "jung.spring.vo.BoardInfoVO" parameterType = "string">
-			SELECT * FROM boardInfo WHERE boardUserId = #{user_id}
-		</select>
-		
-		<select id = "getBoardOthers" resultType = "jung.spring.vo.BoardInfoVO" parameterType = "jung.spring.vo.BoardInfoVO">
-			SELECT * FROM boardInfo WHERE boardSubject = #{boardSubject} ORDER BY boardRegistNumber DESC
-		</select>
-		
-		<update id = "modifyBoardJoinUserNumber" parameterType = "jung.spring.vo.BoardInfoVO">
-			UPDATE boardInfo SET boardJoinUserNumber = #{boardJoinUserNumber} WHERE boardNumber = #{boardNumber}
-		</update>
-		
-		<select id = "getboard" resultType = "jung.spring.vo.BoardInfoVO" parameterType = "int">
+		<select id = "getBoard" parameterType = "int" resultType = "jung.spring.vo.BoardInfoVO">
 			SELECT * FROM boardInfo WHERE boardNumber = #{boardNumber}
 		</select>
-		
-		<insert id = "addBoard" parameterType = "jung.spring.vo.BoardInfoVO">
-			INSERT INTO boardInfo VALUES(#{boardRegistNumber}, boardNumber_seq.nextval, #{boardUserId}, #{boardTitle}, #{boardWriter}, #{boardContent}, #{boardDate}, #{boardJoinUserNumber}, #{boardSubject}, #{boardFavorites}, #{boardJoins})
-		</insert>
-		
-		<update id = "modifyBoard" parameterType = "jung.spring.vo.BoardInfoVO">
-			UPDATE boardInfo SET boardTitle = #{boardTitle}, boardContent = #{boardContent}, boardDate = #{boardDate} WHERE boardNumber = #{boardNumber}
-		</update>
-		
-		<update id = "modifyFavoriteBoard" parameterType = "jung.spring.vo.BoardInfoVO">
-			UPDATE boardInfo SET boardFavorites = #{boardFavorites} WHERE boardNumber = #{boardNumber}
-		</update>
-		
-		<update id = "modifyBoardNumber" parameterType = "jung.spring.vo.BoardInfoVO">
-			UPDATE boardInfo SET boardRegistNumber = #{boardRegistNumber} WHERE boardNumber = #{boardNumber}
-		</update>
-		
-		<update id = "boardJoinUserNumberDown" parameterType = "jung.spring.vo.BoardInfoVO">
-			UPDATE boardInfo SET boardJoinUserNumber = #{boardJoinUserNumber} WHERE boardNumber = #{boardNumber}
-		</update>
-
-		<update id = "modifyJoinBoard" parameterType = "jung.spring.vo.BoardInfoVO">
-			UPDATE boardInfo SET boardJoins = #{boardJoins} WHERE boardNumber = #{boardNumber}
-		</update>
-		
-		<delete id = "deleteBoard" parameterType = "int">
-			DELETE boardInfo WHERE boardNumber = #{boardNumber}
-		</delete>
-		
-		<delete id = "userSecession" parameterType = "string">
-			DELETE boardInfo WHERE boardUserId = #{boardUserId}
-		</delete>
-
-		<delete id = "adminBoardDelete" parameterType = "int">
-			DELETE boardInfo WHERE boardNumber = #{boardNumber}
-		</delete>
 	</mapper>

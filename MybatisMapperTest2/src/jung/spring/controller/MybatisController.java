@@ -28,13 +28,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import jung.spring.svc.UserInfoService;
-import jung.spring.vo.AlarmInfoVO;
 import jung.spring.vo.BoardInfoVO;
-import jung.spring.vo.BoardJoinUserInfoVO;
 import jung.spring.vo.ChatInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
-import jung.spring.vo.QnaInfoVO;
 import jung.spring.vo.UserInfoVO;
 
 @Controller
@@ -44,40 +41,33 @@ public class MybatisController {
 	@Autowired
 	private UserInfoService userInfoService;
 
-	private String togetherPeopleTitle = "http://sjsnrndi12.dothome.co.kr/images/bg.png";
-	private String togetherPeopleBoard = "http://sjsnrndi12.dothome.co.kr/images/board.png";
-	private String togetherPeopleMypage = "http://sjsnrndi12.dothome.co.kr/images/mypage.png";
-	private String togetherPeopleNotice = "http://sjsnrndi12.dothome.co.kr/images/notice.PNG";
-	private String togetherPeopleManagement = "http://sjsnrndi12.dothome.co.kr/images/management.png";
-	private String alarmClose = "http://sjsnrndi12.dothome.co.kr/images/alarm.png";
-	
 	/* =========== session ============ */
 	public String httpServletRequest(HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession();
 		String name = (String) session.getAttribute("ssVar");
 		session.setAttribute("ssVar", name);
-		
+
 		return name;
 	}
-	
+
 	public void httpServletRequest(HttpServletRequest request, String user_id) throws Exception {
 		HttpSession session = request.getSession();
 		String name = user_id;
 		session.setAttribute("ssVar", name);
 	}
-	
+
 	public void httpServletRequestOut(HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession();
 		session.invalidate();
 	}
 	/* =========== session ============ */
-	
+
 	/* =========== 기본 화면 ============ */
 	@RequestMapping(value = "/")
 	public ModelAndView home(HttpServletRequest request) throws Exception {
 
 		String name = httpServletRequest(request);
-		
+
 		ModelAndView mav = new ModelAndView();
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		mav.addObject("userList", userList);
@@ -97,7 +87,7 @@ public class MybatisController {
 	public ModelAndView first(HttpServletRequest request) throws Exception {
 
 		String name = httpServletRequest(request);
-		
+
 		ModelAndView mav = new ModelAndView();
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		mav.addObject("userList", userList);
@@ -130,7 +120,7 @@ public class MybatisController {
 			@RequestParam("user_password") String user_password) throws Exception {
 
 		httpServletRequest(request, user_id);
-		
+
 		ModelAndView mav = new ModelAndView();
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		mav.addObject("userList", userList);
@@ -146,15 +136,15 @@ public class MybatisController {
 	/* =========== 로그아웃 ============ */
 	@RequestMapping("/user_loginOut")
 	public ModelAndView loginOut(HttpServletRequest request) throws Exception {
-		
+
 		httpServletRequestOut(request);
-		
+
 		ModelAndView mav = new ModelAndView();
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		mav.addObject("userList", userList);
 		List<PostingInfoVO> postingList = userInfoService.getPostings();
 		mav.addObject("postingList", postingList);
-		
+
 		mav.setViewName("Tp_firstView");
 		return mav;
 	}
@@ -276,19 +266,20 @@ public class MybatisController {
 	@RequestMapping(value = "/user_posting_regist")
 	public ModelAndView UserPostingRegist(@RequestParam("ct_ti") String content_title,
 			@RequestParam("ct_ct") String content_content, @RequestParam("ct_pt") File content_picture,
-			@RequestParam("user_posting_id") String user_id, HttpServletRequest request) throws Exception, SocketException, IOException {
-		
+			@RequestParam("user_posting_id") String user_id, HttpServletRequest request)
+			throws Exception, SocketException, IOException {
+
 		String name = httpServletRequest(request);
-		
+
 		ModelAndView mav = new ModelAndView();
 		UserInfoVO userInfo = userInfoService.getUser(user_id);
 		userInfoService.addPosting(content_title, content_content, content_picture, userInfo);
 		String postingNumber = userInfoService.getLastPostingNumber();
-		
+
 		if (name != null) {
 			mav.addObject("userInfo", userInfo);
 		}
-		
+
 		FTPSClient ftps = null;
 		try {
 			ftps = new FTPSClient("TLS", false);
@@ -381,8 +372,8 @@ public class MybatisController {
 		}
 	}
 	/* =========== 포스팅 등록 화면 ============ */
-	
-	/* 수정, 삭제, 추천, 댓글*/
+
+	/* 수정, 삭제, 추천, 댓글 */
 
 	/* =========== 소개(CEO) 화면 ============ */
 	@RequestMapping(value = "/noticeView")
@@ -445,7 +436,7 @@ public class MybatisController {
 	public ModelAndView Popup(HttpServletRequest request) throws Exception {
 
 		String name = httpServletRequest(request);
-		
+
 		ModelAndView mav = new ModelAndView();
 		int popupNumber = userInfoService.getPopupNumber(name);
 		List<PopupChatInfoVO> popupChatList = userInfoService.getPopupChats(popupNumber);
@@ -487,10 +478,10 @@ public class MybatisController {
 
 	/* =========== 팝업 창 톡톡 사용자 입력 ============ */
 	@RequestMapping(value = "/popup_user_chat_input_form")
-	public ModelAndView Popup_user_chat_input_form(@RequestParam("user_chat") String user_chat, @RequestParam("user_id") String user_id,
-			HttpServletRequest request) throws Exception {
+	public ModelAndView Popup_user_chat_input_form(@RequestParam("user_chat") String user_chat,
+			@RequestParam("user_id") String user_id, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		
+
 		String name = httpServletRequest(request);
 		if (name != null) {
 			UserInfoVO userInfo = userInfoService.getUser(name);
@@ -510,16 +501,39 @@ public class MybatisController {
 	@RequestMapping(value = "/communityView")
 	public ModelAndView CommunityView(HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
+
+		String name = httpServletRequest(request);
+		if (name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+		
+		List<BoardInfoVO> boardList = userInfoService.getBoards();
+		
+		mav.addObject("boardList", boardList);
+		mav.setViewName("Tp_communityView");
+		return mav;
+	}
+	/* =========== 커뮤니티 화면 =========== */
+	
+	/* =========== 커뮤니티 게시글 화면 =========== */
+	@RequestMapping(value = "/communityContentView")
+	public ModelAndView CommunityContentView(HttpServletRequest request, @RequestParam("boardNumber") int boardNumber) throws Exception {
+		ModelAndView mav = new ModelAndView();
 		
 		String name = httpServletRequest(request);
 		if (name != null) {
 			UserInfoVO userInfo = userInfoService.getUser(name);
 			mav.addObject("userInfo", userInfo);
 		}
-
-		mav.setViewName("Tp_communityView");
+		
+		List<BoardInfoVO> board = userInfoService.getBoard(boardNumber);
+		mav.addObject("boardTitle", board.get(0).getBoardTitle());
+		mav.addObject("board", board);
+		mav.setViewName("Tp_communityContentView");
 		return mav;
 	}
+	/* =========== 커뮤니티 게시글 화면 =========== */
 	
 	
 	
@@ -530,1051 +544,142 @@ public class MybatisController {
 	
 	
 	
-	/* =========== 게시판 화면 ============ */
-	@RequestMapping(value = "/boardView")
-	public ModelAndView BoardView(@RequestParam("id") String user_id, @RequestParam("subject") String subject) {
-		ModelAndView mav = new ModelAndView();
-		if (subject.equals("all")) {
-			List<BoardInfoVO> boardList = userInfoService.getBoards();
-			mav.addObject("boardList", boardList);
-		} else {
-			List<BoardInfoVO> boardList = userInfoService.getBoardOthers(subject);
-			mav.addObject("boardList", boardList);
-		}
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("subject", subject);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("boardView");
-		return mav;
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * =========== 채팅창 ============
+	 * 
+	 * @RequestMapping(value = "/chat") public ModelAndView Chat(HttpServletResponse
+	 * response, @RequestParam("id") String user_id,
+	 * 
+	 * @RequestParam("number") int boardNumber) { ModelAndView mav = new
+	 * ModelAndView(); UserInfoVO userInfo =
+	 * userInfoService.selectUserPassword(user_id); BoardInfoVO boardInfo =
+	 * userInfoService.getboard(boardNumber); List<ChatInfoVO> chatList =
+	 * userInfoService.getChats(boardNumber); boolean chatJoinCheck = true;
+	 * userInfoService.chatJoin(boardNumber, user_id, chatJoinCheck);
+	 * List<BoardJoinUserInfoVO> boardJoinUserList =
+	 * userInfoService.getBoardJoinUsers(); List<AlarmInfoVO> alarmList =
+	 * userInfoService.getAlarms(); List<AlarmInfoVO> alarms = new
+	 * ArrayList<AlarmInfoVO>(); for (int i = 0; i < alarmList.size(); i++) {
+	 * String[] str = alarmList.get(i).getAlarmYouId().split(","); if
+	 * (str[0].equals(user_id)) { alarms.add(alarmList.get(i)); } }
+	 * mav.addObject("alarms", alarms); mav.addObject("userInfo", userInfo);
+	 * mav.addObject("boardInfo", boardInfo); mav.addObject("chatList", chatList);
+	 * mav.addObject("boardJoinUserList", boardJoinUserList);
+	 * mav.setViewName("chat"); return mav; }
+	 * 
+	 * @RequestMapping(value = "/chatSave") public String
+	 * ChatSave(@RequestParam("user_id") String
+	 * user_id, @RequestParam("boardNumber") int boardNumber,
+	 * 
+	 * @RequestParam("inputMessage") String content) { if (content.equals("")) { }
+	 * else { userInfoService.addChat(user_id, boardNumber, content); } return
+	 * "redirect:/chat?id=" + user_id + "&number=" + boardNumber; } =========== 채팅창
+	 * ============
+	 * 
+	 * =========== 채팅창에서 나갈 때============
+	 * 
+	 * @RequestMapping(value = "/chatJoinClose") public ModelAndView
+	 * ChatJoinClose(@RequestParam("id") String user_id, @RequestParam("number") int
+	 * boardNumber) { ModelAndView mav = new ModelAndView();
+	 * List<BoardJoinUserInfoVO> boardJoinUserList =
+	 * userInfoService.getBoardJoinUsers(); BoardJoinUserInfoVO boardJoinUserInfo =
+	 * userInfoService.getBoardJoinUser(boardNumber, user_id); BoardInfoVO boardInfo
+	 * = userInfoService.getboard(boardNumber); UserInfoVO userInfo =
+	 * userInfoService.selectUserPassword(user_id);
+	 * mav.addObject("boardJoinUserInfo", boardJoinUserInfo);
+	 * mav.addObject("boardJoinUserList", boardJoinUserList);
+	 * mav.addObject("userInfo", userInfo); mav.addObject("boardInfo", boardInfo);
+	 * //String[] favorites = boardInfo.getBoardFavorites().split(",");// c|2 b|2
+	 * String favorite = "fail"; for (int i = 0; i < favorites.length; i++) { if
+	 * (favorites[i].equals("")) {
+	 * 
+	 * } else { String[] temp = favorites[i].split("|"); if (user_id.equals(temp[0])
+	 * && String.valueOf(boardNumber).equals(temp[2])) { favorite = "success";
+	 * break; } else { favorite = "fail"; } } } mav.addObject("favorite", favorite);
+	 * boolean chatJoinCheck = false; userInfoService.chatJoin(boardNumber, user_id,
+	 * chatJoinCheck); List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
+	 * List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>(); for (int i = 0; i <
+	 * alarmList.size(); i++) { String[] str =
+	 * alarmList.get(i).getAlarmYouId().split(","); if (str[0].equals(user_id)) {
+	 * alarms.add(alarmList.get(i)); } } mav.addObject("alarms", alarms);
+	 * mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
+	 * mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
+	 * mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
+	 * mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
+	 * mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
+	 * mav.addObject("alarmClose", alarmClose); mav.setViewName("boardOpen"); return
+	 * mav; }
+	 * 
+	 * @RequestMapping("/chatJoinCloseLoginView") public String
+	 * ChatJoinCloseLoginView(@RequestParam("id") String
+	 * user_id, @RequestParam("number") int boardNumber) { boolean chatJoinCheck =
+	 * false; userInfoService.chatJoin(boardNumber, user_id, chatJoinCheck); return
+	 * "redirect:/loginView"; }
+	 * 
+	 * @RequestMapping(value = "/chatJoinCloseNoticeView") public String
+	 * ChatJoinCloseNoticeView(@RequestParam("id") String
+	 * user_id, @RequestParam("number") int boardNumber) { boolean chatJoinCheck =
+	 * false; userInfoService.chatJoin(boardNumber, user_id, chatJoinCheck); return
+	 * "redirect:/noticeView?id" + "user_id"; }
+	 * 
+	 * @RequestMapping(value = "/chatJoinCloseMypageView") public String
+	 * ChatJoinCloseMypageView(@RequestParam("id") String
+	 * user_id, @RequestParam("number") int boardNumber) { boolean chatJoinCheck =
+	 * false; userInfoService.chatJoin(boardNumber, user_id, chatJoinCheck); return
+	 * "redirect:/mypageView?id" + "user_id"; }
+	 * 
+	 * @RequestMapping(value = "/chatJoinCloseBoardView") public ModelAndView
+	 * BoardView(@RequestParam("id") String user_id, @RequestParam("number") int
+	 * boardNumber,
+	 * 
+	 * @RequestParam("subject") String subject) { ModelAndView mav = new
+	 * ModelAndView(); if (subject.equals("all")) { List<BoardInfoVO> boardList =
+	 * userInfoService.getBoards(); mav.addObject("boardList", boardList); } else {
+	 * List<BoardInfoVO> boardList = userInfoService.getBoardOthers(subject);
+	 * mav.addObject("boardList", boardList); } UserInfoVO userInfo =
+	 * userInfoService.selectUserPassword(user_id); boolean chatJoinCheck = false;
+	 * userInfoService.chatJoin(boardNumber, user_id, chatJoinCheck);
+	 * List<AlarmInfoVO> alarmList = userInfoService.getAlarms(); List<AlarmInfoVO>
+	 * alarms = new ArrayList<AlarmInfoVO>(); for (int i = 0; i < alarmList.size();
+	 * i++) { String[] str = alarmList.get(i).getAlarmYouId().split(","); if
+	 * (str[0].equals(user_id)) { alarms.add(alarmList.get(i)); } }
+	 * mav.addObject("alarms", alarms); mav.addObject("userInfo", userInfo);
+	 * mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
+	 * mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
+	 * mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
+	 * mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
+	 * mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
+	 * mav.addObject("alarmClose", alarmClose); mav.setViewName("boardView"); return
+	 * mav; } =========== 채팅창 나갈 때============
+	 * 
+	 * =========== 채팅창 회원 정보============
+	 * 
+	 * @RequestMapping(value = "/chatProfile") public ModelAndView
+	 * Profile(@RequestParam("id") String user_id, @RequestParam("number") int
+	 * boardNumber) { ModelAndView mav = new ModelAndView(); UserInfoVO userInfo =
+	 * userInfoService.selectUserPassword(user_id); BoardInfoVO boardInfo =
+	 * userInfoService.getboard(boardNumber); List<BoardJoinUserInfoVO>
+	 * boardJoinUsers = userInfoService.getJoinUsers(boardNumber);
+	 * mav.addObject("boardInfo", boardInfo); mav.addObject("userInfo", userInfo);
+	 * mav.addObject("boardJoinUsers", boardJoinUsers);
+	 * mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
+	 * mav.setViewName("chatProfile"); return mav; } =========== 채팅창 회원
+	 * 정보============
+	 */
 
-	@RequestMapping(value = "/searchBoardView")
-	public ModelAndView SearchBoardView(@RequestParam("id") String user_id,
-			@RequestParam("list") String searchBoardList) {
-		ModelAndView mav = new ModelAndView();
-		System.out.println(searchBoardList);
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		List<BoardInfoVO> boardList = userInfoService.getSearchBoards(searchBoardList);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("boardList", boardList);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("boardView");
-		return mav;
-	}
-	/* =========== 게시판 화면 ============ */
-
-	/* =========== 게시판 등록 화면 ============ */
-	@RequestMapping(value = "/boardRegist")
-	public ModelAndView BoardRegist(@RequestParam("id") String user_id) {
-		ModelAndView mav = new ModelAndView();
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.setViewName("boardRegist");
-		return mav;
-	}
-
-	@RequestMapping(value = "/boardRegistForm")
-	public String BoardRegistForm(@RequestParam("writer") String boardWriter, @RequestParam("user_id") String user_id,
-			@RequestParam("subject") String boardTitle, @RequestParam("content") String boardContent,
-			@RequestParam("selectBoard") String selectBoard) {
-		if (boardTitle.equals("")) {
-			return "redirect:/boardRegist?id=" + user_id;
-		} else if (boardContent.equals("")) {
-			return "redirect:/boardRegist?id=" + user_id;
-		} else if (selectBoard.equals("")) {
-			return "redirect:/boardRegist?id=" + user_id;
-		} else {
-			userInfoService.addBoard(boardWriter, boardTitle, boardContent, selectBoard, user_id);
-			return "redirect:/boardView?id=" + user_id + "&subject=all";
-		}
-	}
-	/* =========== 게시판 등록 화면 ============ */
-
-	/* =========== 게시글 보기 화면 ============ */
-	@RequestMapping(value = "/boardOpen")
-	public ModelAndView BoardOpen(@RequestParam("number") int boardNumber, @RequestParam("id") String user_id) {
-		ModelAndView mav = new ModelAndView();
-		List<BoardJoinUserInfoVO> boardJoinUserList = userInfoService.getBoardJoinUsers();
-		BoardJoinUserInfoVO boardJoinUserInfo = userInfoService.getBoardJoinUser(boardNumber, user_id);
-		BoardInfoVO boardInfo = userInfoService.getboard(boardNumber);
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		String str = user_id + "|" + boardNumber;
-		String[] favorites = boardInfo.getBoardFavorites().split(",");
-		String[] joins = boardInfo.getBoardJoins().split(",");
-		String favorite = favoritesFailSuccess(favorites, str);
-		String join = joinsFailSuccess(joins, str);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str3 = alarmList.get(i).getAlarmYouId().split(",");
-			if (str3[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("favorite", favorite);
-		mav.addObject("join", join);
-		mav.addObject("boardJoinUserInfo", boardJoinUserInfo);
-		mav.addObject("boardJoinUserList", boardJoinUserList);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("boardInfo", boardInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("boardOpen");
-		return mav;
-	}
-
-	public String favoritesFailSuccess(String[] favorites, String str) {
-		String favorite = "fail";
-		for (int i = 0; i < favorites.length; i++) {
-			if (favorites[i].equals(str)) {
-				favorite = "success";
-				break;
-			}
-		}
-		return favorite;
-	}
-
-	public String joinsFailSuccess(String[] joins, String str) {
-		String join = "fail";
-		for (int i = 0; i < joins.length; i++) {
-			if (joins[i].equals(str)) {
-				join = "success";
-				break;
-			}
-		}
-		return join;
-	}
-	/* =========== 게시글 보기 화면 ============ */
-
-	/* =========== 게시글 참여 ============ */
-	@RequestMapping(value = "/boardJoin")
-	public String BoardJoin(@RequestParam("number") int boardNumber, @RequestParam("id") String user_id) {
-		BoardInfoVO boardInfo = userInfoService.getboard(boardNumber);
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		userInfoService.sendBoardJoin(boardInfo, userInfo);
-		userInfoService.addAlarmBoard(boardInfo, userInfo);
-		return "redirect:/boardOpen?number=" + boardNumber + "&id=" + user_id;
-	}
-	/* =========== 게시글 참여 ============ */
-
-	/* =========== 게시글 참여 취소 ============ */
-	@RequestMapping(value = "/boardJoinCancel")
-	public String BoardJoinCancel(@RequestParam("number") int boardNumber, @RequestParam("id") String user_id) {
-		BoardJoinUserInfoVO boardJoinUserInfo = userInfoService.getBoardJoinUser(boardNumber, user_id);
-		userInfoService.sendCancelBoardJoin(boardJoinUserInfo);
-		return "redirect:/boardOpen?number=" + boardNumber + "&id=" + user_id;
-	}
-	/* =========== 게시글 참여 취소 ============ */
-
-	/* =========== 게시글 참여자 명단 보기 ============ */
-	@RequestMapping(value = "/boardJoinUserList")
-	public ModelAndView BoardJoinUserList(@RequestParam("number") int boardNumber, @RequestParam("id") String user_id) {
-		ModelAndView mav = new ModelAndView();
-		List<BoardJoinUserInfoVO> boardJoinUserList = userInfoService.getBoardJoinUsers();
-		BoardInfoVO boardInfo = userInfoService.getboard(boardNumber);
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		mav.addObject("boardJoinUserList", boardJoinUserList);
-		mav.addObject("boardInfo", boardInfo);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.setViewName("boardJoinUserList");
-		return mav;
-	}
-	/* =========== 게시글 참여지 명단 보기============ */
-
-	/* =========== 게시글 참여자 수락 ============ */
-	@RequestMapping(value = "/successJoinUser")
-	public String SuccessJoinUser(@RequestParam("user_id") String user_id,
-			@RequestParam("boardJoinUser_id") String boardJoinUser_id, @RequestParam("number") int boardNumber) {
-		BoardJoinUserInfoVO boardJoinUserInfo = userInfoService.getBoardJoinUser(boardNumber, boardJoinUser_id);
-		BoardInfoVO boardInfo = userInfoService.getboard(boardNumber);
-		userInfoService.modifyBoardJoinUserInfo(boardJoinUserInfo);
-		userInfoService.modifyBoardJoinUserNumber(boardInfo);
-		userInfoService.addAlarmBoardJoinSuccess(user_id, boardJoinUserInfo, boardNumber);
-		return "redirect:/boardJoinUserList?number=" + boardNumber + "&id=" + user_id;
-	}
-	/* =========== 게시글 참여자 수락 ============ */
-
-	/* =========== 게시글 참여자 거절 ============ */
-	@RequestMapping(value = "/failJoinUser")
-	public String FailJoinUser(@RequestParam("user_id") String user_id,
-			@RequestParam("boardJoinUser_id") String boardJoinUser_id, @RequestParam("number") int boardNumber) {
-		BoardJoinUserInfoVO boardJoinUserInfo = userInfoService.getBoardJoinUser(boardNumber, boardJoinUser_id);
-		userInfoService.deleteBoardJoinUserInfo(boardJoinUserInfo);
-		userInfoService.addAlarmBoardJoinFail(user_id, boardJoinUserInfo, boardNumber);
-		return "redirect:/boardJoinUserList?number=" + boardNumber + "&id=" + user_id;
-	}
-	/* =========== 게시글 참여자 거절 ============ */
-
-	/* =========== 게시글 수정 ============ */
-	// 게시글 정보만 수정
-	@RequestMapping(value = "/boardModify")
-	public ModelAndView BoardModify(@RequestParam("id") String user_id, @RequestParam("number") int boardNumber) {
-		ModelAndView mav = new ModelAndView();
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		BoardInfoVO boardInfo = userInfoService.getboard(boardNumber);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("boardInfo", boardInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("boardModify");
-		return mav;
-	}
-
-	@RequestMapping(value = "/boardModifyForm")
-	public ModelAndView BoardModifyForm(@RequestParam("user_id") String user_id,
-			@RequestParam("boardNumber") int boardNumber, @RequestParam("subject") String boardTitle,
-			@RequestParam("content") String boardContent) {
-		userInfoService.modifyBoard(user_id, boardNumber, boardTitle, boardContent);
-		ModelAndView mav = new ModelAndView();
-		List<BoardJoinUserInfoVO> boardJoinUserList = userInfoService.getBoardJoinUsers();
-		BoardJoinUserInfoVO boardJoinUserInfo = userInfoService.getBoardJoinUser(boardNumber, user_id);
-		BoardInfoVO boardInfo = userInfoService.getboard(boardNumber);
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		String[] favorites = boardInfo.getBoardFavorites().split(",");// c|2 b|2
-		String favorite = "fail";
-		for (int i = 0; i < favorites.length; i++) {
-			if (favorites[i].equals("")) {
-
-			} else {
-				String[] temp = favorites[i].split("|");
-				if (user_id.equals(temp[0]) && String.valueOf(boardNumber).equals(temp[2])) {
-					favorite = "success";
-					break;
-				} else {
-					favorite = "fail";
-				}
-			}
-		}
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("favorite", favorite);
-		mav.addObject("boardJoinUserInfo", boardJoinUserInfo);
-		mav.addObject("boardJoinUserList", boardJoinUserList);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("boardInfo", boardInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("boardOpen");
-		return mav;
-	}
-
-	@RequestMapping(value = "/boardModifyClose")
-	public ModelAndView BoardModifyClose(@RequestParam("id") String user_id, @RequestParam("number") int boardNumber) {
-		ModelAndView mav = new ModelAndView();
-		List<BoardJoinUserInfoVO> boardJoinUserList = userInfoService.getBoardJoinUsers();
-		BoardJoinUserInfoVO boardJoinUserInfo = userInfoService.getBoardJoinUser(boardNumber, user_id);
-		BoardInfoVO boardInfo = userInfoService.getboard(boardNumber);
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		String[] favorites = boardInfo.getBoardFavorites().split(",");// c|2 b|2
-		String favorite = "fail";
-		for (int i = 0; i < favorites.length; i++) {
-			if (favorites[i].equals("")) {
-
-			} else {
-				String[] temp = favorites[i].split("|");
-				if (user_id.equals(temp[0]) && String.valueOf(boardNumber).equals(temp[2])) {
-					favorite = "success";
-					break;
-				} else {
-					favorite = "fail";
-				}
-			}
-		}
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("boardJoinUserInfo", boardJoinUserInfo);
-		mav.addObject("boardJoinUserList", boardJoinUserList);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("boardInfo", boardInfo);
-		mav.addObject("favorite", favorite);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("boardOpen");
-		return mav;
-	}
-	/* =========== 게시글 수정 ============ */
-
-	/* =========== 게시글 삭제 ============ */
-	@RequestMapping(value = "/boardDelete")
-	public ModelAndView BoardDelete(@RequestParam("id") String user_id, @RequestParam("number") int boardNumber) {
-		ModelAndView mav = new ModelAndView();
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		BoardInfoVO boardInfo = userInfoService.getboard(boardNumber);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("boardInfo", boardInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("boardDelete");
-		return mav;
-	}
-
-	@RequestMapping(value = "/boardDeleteForm")
-	public String BoardDeleteForm(@RequestParam("user_id") String user_id,
-			@RequestParam("boardNumber") int boardNumber) {
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		BoardInfoVO boardInfo = userInfoService.getboard(boardNumber);
-		userInfoService.addAlarmBoardDelete(user_id, boardNumber);
-		userInfoService.deleteBoard(userInfo, boardInfo);
-		return "redirect:/boardView?id=" + user_id + "&subject=all";
-	}
-	/* =========== 게시글 삭제 ============ */
-
-	/* =========== 게시글 분류 ============ */
-	@RequestMapping(value = "/allBoard")
-	public String AllBoard(@RequestParam("id") String user_id) {
-		return "redirect:/boardView?id=" + user_id;
-	}
-	/* =========== 게시글 분류 ============ */
-
-	/* =========== 채팅창 ============ */
-	@RequestMapping(value = "/chat")
-	public ModelAndView Chat(HttpServletResponse response, @RequestParam("id") String user_id,
-			@RequestParam("number") int boardNumber) {
-		ModelAndView mav = new ModelAndView();
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		BoardInfoVO boardInfo = userInfoService.getboard(boardNumber);
-		List<ChatInfoVO> chatList = userInfoService.getChats(boardNumber);
-		boolean chatJoinCheck = true;
-		userInfoService.chatJoin(boardNumber, user_id, chatJoinCheck);
-		List<BoardJoinUserInfoVO> boardJoinUserList = userInfoService.getBoardJoinUsers();
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("boardInfo", boardInfo);
-		mav.addObject("chatList", chatList);
-		mav.addObject("boardJoinUserList", boardJoinUserList);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("chat");
-		return mav;
-	}
-
-	@RequestMapping(value = "/chatSave")
-	public String ChatSave(@RequestParam("user_id") String user_id, @RequestParam("boardNumber") int boardNumber,
-			@RequestParam("inputMessage") String content) {
-		if (content.equals("")) {
-		} else {
-			userInfoService.addChat(user_id, boardNumber, content);
-		}
-		return "redirect:/chat?id=" + user_id + "&number=" + boardNumber;
-	}
-	/* =========== 채팅창 ============ */
-
-	/* =========== 채팅창에서 나갈 때============ */
-	@RequestMapping(value = "/chatJoinClose")
-	public ModelAndView ChatJoinClose(@RequestParam("id") String user_id, @RequestParam("number") int boardNumber) {
-		ModelAndView mav = new ModelAndView();
-		List<BoardJoinUserInfoVO> boardJoinUserList = userInfoService.getBoardJoinUsers();
-		BoardJoinUserInfoVO boardJoinUserInfo = userInfoService.getBoardJoinUser(boardNumber, user_id);
-		BoardInfoVO boardInfo = userInfoService.getboard(boardNumber);
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		mav.addObject("boardJoinUserInfo", boardJoinUserInfo);
-		mav.addObject("boardJoinUserList", boardJoinUserList);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("boardInfo", boardInfo);
-		String[] favorites = boardInfo.getBoardFavorites().split(",");// c|2 b|2
-		String favorite = "fail";
-		for (int i = 0; i < favorites.length; i++) {
-			if (favorites[i].equals("")) {
-
-			} else {
-				String[] temp = favorites[i].split("|");
-				if (user_id.equals(temp[0]) && String.valueOf(boardNumber).equals(temp[2])) {
-					favorite = "success";
-					break;
-				} else {
-					favorite = "fail";
-				}
-			}
-		}
-		mav.addObject("favorite", favorite);
-		boolean chatJoinCheck = false;
-		userInfoService.chatJoin(boardNumber, user_id, chatJoinCheck);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("boardOpen");
-		return mav;
-	}
-
-	@RequestMapping("/chatJoinCloseLoginView")
-	public String ChatJoinCloseLoginView(@RequestParam("id") String user_id, @RequestParam("number") int boardNumber) {
-		boolean chatJoinCheck = false;
-		userInfoService.chatJoin(boardNumber, user_id, chatJoinCheck);
-		return "redirect:/loginView";
-	}
-
-	@RequestMapping(value = "/chatJoinCloseNoticeView")
-	public String ChatJoinCloseNoticeView(@RequestParam("id") String user_id, @RequestParam("number") int boardNumber) {
-		boolean chatJoinCheck = false;
-		userInfoService.chatJoin(boardNumber, user_id, chatJoinCheck);
-		return "redirect:/noticeView?id" + "user_id";
-	}
-
-	@RequestMapping(value = "/chatJoinCloseMypageView")
-	public String ChatJoinCloseMypageView(@RequestParam("id") String user_id, @RequestParam("number") int boardNumber) {
-		boolean chatJoinCheck = false;
-		userInfoService.chatJoin(boardNumber, user_id, chatJoinCheck);
-		return "redirect:/mypageView?id" + "user_id";
-	}
-
-	@RequestMapping(value = "/chatJoinCloseBoardView")
-	public ModelAndView BoardView(@RequestParam("id") String user_id, @RequestParam("number") int boardNumber,
-			@RequestParam("subject") String subject) {
-		ModelAndView mav = new ModelAndView();
-		if (subject.equals("all")) {
-			List<BoardInfoVO> boardList = userInfoService.getBoards();
-			mav.addObject("boardList", boardList);
-		} else {
-			List<BoardInfoVO> boardList = userInfoService.getBoardOthers(subject);
-			mav.addObject("boardList", boardList);
-		}
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		boolean chatJoinCheck = false;
-		userInfoService.chatJoin(boardNumber, user_id, chatJoinCheck);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("boardView");
-		return mav;
-	}
-	/* =========== 채팅창 나갈 때============ */
-
-	/* =========== 채팅창 회원 정보============ */
-	@RequestMapping(value = "/chatProfile")
-	public ModelAndView Profile(@RequestParam("id") String user_id, @RequestParam("number") int boardNumber) {
-		ModelAndView mav = new ModelAndView();
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		BoardInfoVO boardInfo = userInfoService.getboard(boardNumber);
-		List<BoardJoinUserInfoVO> boardJoinUsers = userInfoService.getJoinUsers(boardNumber);
-		mav.addObject("boardInfo", boardInfo);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("boardJoinUsers", boardJoinUsers);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.setViewName("chatProfile");
-		return mav;
-	}
-	/* =========== 채팅창 회원 정보============ */
-
-	/* =========== 게시글 즐겨찾기============ */
-	@RequestMapping(value = "/favoriteBoard")
-	public String FavoriteBoard(@RequestParam("id") String user_id, @RequestParam("number") int boardNumber) {
-		userInfoService.addFavoriteBoard(user_id, boardNumber);
-		return "redirect:/boardOpen?number=" + boardNumber + "&id=" + user_id;
-	}
-	/* =========== 게시글 즐겨찾기============ */
-
-	/* =========== 게시글 즐겨찾기 취소============ */
-	@RequestMapping(value = "/favoriteBoardCancel")
-	public String FavoriteBoardCancel(@RequestParam("id") String user_id, @RequestParam("number") int boardNumber) {
-		userInfoService.modifyFavoriteBoard(user_id, boardNumber);
-		return "redirect:/boardOpen?number=" + boardNumber + "&id=" + user_id;
-	}
-	/* =========== 게시글 즐겨찾기 취소============ */
-
-	/* =========== 마이 페이지 보기 ============ */
-	@RequestMapping(value = "/mypageView")
-	public ModelAndView MypageView(@RequestParam("id") String user_id) {
-		ModelAndView mav = new ModelAndView();
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		List<PostingInfoVO> postingList = userInfoService.getPostings();
-		List<BoardInfoVO> boardList = userInfoService.getUserBoard(user_id);
-		List<PostingInfoVO> postingRecommandList = userInfoService.getPostingRecommands(user_id);
-		String str = "recommand";
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str3 = alarmList.get(i).getAlarmYouId().split(",");
-			if (str3[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("postingList", postingList);
-		mav.addObject("boardList", boardList);
-		mav.addObject("postingRecommandList", postingRecommandList);
-		mav.addObject("recommand", str);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("mypageView");
-		return mav;
-	}
-	/* =========== 마이 페이지 보기 ============ */
-
-	/* =========== 마이 페이지 회원 정보 수정 ============ */
-	@RequestMapping(value = "/userInfoModify")
-	public ModelAndView UserInfoModify(@RequestParam("id") String user_id) {
-		ModelAndView mav = new ModelAndView();
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("mypageUserInfoModify");
-		return mav;
-	}
-
-	@RequestMapping(value = "/userInfoModifyForm")
-	public String UserInfoModifyForm(@RequestParam("user_name") String user_name,
-			@RequestParam("user_postNumber") String user_postNumber, @RequestParam("user_address") String user_address,
-			@RequestParam("user_detailAddress") String user_detailAddress,
-			@RequestParam("user_email") String user_email, @RequestParam("user_phone") int user_phone,
-			@RequestParam("user_id") String user_id,
-			@RequestParam("user_passwordQuestion") String user_passwordQuestion,
-			@RequestParam("user_answer") String user_answer) {
-		if (user_passwordQuestion.equals("질문")) {
-			return "redirect:/userInfoModifyError?id=" + user_id;
-		} else {
-			userInfoService.modifyUserInfo(user_name, user_detailAddress, user_email, user_phone, user_id);
-			return "redirect:/mypageView?id=" + user_id;
-		}
-	}
-
-	@RequestMapping(value = "/userInfoModifyError")
-	public String UserInfoModifyError(@RequestParam("id") String user_id) {
-		return "redirect:/userInfoModify?id=" + user_id;
-	}
-	/* =========== 마이 페이지 회원 정보 수정 ============ */
-
-	/* =========== 마이페이지 즐겨찾기 취소 ============ */
-	@RequestMapping(value = "/mypageFavoriteCancel")
-	public String MypageFavoriteCancel(@RequestParam("id") String user_id, @RequestParam("number") int boardNumber) {
-		userInfoService.modifyFavoriteBoard(user_id, boardNumber);
-		return "redirect:/mypageView?id=" + user_id;
-	}
-	/* =========== 마이페이지 즐겨찾기 취소 ============ */
-
-	/* =========== 마이페이지 포스팅 삭제 ============ */
-	@RequestMapping(value = "/mypageDeletePosting")
-	public String MypageDeletePosting(@RequestParam("user_id") String user_id,
-			@RequestParam("check") List<String> postingNumber) {
-		if (!postingNumber.get(0).equals("empty")) {
-			userInfoService.deletePosting(user_id, Integer.parseInt(postingNumber.get(0)));
-		}
-		return "redirect:/mypageView?id=" + user_id;
-	}
-	/* =========== 마이페이지 포스팅 삭제 ============ */
-
-	/* =========== 마이페이지 내 게시글 보기 ============ */
-	@RequestMapping(value = "/mypageUserBoard")
-	public ModelAndView MypageUserBoard(@RequestParam("id") String user_id) {
-		ModelAndView mav = new ModelAndView();
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		List<PostingInfoVO> postingList = userInfoService.getPostings();
-		List<BoardInfoVO> boardList = userInfoService.getBoards();
-		List<PostingInfoVO> postingRecommandList = userInfoService.getPostingRecommands(user_id);
-		String str = "myBoard";
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str3 = alarmList.get(i).getAlarmYouId().split(",");
-			if (str3[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("postingList", postingList);
-		mav.addObject("boardList", boardList);
-		mav.addObject("postingRecommandList", postingRecommandList);
-		mav.addObject("recommand", str);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("mypageView");
-		return mav;
-	}
-	/* =========== 마이페이지 내 게시글 보기 ============ */
-
-	/* =========== 마이페이지 내 게시글 삭제 ============ */
-	@RequestMapping(value = "/mypageBoardDelete")
-	public ModelAndView MypageBoardDelete(@RequestParam("user_id") String user_id,
-			@RequestParam("check") List<String> boardNumber) {
-		ModelAndView mav = new ModelAndView();
-		if (boardNumber.get(0).equals("empty")) {
-
-		} else {
-			userInfoService.addAlarmBoardDelete(user_id, Integer.parseInt(boardNumber.get(0)));
-			userInfoService.deleteMypageBoard(Integer.parseInt(boardNumber.get(0)));
-		}
-		UserInfoVO userInfo = userInfoService.selectUserPassword(user_id);
-		List<PostingInfoVO> postingList = userInfoService.getPostings();
-		List<BoardInfoVO> boardList = userInfoService.getBoards();
-		List<PostingInfoVO> postingRecommandList = userInfoService.getPostingRecommands(user_id);
-		String str = "myBoard";
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str3 = alarmList.get(i).getAlarmYouId().split(",");
-			if (str3[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("postingList", postingList);
-		mav.addObject("boardList", boardList);
-		mav.addObject("postingRecommandList", postingRecommandList);
-		mav.addObject("recommand", str);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("mypageView");
-		return mav;
-	}
-	/* =========== 마이페이지 내 게시글 삭제 ============ */
-
-	/* =========== 회원탈퇴 ============ */
-	@RequestMapping(value = "/userSecession")
-	public ModelAndView UserSecession(@RequestParam("id") String user_id) {
-		ModelAndView mav = new ModelAndView();
-		UserInfoVO userInfo = userInfoService.getUser(user_id);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.setViewName("userSecession");
-		return mav;
-	}
-
-	@RequestMapping(value = "/userSecessionForm")
-	public void UserSecessionForm(@RequestParam("user_id") String user_id) {
-		userInfoService.userSecession(user_id);
-	}
-	/* =========== 회원탈퇴 ============ */
-
-	/* =========== 문의사항 ============ */
-	@RequestMapping(value = "/qnaView")
-	public ModelAndView MypageQnaView(@RequestParam("id") String user_id) {
-		ModelAndView mav = new ModelAndView();
-		UserInfoVO userInfo = userInfoService.getUser(user_id);
-		List<QnaInfoVO> qnaList = userInfoService.getQnas(user_id);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("qnaList", qnaList);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("qnaView");
-		return mav;
-	}
-	/* =========== 문의사항 ============ */
-
-	/* =========== 문의사항 등록 ============ */
-	@RequestMapping(value = "/qnaRegist")
-	public ModelAndView QnaRegist(@RequestParam("id") String user_id) {
-		ModelAndView mav = new ModelAndView();
-		UserInfoVO userInfo = userInfoService.getUser(user_id);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("qnaRegist");
-		return mav;
-	}
-
-	@RequestMapping(value = "/qnaRegistForm")
-	public String QnaRegistForm(@RequestParam("user_id") String user_id, @RequestParam("subject") String qnaTitle,
-			@RequestParam("content") String qnaContent) {
-		if (qnaTitle.equals("")) {
-			return "redirect:/qnaRegist?id=" + user_id;
-		} else if (qnaContent.equals("")) {
-			return "redirect:/qnaRegist?id=" + user_id;
-		} else {
-			userInfoService.addQna(user_id, qnaTitle, qnaContent);
-			userInfoService.addAlarmQna(user_id, qnaTitle, qnaContent);
-			return "redirect:/qnaView?id=" + user_id;
-		}
-	}
-	/* =========== 문의사항 등록 ============ */
-
-	/* =========== 문의사항 삭제 ============ */
-	@RequestMapping(value = "/qnaDelete")
-	public String QnaDelete(@RequestParam("id") String user_id, @RequestParam("number") int qnaNumber) {
-		userInfoService.deleteQna(qnaNumber);
-		return "redirect:/qnaView?id=" + user_id;
-	}
-	/* =========== 문의사항 삭제 ============ */
-
-	/* =========== 문의사항 보기 ============ */
-	@RequestMapping(value = "/qnaOpen")
-	public ModelAndView QnaOpen(@RequestParam("id") String user_id, @RequestParam("number") int qnaNumber) {
-		ModelAndView mav = new ModelAndView();
-		QnaInfoVO qnaInfo = userInfoService.getQna(qnaNumber);
-		UserInfoVO userInfo = userInfoService.getUser(user_id);
-		if (qnaInfo.getQnaComment().equals("empty")) {
-			qnaInfo.setQnaComment("no answer");
-		}
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("qnaInfo", qnaInfo);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("qnaOpen");
-		return mav;
-	}
-	/* =========== 문의사항 보기 ============ */
-
-	/* =========== 문의사항 수정 ============ */
-	@RequestMapping(value = "/qnaModify")
-	public ModelAndView QnaModify(@RequestParam("id") String user_id, @RequestParam("number") int qnaNumber) {
-		ModelAndView mav = new ModelAndView();
-		QnaInfoVO qnaInfo = userInfoService.getQna(qnaNumber);
-		UserInfoVO userInfo = userInfoService.getUser(user_id);
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("qnaInfo", qnaInfo);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("qnaModify");
-		return mav;
-	}
-
-	@RequestMapping(value = "/qnaModifyForm")
-	public String QnaModifyForm(@RequestParam("user_id") String user_id, @RequestParam("qnaNumber") int qnaNumber,
-			@RequestParam("subject") String qnaTitle, @RequestParam("content") String qnaContent) {
-		userInfoService.qnaModify(user_id, qnaNumber, qnaTitle, qnaContent);
-		return "redirect:/qnaView?id=" + user_id;
-	}
-	/* =========== 문의사항 수정 ============ */
-
-	/* =========== 관리자 포스팅 삭제 ============ */
-	@RequestMapping(value = "/adminDeletePosting")
-	public String AdminDeletePosting(@RequestParam("id") String user_id, @RequestParam("number") int postingNumber) {
-		userInfoService.adminDeletePosting(postingNumber);
-		return "redirect:/mainView?id=" + user_id;
-	}
-	/* =========== 관리자 포스팅 삭제 ============ */
-
-	/* =========== 관리자 게시글 검색/삭제 ============ */
-	@RequestMapping(value = "/adminBoardDelete")
-	public String AdminBoardDelete(@RequestParam("user_id") String user_id,
-			@RequestParam("check") List<String> boardNumber, @RequestParam("subject") String subject,
-			@RequestParam("searchText") String searchText) {
-		if (boardNumber.get(0).equals("empty")) {
-
-		} else {
-			userInfoService.adminBoardDelete(Integer.parseInt(boardNumber.get(0)));
-		}
-		if (searchText.equals("")) {
-		} else {
-			String searchBoardList = userInfoService.getSearchBoard(searchText);
-			if (searchBoardList.equals("notSearch")) {
-			} else {
-				return "redirect:/searchBoardView?id=" + user_id + "&list=" + searchBoardList;
-			}
-		}
-		return "redirect:/boardView?id=" + user_id + "&subject=" + subject;
-	}
-	/* =========== 관리자 게시글 검색/삭제 ============ */
-
-	/* =========== 관리 ============ */
-	@RequestMapping(value = "/managementView")
-	public ModelAndView ManagementView() {
-		ModelAndView mav = new ModelAndView();
-		UserInfoVO userInfo = userInfoService.getUser("admin");
-		List<UserInfoVO> userList = userInfoService.getMembers();
-		List<QnaInfoVO> qnaList = userInfoService.getQnaInfos();
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals("admin")) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("userList", userList);
-		mav.addObject("qnaList", qnaList);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("managementView");
-		return mav;
-	}
-	/* =========== 관리 ============ */
-
-	/* =========== 회원 추방 ============ */
-	@RequestMapping(value = "/adminUserExile")
-	public String AdminUserExile(@RequestParam("check") List<String> user_idList) {
-		if (user_idList.size() == 1) {
-		} else {
-			userInfoService.userSecession(user_idList.get(1));
-		}
-		return "redirect:/managementView";
-	}
-	/* =========== 회원 추방 ============ */
-
-	/* =========== 관리자 문의사항 삭제 ============ */
-	@RequestMapping(value = "/adminQnaDelete")
-	public String AdminQnaDelete(@RequestParam("check") List<String> qnaNumberList) {
-		if (qnaNumberList.size() == 1) {
-		} else {
-			userInfoService.deleteQna(Integer.parseInt(qnaNumberList.get(1)));
-		}
-		return "redirect:/managementView";
-	}
-	/* =========== 관리자 문의사항 삭제 ============ */
-
-	/* =========== 관리자 문의사항 보기 ============ */
-	@RequestMapping(value = "/adminQnaOpen")
-	public ModelAndView AdminQnaOpen(@RequestParam("id") String user_id, @RequestParam("number") int qnaNumber) {
-		ModelAndView mav = new ModelAndView();
-		QnaInfoVO qnaInfo = userInfoService.getQna(qnaNumber);
-		UserInfoVO userInfo = userInfoService.getUser(user_id);
-		if (qnaInfo.getQnaComment().equals("empty")) {
-			qnaInfo.setQnaComment(" ");
-		}
-		List<AlarmInfoVO> alarmList = userInfoService.getAlarms();
-		List<AlarmInfoVO> alarms = new ArrayList<AlarmInfoVO>();
-		for (int i = 0; i < alarmList.size(); i++) {
-			String[] str = alarmList.get(i).getAlarmYouId().split(",");
-			if (str[0].equals(user_id)) {
-				alarms.add(alarmList.get(i));
-			}
-		}
-		mav.addObject("alarms", alarms);
-		mav.addObject("admin", "admin");
-		mav.addObject("qnaInfo", qnaInfo);
-		mav.addObject("userInfo", userInfo);
-		mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-		mav.addObject("togetherPeopleBoard", togetherPeopleBoard);
-		mav.addObject("togetherPeopleMypage", togetherPeopleMypage);
-		mav.addObject("togetherPeopleNotice", togetherPeopleNotice);
-		mav.addObject("togetherPeopleManagement", togetherPeopleManagement);
-		mav.addObject("alarmClose", alarmClose);
-		mav.setViewName("qnaOpen");
-		return mav;
-	}
-	/* =========== 관리자 문의사항 보기 ============ */
-
-	/* =========== 관리자 문의사항 답변 달기 ============ */
-	@RequestMapping(value = "/commentInput")
-	public String CommentInput(@RequestParam("qna_id") String qna_id, @RequestParam("qna_qnaNumber") int qnaNumber,
-			@RequestParam("ta") String qnaComment) {
-		if (qnaComment.equals("")) {
-			qnaComment = "empty";
-		}
-		userInfoService.modifyQnaComment(qna_id, qnaNumber, qnaComment);
-		userInfoService.addAlarmQnaComment(qna_id, qnaNumber);
-		return "redirect:/managementView";
-	}
-	/* =========== 관리자 문의사항 답변 달기 ============ */
-
-	/* =========== 게시글 회원 추방 ============ */
-	@RequestMapping(value = "/userBoardOut")
-	public String UserBoardOut(@RequestParam("id") String user_id,
-			@RequestParam("boardJoinUser_id") String boardJoinUser_id, @RequestParam("number") int boardNumber) {
-		BoardJoinUserInfoVO boardJoinUserInfo = userInfoService.getBoardJoinUser(boardNumber, boardJoinUser_id);
-		userInfoService.userBoardOut(boardJoinUser_id, boardNumber);
-		userInfoService.boardJoinUserNumberDown(boardNumber);
-		userInfoService.addAlarmBoardOut(user_id, boardJoinUserInfo, boardNumber);
-		return "redirect:/chatProfile?id=" + user_id + "&number=" + boardNumber;
-	}
-	/* =========== 게시글 회원 추방 ============ */
 }

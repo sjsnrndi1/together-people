@@ -13,25 +13,5 @@ public interface PostingMapper {
 	void deletePostingFail(int postingNumber);
 	/* 포스팅 등록 */
 	
-	ArrayList<PostingInfoVO> getPostings();
-
-	void addUserPosting(PostingInfoVO postingInfo);
-
-	PostingInfoVO getUserPosting(int postingNumber);
-
-	PostingInfoVO getUserPostingInfo(PostingInfoVO posting);
-
-	void updateUserPosting(PostingInfoVO postingInfo);
-
-	void deleteUserPosting(PostingInfoVO postingInfo);
-
-	void updateUserPostingRecommand(PostingInfoVO postingInfo);
-
-	PostingInfoVO getPosting(int postingNumber);
-
-	void userSecession(String userId);
-
-	void adminDeletePosting(int postingNumber);
-
-
+	ArrayList<PostingInfoVO> getPostings(); // 포스팅 가져오기
 }

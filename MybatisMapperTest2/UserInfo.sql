@@ -26,6 +26,8 @@ select * from userInfo
 INSERT INTO userInfo VALUES(userInfo_seq.nextval, 'admin', 'admin', '38455', '경북 경산시 진량읍 대구대로 299-31', '경북 경산시 진량읍 평사리 430-8', '아이파크원룸 210호', 
 '관리자', '남성', '1996', '2', '1', 'sjsnrndi12@naver.com', '6362', sysdate, 'null');
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 CREATE TABLE postingInfo(
 	postingNumber NUMBER PRIMARY KEY,
 	userId VARCHAR2(100),
@@ -43,6 +45,8 @@ CREATE SEQUENCE postingNumber_seq;
 
 select * from postingInfo
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 create table popupInfo (
 	popupNumber NUMBER NOT NULL,
 	userId VARCHAR2(100) NOT NULL,
@@ -52,6 +56,8 @@ create table popupInfo (
 create sequence popupNumber_seq
 
 select * from popupInfo
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 create table popupChatInfo (
 	popupChatNumber NUMBER NOT NULL,
@@ -63,16 +69,35 @@ create table popupChatInfo (
 	
 	PRIMARY KEY(popupChatNumber)
 )
+
 create sequence popupChatNumber_seq
 
 select * from popupChatInfo
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE boardInfo (
+	boardNumber NUMBER NOT NULL,
+	boardUserId VARCHAR2(100) NOT NULL,
+	boardTitle VARCHAR2(1000) NOT NULL,
+	boardWriter VARCHAR2(100) NOT NULL,
+	boardContent VARCHAR2(3000) NOT NULL,
+	boardDate DATE NOT NULL,
+	boardSubject VARCHAR2(20) NOT NULL,
+	
+	PRIMARY KEY(boardNumber)
+)
+
+CREATE SEQUENCE boardNumber_seq;
+
+select * from boardInfo;
+
+insert into boardInfo values (boardNumber_seq.nextval, 'sjsnrndi12', '테스트', '김민성', '테스트중입니다.', sysdate, '자유')
+insert into boardInfo values (boardNumber_seq.nextval, 'sjsnrndi12', '테스트2', '김민성', '테스트2중입니다.', sysdate, '자유')
+insert into boardInfo values (boardNumber_seq.nextval, 'sjsnrndi12', '테스트3', '김민성', '테스트3중입니다.', sysdate, '자유')
 
 
-
-
-
-
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE postingRecommandInfo(
 	postingRecommandNumber NUMBER PRIMARY KEY,

@@ -51,32 +51,8 @@
 		<select id = "selectUserPasswordModify" resultType = "user" parameterType = "map">
 			SELECT * FROM userInfo WHERE user_id = #{user_id} AND user_name = #{user_name} AND user_phone = #{user_phone}
 		</select>
-
-		<select id = "selectUserPasswordInfo" resultType = "string" parameterType = "string">
-			SELECT user_password FROM userInfo WHERE user_id = #{user_id}
-		</select>
-		
-		<select id = "selectUserInfo" resultType = "user" parameterType = "jung.spring.vo.UserIdPasswordVO">
-			SELECT * FROM userInfo WHERE user_id = #{user_id}
-		</select>
-		
-		<select id = "selectUserInfoRecommand" resultType = "user" parameterType = "string">
-			SELECT * FROM userInfo WHERE user_id = #{user_id}
-		</select>
 		
 		<update id = "modifyPassword" parameterType = "map">
 			UPDATE userInfo SET user_password = #{user_password} WHERE user_id = #{user_id}
 		</update>
-		
-		<update id = "modifyUserReport" parameterType = "user">
-			UPDATE userInfo SET user_reportNumber = #{user_reportNumber} WHERE user_id = #{user_id}
-		</update>
-		
-		<update id = "modifyUserInfo" parameterType = "user">
-			UPDATE userInfo SET user_name = #{user_name}, user_postNumber = #{user_postNumber}, user_address = #{user_address}, user_detailAddress = #{user_detailAddress}, user_email = #{user_email}, user_phone = #{user_phone}, user_passwordQuestion = #{user_passwordQuestion}, user_answer = #{user_answer} WHERE user_id = #{user_id}
-		</update>
-		
-		<delete id = "userSecession" parameterType = "string">
-			DELETE userInfo WHERE user_id = #{user_id}
-		</delete>
 	</mapper>
