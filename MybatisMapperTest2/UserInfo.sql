@@ -74,6 +74,8 @@ create sequence popupChatNumber_seq
 
 select * from popupChatInfo
 
+insert into popupChatInfo values(popupChatNumber_seq.nextval, 1, 'admin', '관리자 테스트', '관리자 테스트', sysdate)
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE boardInfo (
@@ -83,7 +85,8 @@ CREATE TABLE boardInfo (
 	boardWriter VARCHAR2(100) NOT NULL,
 	boardContent VARCHAR2(3000) NOT NULL,
 	boardDate DATE NOT NULL,
-	boardSubject VARCHAR2(20) NOT NULL,
+	boardSubject VARCHAR2(100) NOT NULL,
+	boardViews NUMBER NOT NULL,
 	
 	PRIMARY KEY(boardNumber)
 )
@@ -92,10 +95,9 @@ CREATE SEQUENCE boardNumber_seq;
 
 select * from boardInfo;
 
-insert into boardInfo values (boardNumber_seq.nextval, 'sjsnrndi12', '테스트', '김민성', '테스트중입니다.', sysdate, '자유')
-insert into boardInfo values (boardNumber_seq.nextval, 'sjsnrndi12', '테스트2', '김민성', '테스트2중입니다.', sysdate, '자유')
-insert into boardInfo values (boardNumber_seq.nextval, 'sjsnrndi12', '테스트3', '김민성', '테스트3중입니다.', sysdate, '자유')
-
+insert into boardInfo values (boardNumber_seq.nextval, 'sjsnrndi12', '테스트', '김민성', '테스트중입니다.', sysdate, '자유', 0);
+insert into boardInfo values (boardNumber_seq.nextval, 'sjsnrndi12', '테스트2', '김민성', '테스트2중입니다.', sysdate, '자유', 0);
+insert into boardInfo values (boardNumber_seq.nextval, 'sjsnrndi12', '테스트3', '김민성', '테스트3중입니다.', sysdate, '자유', 0);
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

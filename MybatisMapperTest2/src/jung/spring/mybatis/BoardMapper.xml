@@ -11,6 +11,7 @@
 			<result property = "boardContent" column = "BOARDCONTENT"/>
 			<result property = "boardDate" column = "BOARDDATE"/>
 			<result property = "boardSubject" column = "BOARDSUBJECT"/>
+			<result property = "boardViews" column = "BOARDVIEWS"/>
 		</resultMap>
 		
 		<select id = "getBoards" resultType = "jung.spring.vo.BoardInfoVO">
@@ -19,4 +20,7 @@
 		<select id = "getBoard" parameterType = "int" resultType = "jung.spring.vo.BoardInfoVO">
 			SELECT * FROM boardInfo WHERE boardNumber = #{boardNumber}
 		</select>
+		<update id = "countBoardViews" parameterType = "map">
+			UPDATE boardInfo SET boardViews = #{count} WHERE boardNumber = #{boardNumber}
+		</update>
 	</mapper>

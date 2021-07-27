@@ -237,6 +237,11 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 		// TODO Auto-generated method stub
 		BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
 		ArrayList<BoardInfoVO> board = boardMapper.getBoard(boardNumber);
+		int count = board.get(0).getBoardViews() + 1;
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("count", count);
+		map.put("boardNumber", boardNumber);
+		boardMapper.countBoardViews(map);
 		return board;
 	}
 	/* ===========게시글 가져오는 서비스============ */

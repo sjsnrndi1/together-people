@@ -10,6 +10,7 @@ public class BoardInfoVO {
 	private String boardContent;
 	private Date boardDate;
 	private String boardSubject;
+	private int boardViews;
 	
 	public int getBoardNumber() {
 		return boardNumber;
@@ -52,5 +53,11 @@ public class BoardInfoVO {
 	}
 	public void setBoardSubject(String boardSubject) {
 		this.boardSubject = boardSubject;
+	}
+	public int getBoardViews() {
+		return boardViews;
+	}
+	public void setBoardViews(int boardViews) {
+		this.boardViews = boardViews;
 	}
 }
