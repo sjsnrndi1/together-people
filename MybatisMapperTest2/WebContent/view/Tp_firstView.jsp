@@ -181,7 +181,7 @@
 						<li><a href="userRegistAndLogin">회원가입 및 로그인</a></li>
 					</ul>
 				</li>
-				<li><a href="#">커뮤니티</a>
+				<li><a href="communityView">커뮤니티</a>
 					<ul>
 						<li><a href="#">자유게시판</a></li>
 						<li><a href="#">참여게시판</a></li>

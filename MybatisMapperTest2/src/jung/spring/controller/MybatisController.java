@@ -381,64 +381,8 @@ public class MybatisController {
 		}
 	}
 	/* =========== 포스팅 등록 화면 ============ */
-	/*
-	 * =========== 포스팅 수정 화면 ============
-	 * 
-	 * @RequestMapping(value = "/modifyPosting") public ModelAndView
-	 * ModifyPosting(@RequestParam("id") String user_id, @RequestParam("number") int
-	 * postingNumber) { ModelAndView mav = new ModelAndView(); UserInfoVO userInfo =
-	 * userInfoService.selectUserPassword(user_id); PostingInfoVO postingInfo =
-	 * userInfoService.getUserPostingInfo(user_id, postingNumber);
-	 * mav.addObject("userInfo", userInfo); mav.addObject("postingInfo",
-	 * postingInfo); mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-	 * mav.setViewName("modifyPosting"); return mav; }
-	 * 
-	 * @RequestMapping(value = "/modifyPostingForm") public void
-	 * ModifyPosting(@RequestParam("user_id") String user_id,
-	 * 
-	 * @RequestParam("user_name") String user_name, @RequestParam("postingContent")
-	 * String postingContent,
-	 * 
-	 * @RequestParam("postingNumber") int postingNumber,
-	 * 
-	 * @RequestParam("postingRecommandCount") int postingRecommandCount) {
-	 * userInfoService.updateUserPostingInfo(user_id, postingContent, user_name,
-	 * postingNumber, postingRecommandCount); } =========== 포스팅 수정 화면 ============
-	 * 
-	 * =========== 포스팅 삭제 화면 ============
-	 * 
-	 * @RequestMapping(value = "/deletePosting") public ModelAndView
-	 * DeletePosting(@RequestParam("id") String user_id, @RequestParam("number") int
-	 * postingNumber) { ModelAndView mav = new ModelAndView(); UserInfoVO userInfo =
-	 * userInfoService.selectUserPassword(user_id); PostingInfoVO postingInfo =
-	 * userInfoService.getUserPostingInfo(user_id, postingNumber);
-	 * mav.addObject("userInfo", userInfo); mav.addObject("postingInfo",
-	 * postingInfo); mav.addObject("togetherPeopleTitle", togetherPeopleTitle);
-	 * mav.setViewName("deletePosting"); return mav; }
-	 * 
-	 * @RequestMapping(value = "/deletePostingForm") public void
-	 * DeletePostingForm(@RequestParam("user_id") String user_id,
-	 * 
-	 * @RequestParam("user_name") String user_name, @RequestParam("postingContent")
-	 * String postingContent,
-	 * 
-	 * @RequestParam("postingNumber") int postingNumber,
-	 * 
-	 * @RequestParam("postingRecommandCount") int postingRecommandCount) {
-	 * userInfoService.deleteUserPostingInfo(user_id, postingContent, user_name,
-	 * postingNumber, postingRecommandCount); } =========== 포스팅 삭제 화면 ============
-	 * 
-	 * =========== 포스팅 추천 화면 ============
-	 * 
-	 * @RequestMapping(value = "/postingRecommandCount") public String
-	 * PostingRecommandCount(@RequestParam("id") String
-	 * user_id, @RequestParam("number") int postingNumber) {
-	 * userInfoService.createUserPostingRecommand(user_id, postingNumber);
-	 * PostingRecommandInfoVO posting = userInfoService.getPosting(user_id,
-	 * postingNumber); if(posting.getPostingRecommandCountCheck() == 1) {
-	 * userInfoService.addAlarmPosting(user_id, postingNumber); } return
-	 * "redirect:/mainView?id=" + user_id; } =========== 포스팅 추천 화면 ============
-	 */
+	
+	/* 수정, 삭제, 추천, 댓글*/
 
 	/* =========== 소개(CEO) 화면 ============ */
 	@RequestMapping(value = "/noticeView")
@@ -562,8 +506,20 @@ public class MybatisController {
 	}
 	/* =========== 팝업 창 톡톡 사용자 입력 ============ */
 
-	
-	
+	/* =========== 커뮤니티 화면 =========== */
+	@RequestMapping(value = "/communityView")
+	public ModelAndView CommunityView(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String name = httpServletRequest(request);
+		if (name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+
+		mav.setViewName("Tp_communityView");
+		return mav;
+	}
 	
 	
 	

@@ -15,6 +15,14 @@
 	.popup-chat-content-frame {
 		overflow-x : hidden;
 	}
+	
+	.bottomView{
+		border : 1px solid white;
+		width : 100%;
+	}
+	input:focus {
+		outline : none;
+	}
 </style>
 <body>
 	<input type = "hidden" value = "${ssVar}"/>
@@ -66,6 +74,7 @@
 						</c:if>
 					</c:if>
 			</c:forEach>
+			<input type = "text" value = "" readonly autofocus class = "bottomView" />
 		</div>
 		
 		<hr>

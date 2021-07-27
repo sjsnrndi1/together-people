@@ -193,8 +193,8 @@
 			var map = new kakao.maps.Map(container, options);
 			
 			//지도 스카이뷰
-			var mapTypeControl = new kakao.maps.MapTypeControl();
-			map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+			//var mapTypeControl = new kakao.maps.MapTypeControl();
+			//map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 			
 			// 확대축소
 			var zoomControl = new kakao.maps.ZoomControl();
