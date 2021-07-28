@@ -13,4 +13,6 @@ public interface BoardMapper {
 
 	void countBoardViews(HashMap<Object, Object> map); //게시글 조회 수 업
 
+	void addBoard(HashMap<Object, Object> map); //게시글 생성
+
 }

@@ -133,6 +133,20 @@
  		border : 1px solid red;
  		text-align : left;
  	}
+ 	.commu_create_frame {
+ 		font-size : 120%;
+		width : 100%;
+		height : 20px;
+		color : #696969;
+	}
+	.commu_create_frame a:link { text-decoration : none; color : #696969;}
+	.commu_create_frame a:visited { text-decoration : none;color : #696969;}
+	.commu_create_frame a:active {text-decoration : none; color : #2F4F4F; }
+	.commu_create_frame a:hover { text-decoration : none; color : #2F4F4F;}
+	.commu_sort {
+		float : right;
+		margin-right : 7px;
+	}
 </style>
 </head>
 <body>
@@ -195,6 +209,17 @@
 	
 	
 	<div class = "commu_frame">
+		<div class = "commu_create_frame">
+			<c:if test = "${ssVar ne null}">
+				<a href = "communityCreateBoard">작성</a>
+			</c:if>
+			<select name = "sorts" id = "commu_sort" class = "commu_sort">
+				<option value="">정렬</option>
+				<option value="number">번호</option>
+				<option value="writer">작성자</option>
+				<option value="nowDate">작성일</option>
+			</select>
+		</div>
 		<div class = "commu_title_frame">
 			<table class = "commu_title_table">
 				<thead>
@@ -210,7 +235,7 @@
 		</div>
 		<div class = "commu_content_frame">
 			<c:forEach items = "${boardList }" var = "board" varStatus = "status">
-				<c:if test = "${board.boardSubject eq '자유' }">
+				<c:if test = "${board.boardSubject eq 'freedom' }">
 					<table class = "commu_board_table">
 						<thead>
 							<tr>
@@ -219,7 +244,7 @@
 								<td style = "width : 12%;">${board.boardWriter}</td>
 								<fmt:formatDate var = "date" value="${board.boardDate}" pattern="yyyy-MM-dd" />
 								<td style = "width : 10%;">${date}</td>
-								<td style = "width : 10%;">조회수</td>
+								<td style = "width : 10%;">${board.boardViews }</td>
 							</tr>
 						</thead>
 					</table>

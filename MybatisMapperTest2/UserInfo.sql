@@ -101,6 +101,21 @@ insert into boardInfo values (boardNumber_seq.nextval, 'sjsnrndi12', 'Å×½ºÆ®3', 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+CREATE TABLE boardChildInfo (
+	boardChildNumber NUMBER NOT NULL,
+	boardNumber NUMBER NOT NULL,
+	userId VARCHAR2(100) NOT NULL,
+	boardSympathy NUMBER,
+	boardComment VARCHAR2(2000),
+	
+	PRIMARY KEY(boardChildNumber)
+)
+
+CREATE SEQUENCE boardChildNumber_seq;
+
+select * from boardChildInfo;
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE postingRecommandInfo(
 	postingRecommandNumber NUMBER PRIMARY KEY,
 	postingNumber NUMBER,

@@ -9,11 +9,13 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import jung.spring.mybatis.BoardChildMapper;
 import jung.spring.mybatis.BoardMapper;
 import jung.spring.mybatis.MemberMapper;
 import jung.spring.mybatis.PopupChatMapper;
 import jung.spring.mybatis.PopupMapper;
 import jung.spring.mybatis.PostingMapper;
+import jung.spring.vo.BoardChildInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
@@ -246,15 +248,96 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	}
 	/* ===========게시글 가져오는 서비스============ */
 	
+	/* ===========게시글 자식 생성 서비스============ */
+	@Override
+	public void addBoardChild(String name, int boardNumber) {
+		// TODO Auto-generated method stub
+		BoardChildMapper boardChildMapper = sqlSession.getMapper(BoardChildMapper.class);
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		int boardSympathy = 1; // 공감 안누른 상태
+		String boardComment = ""; // 댓글 없는 상태
+		map.put("boardNumber", boardNumber);
+		map.put("boardSympathy", boardSympathy);
+		map.put("boardComment", boardComment);
+		map.put("userId", name);
+		boardChildMapper.addBoardChild(map);
+	}
+	/* ===========게시글 자식 생성 서비스============ */
 	
+	/* ===========게시글 공감 서비스============ */
+	@Override
+	public void updateBoardSympathy(int boardNumber, String name, int sym_count) {
+		// TODO Auto-generated method stub
+		BoardChildMapper boardChildMapper = sqlSession.getMapper(BoardChildMapper.class);
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("boardNumber", boardNumber);
+		map.put("userId", name);
+		if(sym_count == 0) {
+			sym_count = 1;
+			map.put("boardSympathy", sym_count);
+			boardChildMapper.updateBoardSympathy(map);
+		} else if(sym_count == 1) {
+			sym_count = 0;
+			map.put("boardSympathy", sym_count);
+			boardChildMapper.updateBoardSympathy(map);
+		}
+	}
+	/* ===========게시글 공감 서비스============ */
 	
+	/* ===========게시글 생성 서비스============ */
+	@Override
+	public void addBoard(String name, String title, String content, String subject) {
+		// TODO Auto-generated method stub
+		BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
+		MemberMapper userMapper = sqlSession.getMapper(MemberMapper.class);
+		UserInfoVO userInfo = userMapper.getUser(name);
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		int boardViews = 0;
+		map.put("boardUserId", name);
+		map.put("boardTitle", title);
+		map.put("boardWriter", userInfo.getUser_name());
+		map.put("boardContent", content);
+		map.put("boardDate", new Date());
+		map.put("boardSubject", subject);
+		map.put("boardViews", boardViews);
+		boardMapper.addBoard(map);
+	}
+	/* ===========게시글 생성 서비스============ */
 	
+	/* ===========게시글 자식 생성을 위환 게시글 번호 가져오기 서비스============ */
+	@Override
+	public int getBoardNumber() {
+		// TODO Auto-generated method stub
+		BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
+		ArrayList<BoardInfoVO> boardList = boardMapper.getBoards();
+		int boardNumber = boardList.size();
+		ArrayList<BoardInfoVO> board = boardMapper.getBoard(boardNumber);
+		return board.get(0).getBoardNumber();
+	}
+	/* ===========게시글 자식 생성을 위환 게시글 번호 가져오기 서비스============ */
 	
+	/* ===========게시글 공감, 댓글 가져오기 서비스============ */
+	@Override
+	public ArrayList<BoardChildInfoVO> getBoardChildList(int boardNumber) {
+		// TODO Auto-generated method stub
+		BoardChildMapper boardChildMapper = sqlSession.getMapper(BoardChildMapper.class);
+		ArrayList<BoardChildInfoVO> boardChildList = boardChildMapper.getBoardChildList(boardNumber);
+		return boardChildList;
+	}
+	/* ===========게시글 공감, 댓글 가져오기 서비스============ */
 	
-	
-	
-	
-	
+	/* ===========사용자 공감, 댓글 가져오기 서비스============ */
+	@Override
+	public ArrayList<BoardChildInfoVO> getBoardChilds(int boardNumber, String name) {
+		// TODO Auto-generated method stub
+		BoardChildMapper boardChildMapper = sqlSession.getMapper(BoardChildMapper.class);
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("boardNumber", boardNumber);
+		map.put("userId", name);
+		ArrayList<BoardChildInfoVO> boardChilds = boardChildMapper.getBoardChilds(map);
+		return boardChilds;
+	}
+	/* ===========사용자 공감, 댓글 가져오기 서비스============ */
 	
 	
 	

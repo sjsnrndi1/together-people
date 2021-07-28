@@ -24,10 +24,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import jung.spring.svc.UserInfoService;
+import jung.spring.vo.BoardChildInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.ChatInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
@@ -515,6 +518,43 @@ public class MybatisController {
 		return mav;
 	}
 	/* =========== 커뮤니티 화면 =========== */
+
+	/* =========== 커뮤니티 게시글 생성 =========== */
+		@RequestMapping(value = "/communityCreateBoard")
+		public ModelAndView CommunityCreateBoard(HttpServletRequest request) throws Exception {
+			ModelAndView mav = new ModelAndView();
+			
+			String name = httpServletRequest(request);
+			if (name != null) {
+				UserInfoVO userInfo = userInfoService.getUser(name);
+				mav.addObject("userInfo", userInfo);
+			}
+			mav.setViewName("Tp_communityCreateBoard");
+			return mav;
+		}
+		
+		@RequestMapping(value = "/commu_create_board_submit")
+		public ModelAndView Commu_create_board_submit(HttpServletRequest request, @RequestParam("title") String title, 
+				@RequestParam("content") String content, @RequestParam("subject") String subject) throws Exception {
+			ModelAndView mav = new ModelAndView();
+			
+			String name = httpServletRequest(request);
+			if (name != null) {
+				UserInfoVO userInfo = userInfoService.getUser(name);
+				mav.addObject("userInfo", userInfo);
+			}
+			
+			userInfoService.addBoard(name, title, content, subject);
+			int boardNumber = userInfoService.getBoardNumber();
+			userInfoService.addBoardChild(name, boardNumber);
+			List<BoardInfoVO> boardList = userInfoService.getBoards();
+			
+			mav.addObject("boardList", boardList);
+			mav.setViewName("Tp_communityView");
+			return mav;
+		}
+	
+	/* =========== 커뮤니티 게시글 생성 =========== */
 	
 	/* =========== 커뮤니티 게시글 화면 =========== */
 	@RequestMapping(value = "/communityContentView")
@@ -528,6 +568,13 @@ public class MybatisController {
 		}
 		
 		List<BoardInfoVO> board = userInfoService.getBoard(boardNumber);
+		String boardContent = board.get(0).getBoardContent().replace("\r\n", "<br>");
+		//List<BoardChildInfoVO> boardChildList = userInfoService.getBoardChildList(boardNumber);
+		List<BoardChildInfoVO> boardChilds = userInfoService.getBoardChilds(boardNumber, name);
+		
+		//mav.addObject("boardChildList", boardChildList);
+		mav.addObject("boardChilds", boardChilds);
+		mav.addObject("boardContent", boardContent);
 		mav.addObject("boardTitle", board.get(0).getBoardTitle());
 		mav.addObject("board", board);
 		mav.setViewName("Tp_communityContentView");
@@ -535,8 +582,15 @@ public class MybatisController {
 	}
 	/* =========== 커뮤니티 게시글 화면 =========== */
 	
-	
-	
+	/* =========== 커뮤니티 게시글 공감 =========== */
+	@ResponseBody
+	@RequestMapping(value = "sympathy_count", method = RequestMethod.POST)
+	public void memberRegi(int boardNumber, int sym_count, HttpServletRequest request) throws Exception {
+		// sym_count = 0   =>   공감 누른 것   / sym_count = 1  =>  공감 푼 것
+		String name = httpServletRequest(request);
+		userInfoService.updateBoardSympathy(boardNumber, name, sym_count);
+	}
+	/* =========== 커뮤니티 게시글 공감 =========== */
 	
 	
 	

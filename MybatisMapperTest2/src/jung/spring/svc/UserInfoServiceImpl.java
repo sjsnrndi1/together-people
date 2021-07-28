@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jung.spring.dao.UserInfoDAO;
+import jung.spring.vo.BoardChildInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
@@ -165,16 +166,56 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 	/* ===========게시글 화면 가져오는서비스============ */
 	
+	/* ===========게시글 공감 서비스============ */
+	@Override
+	public void addBoardChild(String name, int boardNumber) {
+		// TODO Auto-generated method stub
+		userInfoDAO.addBoardChild(name, boardNumber);
+	}
+	/* ===========게시글 공감 서비스============ */
 	
+	/* ===========게시글 공감 서비스============ */
+	@Override
+	public void updateBoardSympathy(int boardNumber, String name, int sym_count) {
+		// TODO Auto-generated method stub
+		userInfoDAO.updateBoardSympathy(boardNumber, name, sym_count);
+	}
+	/* ===========게시글 공감 서비스============ */
 	
+	/* ===========게시글 생성 서비스============ */
+	@Override
+	public void addBoard(String name, String title, String content, String subject) {
+		// TODO Auto-generated method stub
+		userInfoDAO.addBoard(name, title, content, subject);
+	}
+	/* ===========게시글 생성 서비스============ */
 	
+	/* ===========게시글 자식 생성을 위환 게시글 번호 가져오기 서비스============ */
+	@Override
+	public int getBoardNumber() {
+		// TODO Auto-generated method stub
+		int boardNumber = userInfoDAO.getBoardNumber();
+		return boardNumber;
+	}
+	/* ===========게시글 자식 생성을 위환 게시글 번호 가져오기 서비스============ */
 	
+	/* ===========게시글 공감, 댓글 가져오기 서비스============ */
+	@Override
+	public List<BoardChildInfoVO> getBoardChildList(int boardNumber) {
+		// TODO Auto-generated method stub
+		ArrayList<BoardChildInfoVO> boardChildList = userInfoDAO.getBoardChildList(boardNumber);
+		return boardChildList;
+	}
+	/* ===========게시글 공감, 댓글 가져오기 서비스============ */
 	
-	
-	
-	
-	
-	
+	/* ===========사용자 공감, 댓글 가져오기 서비스============ */
+	@Override
+	public List<BoardChildInfoVO> getBoardChilds(int boardNumber, String name) {
+		// TODO Auto-generated method stub
+		ArrayList<BoardChildInfoVO> boardChilds = userInfoDAO.getBoardChilds(boardNumber, name);
+		return boardChilds;
+	}
+	/* ===========사용자 공감, 댓글 가져오기 서비스============ */
 	
 	
 	

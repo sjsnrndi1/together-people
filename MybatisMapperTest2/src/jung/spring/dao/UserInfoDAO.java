@@ -3,6 +3,8 @@ package jung.spring.dao;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import jung.spring.vo.BoardChildInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.ChatInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
@@ -39,5 +41,11 @@ public interface UserInfoDAO {
 	/********** 게시글 **********/
 	ArrayList<BoardInfoVO> getBoards(); //게시글 목록 가져오기
 	ArrayList<BoardInfoVO> getBoard(int boardNumber); //게시글 보기
+	void addBoardChild(String name, int boardNumber); // 게시글 자식 생성
+	void updateBoardSympathy(int boardNumber, String name, int sym_count); // 게시글 공감
+	void addBoard(String name, String title, String content, String subject); //게시글 생성
+	int getBoardNumber(); //게시글 자식 생성을 위환 게시글 번호 가져오기
+	ArrayList<BoardChildInfoVO> getBoardChildList(int boardNumber); //게시글 공감, 댓글 가져오기
+	ArrayList<BoardChildInfoVO> getBoardChilds(int boardNumber, String name); // 사용자 공감, 댓글 가져오기
 	/********** 게시글 **********/
 }

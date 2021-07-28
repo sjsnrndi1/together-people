@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
+import jung.spring.vo.BoardChildInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
@@ -39,5 +40,11 @@ public interface UserInfoService {
 	/********** 커뮤니티 **********/
 	List<BoardInfoVO> getBoards(); // 커뮤니티 게시글 목록 가져오기
 	List<BoardInfoVO> getBoard(int boardNumber); // 게시글 보기
+	void addBoardChild(String name, int boardNumber); // 게시글 자식 생성
+	void updateBoardSympathy(int boardNumber, String name, int sym_count); // 게시글 공감
+	void addBoard(String name, String title, String content, String subject); //게시글 생성
+	int getBoardNumber(); //게시글 자식 생성을 위환 게시글 번호 가져오기
+	List<BoardChildInfoVO> getBoardChildList(int boardNumber); // 게시글 공감,댓글 가져오기
+	List<BoardChildInfoVO> getBoardChilds(int boardNumber, String name); // 사용자 공감, 댓글 가져오기
 	/********** 커뮤니티 **********/
 }
