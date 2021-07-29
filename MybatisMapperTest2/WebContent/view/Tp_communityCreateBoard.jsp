@@ -23,6 +23,20 @@
 	function closeNav() {
 		document.getElementById('mysidenav').style.width = '0';
 	}
+	function check(){
+		if(boardRegist.commu_subject.value == ""){
+			alert("카테고리를 선택해주세요.");
+			return false;
+		} else if(boardRegist.title.value == ""){
+			alert("제목을 입력해주세요.");
+			return false;
+		} else if(boardRegist.content.value == ""){
+			alert("내용을 입력해주세요.");
+			return false;
+		} else {
+			return true;
+		}
+	}
 </script>
 <style>
 	.commu_board_frame {
@@ -172,10 +186,10 @@
 				</select>
 			</div>
 			<div class = "commu_board_title">
-				<input type = "text" name = "title" value = "" placeholder = "제목"/>
+				<input type = "text" name = "title" id = "title" class = "title" value = "" placeholder = "제목"/>
 			</div>
 			<div class = "commu_board_content">
-				<textarea rows = "33" name = "content" cols = "131" style = "resize : none;"></textarea>
+				<textarea rows = "33" name = "content" id = "content" class = "content" cols = "131" style = "resize : none;"></textarea>
 			</div>
 			<div class = "commu_submit">
 				<input type = "submit" value = "작성" />

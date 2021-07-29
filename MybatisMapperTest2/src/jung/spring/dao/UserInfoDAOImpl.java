@@ -9,13 +9,15 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import jung.spring.mybatis.BoardChildMapper;
+import jung.spring.mybatis.BoardSympathyMapper;
+import jung.spring.mybatis.BoardCommentMapper;
 import jung.spring.mybatis.BoardMapper;
 import jung.spring.mybatis.MemberMapper;
 import jung.spring.mybatis.PopupChatMapper;
 import jung.spring.mybatis.PopupMapper;
 import jung.spring.mybatis.PostingMapper;
-import jung.spring.vo.BoardChildInfoVO;
+import jung.spring.vo.BoardSympathyInfoVO;
+import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
@@ -250,17 +252,15 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	
 	/* ===========게시글 자식 생성 서비스============ */
 	@Override
-	public void addBoardChild(String name, int boardNumber) {
+	public void addBoardSympathy(int boardNumber, String name) {
 		// TODO Auto-generated method stub
-		BoardChildMapper boardChildMapper = sqlSession.getMapper(BoardChildMapper.class);
+		BoardSympathyMapper boardSympathyMapper = sqlSession.getMapper(BoardSympathyMapper.class);
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		int boardSympathy = 1; // 공감 안누른 상태
-		String boardComment = ""; // 댓글 없는 상태
 		map.put("boardNumber", boardNumber);
-		map.put("boardSympathy", boardSympathy);
-		map.put("boardComment", boardComment);
 		map.put("userId", name);
-		boardChildMapper.addBoardChild(map);
+		map.put("boardSympathy", boardSympathy);
+		boardSympathyMapper.addBoardSympathy(map);
 	}
 	/* ===========게시글 자식 생성 서비스============ */
 	
@@ -268,18 +268,18 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	@Override
 	public void updateBoardSympathy(int boardNumber, String name, int sym_count) {
 		// TODO Auto-generated method stub
-		BoardChildMapper boardChildMapper = sqlSession.getMapper(BoardChildMapper.class);
+		BoardSympathyMapper boardSympathyMapper = sqlSession.getMapper(BoardSympathyMapper.class);
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put("boardNumber", boardNumber);
 		map.put("userId", name);
-		if(sym_count == 0) {
+		if(sym_count == 0) { // 공감 해제
 			sym_count = 1;
 			map.put("boardSympathy", sym_count);
-			boardChildMapper.updateBoardSympathy(map);
-		} else if(sym_count == 1) {
+			boardSympathyMapper.updateBoardSympathy(map);
+		} else if(sym_count == 1) { // 공감 하기
 			sym_count = 0;
 			map.put("boardSympathy", sym_count);
-			boardChildMapper.updateBoardSympathy(map);
+			boardSympathyMapper.updateBoardSympathy(map);
 		}
 	}
 	/* ===========게시글 공감 서비스============ */
@@ -316,32 +316,44 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	}
 	/* ===========게시글 자식 생성을 위환 게시글 번호 가져오기 서비스============ */
 	
-	/* ===========게시글 공감, 댓글 가져오기 서비스============ */
+	/* ===========사용자 공감 목록 가져오기 서비스============ */
 	@Override
-	public ArrayList<BoardChildInfoVO> getBoardChildList(int boardNumber) {
+	public ArrayList<BoardSympathyInfoVO> getBoardSympathys(int boardNumber, String name) {
 		// TODO Auto-generated method stub
-		BoardChildMapper boardChildMapper = sqlSession.getMapper(BoardChildMapper.class);
-		ArrayList<BoardChildInfoVO> boardChildList = boardChildMapper.getBoardChildList(boardNumber);
-		return boardChildList;
-	}
-	/* ===========게시글 공감, 댓글 가져오기 서비스============ */
-	
-	/* ===========사용자 공감, 댓글 가져오기 서비스============ */
-	@Override
-	public ArrayList<BoardChildInfoVO> getBoardChilds(int boardNumber, String name) {
-		// TODO Auto-generated method stub
-		BoardChildMapper boardChildMapper = sqlSession.getMapper(BoardChildMapper.class);
+		BoardSympathyMapper boardSympathyMapper = sqlSession.getMapper(BoardSympathyMapper.class);
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put("boardNumber", boardNumber);
 		map.put("userId", name);
-		ArrayList<BoardChildInfoVO> boardChilds = boardChildMapper.getBoardChilds(map);
-		return boardChilds;
+		ArrayList<BoardSympathyInfoVO> boardSympathys = boardSympathyMapper.getBoardSympathys(map);
+		return boardSympathys;
 	}
-	/* ===========사용자 공감, 댓글 가져오기 서비스============ */
+	/* ===========사용자 공감 목록 가져오기 서비스============ */
 	
+	/* ===========게시글 댓글 생성 서비스============ */
+	@Override
+	public void addBoardComment(int boardNumber, String name) {
+		// TODO Auto-generated method stub
+		BoardCommentMapper boardCommentMapper = sqlSession.getMapper(BoardCommentMapper.class);
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("boardNumber", boardNumber);
+		map.put("userId", name);
+		map.put("boardComment", "");
+		boardCommentMapper.addBoardComment(map);
+	}
+	/* ===========게시글 댓글 생성 서비스============ */
 	
-	
-	
+	/* ===========사용자 댓글 목록 가져오기 서비스============ */
+	@Override
+	public ArrayList<BoardCommentInfoVO> getBoardComments(int boardNumber, String name) {
+		// TODO Auto-generated method stub
+		BoardCommentMapper boardCommentMapper = sqlSession.getMapper(BoardCommentMapper.class);
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("boardNumber", boardNumber);
+		map.put("userId", name);
+		ArrayList<BoardCommentInfoVO> boardComments = boardCommentMapper.getBoardComments(map);
+		return boardComments;
+	}
+	/* ===========사용자 댓글 목록 가져오기 서비스============ */
 	
 	
 	

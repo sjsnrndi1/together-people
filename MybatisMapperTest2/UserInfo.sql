@@ -101,21 +101,57 @@ insert into boardInfo values (boardNumber_seq.nextval, 'sjsnrndi12', 'Å×½ºÆ®3', 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CREATE TABLE boardChildInfo (
-	boardChildNumber NUMBER NOT NULL,
-	boardNumber NUMBER NOT NULL,
+CREATE TABLE boardSympathyInfo (
+	boardSympathyNumber NUMBER NOT NULL,
+	boardNumber NUMBER,
 	userId VARCHAR2(100) NOT NULL,
 	boardSympathy NUMBER,
-	boardComment VARCHAR2(2000),
 	
-	PRIMARY KEY(boardChildNumber)
-)
+	PRIMARY KEY(boardSympathyNumber)
+);
 
-CREATE SEQUENCE boardChildNumber_seq;
+CREATE SEQUENCE boardSympathyNumber_seq;
 
-select * from boardChildInfo;
+select * from boardSympathyInfo;
 
+drop TABLE boardSympathyInfo;
+drop SEQUENCE boardSympathyNumber_seq;
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE boardCommentInfo (
+	boardCommentNumber NUMBER NOT NULL,
+	boardNumber NUMBER,
+	userId VARCHAR2(100) NOT NULL,
+	boardComment VARCHAR2(3000),
+	
+	PRIMARY KEY(boardCommentNumber)
+);
+
+CREATE SEQUENCE boardCommentNumber_seq;
+
+select * from boardCommentInfo;
+
+drop TABLE boardCommentInfo;
+drop SEQUENCE boardCommentNumber_seq;
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 CREATE TABLE postingRecommandInfo(
 	postingRecommandNumber NUMBER PRIMARY KEY,
 	postingNumber NUMBER,

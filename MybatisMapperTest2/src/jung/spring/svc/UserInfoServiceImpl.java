@@ -7,7 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jung.spring.dao.UserInfoDAO;
-import jung.spring.vo.BoardChildInfoVO;
+import jung.spring.vo.BoardSympathyInfoVO;
+import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
@@ -168,9 +169,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 	
 	/* ===========게시글 공감 서비스============ */
 	@Override
-	public void addBoardChild(String name, int boardNumber) {
+	public void addBoardSympathy(int boardNumber, String name) {
 		// TODO Auto-generated method stub
-		userInfoDAO.addBoardChild(name, boardNumber);
+		userInfoDAO.addBoardSympathy(boardNumber, name);
 	}
 	/* ===========게시글 공감 서비스============ */
 	
@@ -199,23 +200,38 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 	/* ===========게시글 자식 생성을 위환 게시글 번호 가져오기 서비스============ */
 	
-	/* ===========게시글 공감, 댓글 가져오기 서비스============ */
+	/* ===========사용자 공감 목록 가져오기 서비스============ */
 	@Override
-	public List<BoardChildInfoVO> getBoardChildList(int boardNumber) {
+	public List<BoardSympathyInfoVO> getBoardSympathys(int boardNumber, String name) {
 		// TODO Auto-generated method stub
-		ArrayList<BoardChildInfoVO> boardChildList = userInfoDAO.getBoardChildList(boardNumber);
-		return boardChildList;
+		ArrayList<BoardSympathyInfoVO> boardSympathys = userInfoDAO.getBoardSympathys(boardNumber, name);
+		return boardSympathys;
 	}
-	/* ===========게시글 공감, 댓글 가져오기 서비스============ */
+	/* ===========사용자 공감 목록 가져오기 서비스============ */
 	
-	/* ===========사용자 공감, 댓글 가져오기 서비스============ */
+	/* ===========게시글 댓글 생성 서비스============ */
 	@Override
-	public List<BoardChildInfoVO> getBoardChilds(int boardNumber, String name) {
+	public void addBoardComment(int boardNumber, String name) {
 		// TODO Auto-generated method stub
-		ArrayList<BoardChildInfoVO> boardChilds = userInfoDAO.getBoardChilds(boardNumber, name);
-		return boardChilds;
+		userInfoDAO.addBoardComment(boardNumber, name);
 	}
-	/* ===========사용자 공감, 댓글 가져오기 서비스============ */
+	/* ===========게시글 댓글 생성 서비스============ */
+	
+	/* ===========사용자 댓글 목록 가져오기 서비스============ */
+	@Override
+	public List<BoardCommentInfoVO> getBoardComments(int boardNumber, String name) {
+		// TODO Auto-generated method stub
+		ArrayList<BoardCommentInfoVO> boardComments = userInfoDAO.getBoardComments(boardNumber, name);
+		return boardComments;
+	}
+	/* ===========사용자 댓글 목록 가져오기 서비스============ */
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

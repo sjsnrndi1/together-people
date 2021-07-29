@@ -70,18 +70,25 @@
 		document.body.removeChild(textarea);
 		alert("URL이 복사되었습니다.")
 	}
-	var sym_count = ${boardChilds[0].boardSympathy};
+	<c:choose>
+		<c:when test = "${ssVar eq null }">
+			var sym_count = 1;
+		</c:when>
+		<c:when test = "${ssVar ne null }">
+			var sym_count = ${boardSympathyList[0].boardSympathy};
+		</c:when>
+	</c:choose>
 	function sympathy_button(){
 		$.ajax({
 			url: "sympathy_count",
 		    data: "boardNumber=" + ${board[0].boardNumber} + "&sym_count=" + sym_count,
-		    type: "POST",
-		    success : function(data){
+		    type: "POST"
+		   /*  success : function(data){
 		      alert("성공")
 		    },
 		    error : function(){
 		      alert("에러")		
-		    }
+		    } */
 		})
 		var property = document.getElementById("sympathyBtn");
 		if(sym_count == 0){
@@ -108,6 +115,14 @@
 	  	$("#comment_frame").toggle();
 	  });
 	});
+	function testtest() {
+		$.ajax({
+			url: "comment_test",
+		    data: "comment=" + document.getElementById("test").innerHTML + "&boardNumber=" + ${board[0].boardNumber},
+		    type: "POST"
+		})
+		document.getElementById("test").innerHTML = "";
+	}
 </script>
 <style>
 	.commu_board_frame {
@@ -175,17 +190,6 @@
 		padding-left : 22px;
 		float : left;
 	}
-	.comment_frame {
-		display : none;
-		margin : 2px;
-		float : left;
-		padding-left : 22px;
-		padding-top : 15px;
-		width : 97%;
-		height : auto;
-		border-top : 1px solid #BC8F8F;
-	}
-	
 	button {
 		margin-left : 20px;
 	}
@@ -198,6 +202,106 @@
  		margin-top : 10%;
  		bottom : 0;
  	}
+ 	.comment_frame {
+		display : none;
+		margin : 2px;
+		float : left;
+		width : 100%;
+		height : auto;
+		border-top : 1px solid #BC8F8F;
+	}
+	textarea:focus {
+		outline : none;
+	}
+	.all_comment_frame {
+		margin : 2px;
+		width : 99.3%;
+		margin-bottom : 5%;
+	}
+	.all_user_picture_name{
+	 	margin : 2px;
+	 	width : 99.3%;
+	 	height : 25px;
+	}
+	.all_user_comment{
+	 	margin : 2px;
+	 	width : 99.3%;
+	 	height : auto;
+	}
+	.all_user_comment_time{
+	 	margin : 2px;
+	 	width : 99.3%;
+	 	height : 20px;
+	 }
+	.child_comment_sympathy_btn{
+		border-bottom : 1px solid #BC8F8F;
+		margin : 2px;
+		width : 99.3%;
+		height : 20px;
+	}
+	.child_comment_sympathy_btn span {
+		margin-left : 88.5%;
+	}
+	.my_comment_frame{
+		border : 1px solid #8B4513;
+		margin : 2px;
+		width : 99.3%;
+		height : 132px;
+		border-radius : 5px; 
+	}
+	.my_name_frame{
+		margin : 2px;
+		width : 99.3%;
+		height : 20px;
+	}
+	.my_comment_write_frame{
+		border : 1px solid #BC8F8F;
+		border-radius : 5px;
+		margin : 2px;
+		width : 99.3%;
+		height : 50px;
+	}
+	.my_comment_write_frame:focus {
+		outline : none;
+	}
+	.writeNumber_frame{
+		border-bottom : 1px solid #BC8F8F;
+		margin : 2px;
+		width : 99.3%;
+		height : 20px;
+		text-align : right;
+	}
+	.empty_frame{
+		border-right : 1px solid #BC8F8F;
+		margin : 2px;
+		width : 93%;
+		height : 22px;
+		float : left;
+	}
+	.my_comment_input_frame{
+		margin : 2px;
+		width : 5.6%;
+		height : 22px;
+		float : left;
+	}
+	.my_comment_input_frame input{
+		width : 100%;
+		height : 100%;
+		background-color : white;
+		border : 1px solid white;
+		font-weight : bold;
+	}
+	.login_before_my_comment {
+		display : flex;
+		height : 132px;
+		justify-content : center;
+		align-items : center;
+		border : 1px sold gray;
+	}
+	.login_before_my_comment a:link { text-decoration : none; color : #E9967A;}
+	.login_before_my_comment a:visited { text-decoration : none;color : #E9967A;}
+	.login_before_my_comment a:active {text-decoration : none; color : #E9967A; }
+	.login_before_my_comment a:hover { text-decoration : none; color : #E9967A;}
 </style>
 </head>
 <body>
@@ -257,8 +361,6 @@
 		</div>					
 	</div>
 	
-	
-	
 	<div class = "commu_board_frame">
 		<div class = "commu_board_subject"> <!-- 선택 분류 -->
 			${board[0].boardSubject }
@@ -266,30 +368,68 @@
 		<div class = "commu_board_title"> <!-- 제목 -->
 			${board[0].boardTitle }
 		</div>
-		<div class = "commu_board_user"> <!-- 사용자/관리자   시간   url복사 -->
+		<div class = "commu_board_user"> <!-- 사용자/관리자   시간   url복사  / 1 ~ 7 / 일 ~ 토-->
 			<table>
 				<tr>
 					<td class = "commu_board_user_writer">${board[0].boardWriter}</td>
 					<c:set var="now" value="<%=new java.util.Date()%>" /> 
-					<fmt:formatDate var = "nowDate" value="${now}" pattern="k" />
-					<fmt:formatDate var = "writeDate" value="${board[0].boardDate}" pattern="k" />
+					<fmt:formatDate var = "nowDate" value="${now}" pattern="y" />
+					<fmt:formatDate var = "writeDate" value="${board[0].boardDate}" pattern="y" />
 					<c:choose>
 						<c:when test = "${nowDate - writeDate > 0}">
-							<td class = "commu_board_user_time">${nowDate - writeDate}시간 전</td>
+							<td class = "commu_board_user_time">${nowDate - writeDate}년 전</td>
 						</c:when>
-						<c:when test = "${nowDate - writeDate <= 0}">
-							<fmt:formatDate var = "nowDate" value="${now}" pattern="mm" />
-							<fmt:formatDate var = "writeDate" value="${board[0].boardDate}" pattern="mm" />
-							<td class = "commu_board_user_time">${nowDate - writeDate}분 전</td>
+						<c:when test = "${nowDate - writeDate eq 0}">
+							<fmt:formatDate var = "nowDate" value="${now}" pattern="M" />
+							<fmt:formatDate var = "writeDate" value="${board[0].boardDate}" pattern="M" />
+							<c:choose>
+								<c:when test = "${nowDate - writeDate > 0 }">
+									<td class = "commu_board_user_time">${nowDate - writeDate}달 전</td>
+								</c:when>
+								<c:when test = "${nowDate - writeDate eq 0 }">
+									<fmt:formatDate var = "nowDate" value="${now}" pattern="d" />
+									<fmt:formatDate var = "writeDate" value="${board[0].boardDate}" pattern="d" />
+									<c:choose>
+										<c:when test = "${nowDate - writeDate > 0}">
+											<td class = "commu_board_user_time">${nowDate - writeDate}일 전</td>
+										</c:when>
+										<c:when test = "${nowDate - writeDate eq 0}">
+											<fmt:formatDate var = "nowDate" value="${now}" pattern="k" />
+											<fmt:formatDate var = "writeDate" value="${board[0].boardDate}" pattern="k" />
+											<c:choose>
+												<c:when test = "${nowDate - writeDate > 0}">
+													<td class = "commu_board_user_time">${nowDate - writeDate}시간 전</td>
+												</c:when>
+												<c:when test = "${nowDate - writeDate eq 0}">
+													<fmt:formatDate var = "nowDate" value="${now}" pattern="mm" />
+													<fmt:formatDate var = "writeDate" value="${board[0].boardDate}" pattern="mm" />
+													<c:choose>
+														<c:when test = "${nowDate - writeDate > 0}">
+															<td class = "commu_board_user_time">${nowDate - writeDate}분 전</td>
+														</c:when>
+														<c:when test = "${nowDate - writeDate eq 0}">
+															<td class = "commu_board_user_time">방금</td>
+														</c:when>
+													</c:choose>
+												</c:when>
+											</c:choose>
+										</c:when>
+									</c:choose>
+								</c:when>
+							</c:choose>
 						</c:when>
+						<c:otherwise>
+							<td class = "commu_board_user_time">에러</td>
+						</c:otherwise>
 					</c:choose>
+					
 					<td class = "commu_board_user_url"><a href="#" onclick="clip(); return false;">URL주소복사</a></td>
 				</tr>
 			</table>
 		</div>
 		<div class = "commu_board_content"> <!-- 내용 + 사진(선택사항) -->
 			${boardContent }
-			<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		</div>
 		<div class = "commu_board_sympathy_comment"> <!-- 공감/댓글 -->
 			<c:choose>
@@ -298,10 +438,10 @@
 				</c:when>
 				<c:when test = "${ssVar ne null }">
 					<c:choose>
-						<c:when test = "${boardChilds[0].boardSympathy eq 0 }">
+						<c:when test = "${boardSympathyList[0].boardSympathy eq 0 }">
 							<button type = "button" id = "sympathy_btn" onclick = "sympathy_button()">공감<span id = "sympathyBtn" style = "color : red;">♡</span></button>
 						</c:when>
-						<c:when test = "${boardChilds[0].boardSympathy eq 1 }">
+						<c:when test = "${boardSympathyList[0].boardSympathy eq 1 }">
 							<button type = "button" id = "sympathy_btn" onclick = "sympathy_button()">공감<span id = "sympathyBtn" style = "color : white;">♡</span></button>
 						</c:when>
 					</c:choose>
@@ -312,12 +452,51 @@
 		
 		
 		<div id = "comment_frame" class = "comment_frame">
-			ㅋ<br>
-			ㅋㅋ
+			<div class = "all_comment_frame">
+				<div class = "all_user_picture_name">
+					사진 / 이름
+				</div>
+				<div class = "all_user_comment">
+					내용
+				</div>
+				<div class = "all_user_comment_time">
+					시간
+				</div>
+				<div class = "child_comment_sympathy_btn">
+					답글버튼<span>공감버튼</span>
+				</div>
+			</div> 
+			<div class = "my_comment_frame">
+				<c:choose>
+					<c:when test = "${ssVar eq null }">
+						<div class = "login_before_my_comment">
+							댓글을 작성하시려면&nbsp; <a href = "loginView"> 로그인 </a> &nbsp;후 이용해 주시기 바랍니다.
+						</div>
+					</c:when>
+					<c:when test = "${ssVar ne null }">
+						<div class = "my_name_frame">
+							${userInfo.user_name }
+						</div>
+						<form action = "my_comment_input_form" name = "myCommentInputForm" method = "POST" onsubmit = "return check()">
+							<div contentEditable="true" id = "test" spellcheck="false" class = "my_comment_write_frame">
+							
+							</div>
+						<div class = "writeNumber_frame">
+							타자 수
+						</div>
+						<div class = "empty_frame">
+							
+						</div>
+						<div class = "my_comment_input_frame">
+							<input type = "button" onclick = "testtest()" value = "등록"/>
+						</div>
+						</form>
+					</c:when>
+				</c:choose>
+			</div>
 		</div>
 	</div>
-	
-	
+
 	
 	<div class = "submenu-frame">
 		<div class = "submenu-phone-app">

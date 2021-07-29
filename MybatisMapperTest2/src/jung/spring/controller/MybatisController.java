@@ -30,7 +30,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import jung.spring.svc.UserInfoService;
-import jung.spring.vo.BoardChildInfoVO;
+import jung.spring.vo.BoardSympathyInfoVO;
+import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.ChatInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
@@ -196,7 +197,7 @@ public class MybatisController {
 		userInfoService.addUserInfo(map);
 		userInfoService.addUserPopup(user_id);
 		mav.addObject("user_name", user_name);
-
+		
 		List<UserInfoVO> userList = userInfoService.getMembers();
 		List<PostingInfoVO> postingList = userInfoService.getPostings();
 		mav.addObject("userList", userList);
@@ -545,8 +546,6 @@ public class MybatisController {
 			}
 			
 			userInfoService.addBoard(name, title, content, subject);
-			int boardNumber = userInfoService.getBoardNumber();
-			userInfoService.addBoardChild(name, boardNumber);
 			List<BoardInfoVO> boardList = userInfoService.getBoards();
 			
 			mav.addObject("boardList", boardList);
@@ -565,18 +564,27 @@ public class MybatisController {
 		if (name != null) {
 			UserInfoVO userInfo = userInfoService.getUser(name);
 			mav.addObject("userInfo", userInfo);
+			List<BoardSympathyInfoVO> boardSympathys = userInfoService.getBoardSympathys(boardNumber, name);
+			List<BoardCommentInfoVO> boardComments = userInfoService.getBoardComments(boardNumber, name);
+			
+			if(boardSympathys.size() == 0) {			
+				userInfoService.addBoardSympathy(boardNumber, name);
+				List<BoardSympathyInfoVO> boardSympathys_result = userInfoService.getBoardSympathys(boardNumber, name);
+				mav.addObject("boardSympathyList", boardSympathys_result);
+			}
+			if(boardComments.size() == 0) {
+				userInfoService.addBoardComment(boardNumber, name);
+				List<BoardCommentInfoVO> boardComments_result = userInfoService.getBoardComments(boardNumber, name);
+				mav.addObject("boardCommentList", boardComments_result);
+			}
 		}
 		
 		List<BoardInfoVO> board = userInfoService.getBoard(boardNumber);
 		String boardContent = board.get(0).getBoardContent().replace("\r\n", "<br>");
-		//List<BoardChildInfoVO> boardChildList = userInfoService.getBoardChildList(boardNumber);
-		List<BoardChildInfoVO> boardChilds = userInfoService.getBoardChilds(boardNumber, name);
-		
-		//mav.addObject("boardChildList", boardChildList);
-		mav.addObject("boardChilds", boardChilds);
 		mav.addObject("boardContent", boardContent);
 		mav.addObject("boardTitle", board.get(0).getBoardTitle());
 		mav.addObject("board", board);
+
 		mav.setViewName("Tp_communityContentView");
 		return mav;
 	}
@@ -592,7 +600,21 @@ public class MybatisController {
 	}
 	/* =========== 커뮤니티 게시글 공감 =========== */
 	
-	
+	/* =========== 커뮤니티 게시글 댓글 =========== */
+	@ResponseBody
+	@RequestMapping(value = "comment_test", method = RequestMethod.POST)
+	public void My_comment_input_form(HttpServletRequest request, String comment, int boardNumber) throws Exception {
+		/*
+		List<BoardInfoVO> board = userInfoService.getBoard(boardNumber);
+		String boardContent = board.get(0).getBoardContent().replace("\r\n", "<br>");
+		mav.addObject("boardContent", boardContent);
+		mav.addObject("boardTitle", board.get(0).getBoardTitle());
+		mav.addObject("board", board);
+		
+		mav.setViewName("Tp_communityContentView");
+		*/
+	}
+	/* =========== 커뮤니티 게시글 댓글 =========== */
 	
 	
 	

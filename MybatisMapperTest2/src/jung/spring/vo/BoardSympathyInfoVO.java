@@ -1,10 +1,9 @@
 package jung.spring.vo;
 
-public class BoardChildInfoVO {
-	private int boardChildNumber;
+public class BoardSympathyInfoVO {
+	private int boardSympathyNumber;
 	private int boardNumber;
 	private int boardSympathy;
-	private String boardComment;
 	private String userId;
 	
 	public String getUserId() {
@@ -13,11 +12,11 @@ public class BoardChildInfoVO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public int getBoardChildNumber() {
-		return boardChildNumber;
+	public int getBoardSympathyNumber() {
+		return boardSympathyNumber;
 	}
-	public void setBoardChildNumber(int boardChildNumber) {
-		this.boardChildNumber = boardChildNumber;
+	public void setBoardSympathyNumber(int boardSympathyNumber) {
+		this.boardSympathyNumber = boardSympathyNumber;
 	}
 	public int getBoardNumber() {
 		return boardNumber;
@@ -30,12 +29,6 @@ public class BoardChildInfoVO {
 	}
 	public void setBoardSympathy(int boardSympathy) {
 		this.boardSympathy = boardSympathy;
-	}
-	public String getBoardComment() {
-		return boardComment;
-	}
-	public void setBoardComment(String boardComment) {
-		this.boardComment = boardComment;
 	}
 	
 }
