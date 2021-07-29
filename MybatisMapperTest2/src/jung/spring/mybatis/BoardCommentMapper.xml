@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace = "jung.spring.mybatis.BoardCommentMapper">
+		<resultMap type = "jung.spring.vo.BoardCommentInfoVO" id = "BoardCommentResultMap">			
+			<result property = "boardCommentNumber" column = "BOARDCOMMENTNUMBER"/>
+			<result property = "boardNumber" column = "BOARDNUMBER"/>
+			<result property = "userId" column = "USERID"/>
+			<result property = "boardComment" column = "BOARDCOMMENT"/>
+		</resultMap>
+		
+		<insert id = "addBoardComment" parameterType = "map">
+			INSERT INTO boardCommentInfo VALUES ( boardCommentNumber_seq.nextval, #{boardNumber}, #{userId}, #{boardComment})
+		</insert>
+		
+		<select id = "getBoardComments" resultType = "jung.spring.vo.BoardCommentInfoVO">
+			SELECT * FROM boardCommentInfo WHERE boardNumber = #{boardNumber} AND userId = #{userId}
+		</select>
+		
+	</mapper>
