@@ -120,7 +120,22 @@
 			url: "comment_test",
 		    data: "comment=" + document.getElementById("test").innerHTML + "&boardNumber=" + ${boardInfo.boardNumber},
 		    type: "POST"
-		})
+		}).done(function(result) {
+			console.log("결과확인");
+			var html = jQuery('<div>').html(result);
+			var contents = html.find("div#all_comment_frame").html();
+			if(tab == "ing"){
+				$("#tabl1").html(contents);
+			} else if(tab == "end"){
+				$("#tabl2").html(contents);
+			}
+		}).fail(function (jqXHR, textStatus, errorThrown) {
+			console.log("에러");
+			console.log(jqXHR);
+			console.log(textStatus);
+			console.log(errorThrown);
+		});
+
 		document.getElementById("test").innerHTML = "";
 	}
 	
@@ -460,7 +475,7 @@
 		
 		<div id = "comment_frame" class = "comment_frame">
 			<c:forEach items = "${boardCommentList }" var = "boardComment">
-				<div class = "all_comment_frame">
+				<div id = "all_comment_frame" class = "all_comment_frame">
 					<div class = "all_user_picture_name">
 						${boardComment.userName}
 					</div>
