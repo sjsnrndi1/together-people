@@ -41,13 +41,13 @@ public interface UserInfoDAO {
 	
 	/********** 게시글 **********/
 	ArrayList<BoardInfoVO> getBoards(); //게시글 목록 가져오기
-	ArrayList<BoardInfoVO> getBoard(int boardNumber); //게시글 보기
+	BoardInfoVO getBoard(int boardNumber); //게시글 보기
 	void addBoardSympathy(int boardNumber, String name); // 게시글 공감 생성
-	void addBoardComment(int boardNumber, String name); // 게시글 댓글 생성
+	void addBoardComment(int boardNumber, String name, String comment, String userName); // 게시글 댓글 생성
 	void updateBoardSympathy(int boardNumber, String name, int sym_count); // 게시글 공감
 	void addBoard(String name, String title, String content, String subject); //게시글 생성
 	int getBoardNumber(); //게시글 자식 생성을 위환 게시글 번호 가져오기
-	ArrayList<BoardSympathyInfoVO> getBoardSympathys(int boardNumber, String name); // 사용자 공감 목록 가져오기
-	ArrayList<BoardCommentInfoVO> getBoardComments(int boardNumber, String name); // 사용자 댓글 목록 가져오기
+	BoardSympathyInfoVO getBoardSympathy(int boardNumber, String name); // 사용자 공감 가져오기
+	ArrayList<BoardCommentInfoVO> getBoardComments(int boardNumber); // 사용자 댓글 목록 가져오기
 	/********** 게시글 **********/
 }

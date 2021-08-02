@@ -7,8 +7,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${boardTitle }</title>
+<title>${boardInfo.boardTitle }</title>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- 제이쿼리 -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css"> <!-- 폰트 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/sidebar.css"> <!-- 사이드바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/titlebar.css"> <!-- 타이틀바 -->
@@ -70,25 +71,20 @@
 		document.body.removeChild(textarea);
 		alert("URL이 복사되었습니다.")
 	}
+	
 	<c:choose>
 		<c:when test = "${ssVar eq null }">
 			var sym_count = 1;
 		</c:when>
 		<c:when test = "${ssVar ne null }">
-			var sym_count = ${boardSympathyList[0].boardSympathy};
+			var sym_count = ${boardSympathy};
 		</c:when>
 	</c:choose>
 	function sympathy_button(){
 		$.ajax({
 			url: "sympathy_count",
-		    data: "boardNumber=" + ${board[0].boardNumber} + "&sym_count=" + sym_count,
+		    data: "boardNumber=" + ${boardInfo.boardNumber} + "&sym_count=" + sym_count,
 		    type: "POST"
-		   /*  success : function(data){
-		      alert("성공")
-		    },
-		    error : function(){
-		      alert("에러")		
-		    } */
 		})
 		var property = document.getElementById("sympathyBtn");
 		if(sym_count == 0){
@@ -99,6 +95,7 @@
 			sym_count = 0;
 		}
 	}
+	
 	var comm_count = 1;
 	function comment_button(){
 		var property = document.getElementById("commentBtn");
@@ -110,18 +107,75 @@
 			comm_count = 0;
 		}
 	}
+	
 	$(function (){
 		$("#comment_btn").click(function (){
 	  	$("#comment_frame").toggle();
 	  });
 	});
+	
 	function testtest() {
+		<c:set var = "userName" value = "${userInfo.user_name}" />
 		$.ajax({
 			url: "comment_test",
-		    data: "comment=" + document.getElementById("test").innerHTML + "&boardNumber=" + ${board[0].boardNumber},
+		    data: "comment=" + document.getElementById("test").innerHTML + "&boardNumber=" + ${boardInfo.boardNumber},
 		    type: "POST"
 		})
 		document.getElementById("test").innerHTML = "";
+	}
+	
+	function writeDate() {
+		<c:set var = "now" value = "<%=new java.util.Date()%>" />
+		<fmt:formatDate var = "nowDate" value="${now}" pattern="y" />
+		<fmt:formatDate var = "writeDate" value="${boardInfo.boardDate}" pattern="y" />
+		if (${nowDate - writeDate} > 0) {
+			// 년
+			document.write(${nowDate - writeDate} + "년 전");
+		} else if (${nowDate - writeDate} == 0) {
+			//달
+			<fmt:formatDate var = "nowDate" value="${now}" pattern="M" />
+			<fmt:formatDate var = "writeDate" value="${boardInfo.boardDate}" pattern="M" />
+			if(${nowDate - writeDate} > 0 ) {
+				<fmt:formatDate var = "nowDate" value="${now}" pattern="d" />
+				<fmt:formatDate var = "writeDate" value="${boardInfo.boardDate}" pattern="d" />
+				if(${nowDate - writeDate} < 0) {
+					<fmt:formatDate var = "writeDate_year" value="${boardInfo.boardDate}" pattern="y" />
+					<fmt:formatDate var = "writeDate_month" value="${boardInfo.boardDate}" pattern="M" />
+					let lastDate = new Date(${writeDate_year}, ${writeDate_month}, 0);
+					<fmt:formatDate var = "nowDate_day" value="${now}" pattern="d" />
+					<fmt:formatDate var = "writeDate_day" value="${boardInfo.boardDate}" pattern="d" />
+					let first_date = lastDate.getDate() - ${writeDate_day} + ${nowDate_day};
+					document.write(first_date + "일 전"); 
+				} else if (${nowDate - writeDate} >= 0) {
+					<fmt:formatDate var = "nowDate" value="${now}" pattern="M" />
+					<fmt:formatDate var = "writeDate" value="${boardInfo.boardDate}" pattern="M" />
+					document.write(${nowDate - writeDate} + "달 전");
+				}
+			} else if (${nowDate - writeDate} == 0) {
+				//일
+				<fmt:formatDate var = "nowDate" value="${now}" pattern="d" />
+				<fmt:formatDate var = "writeDate" value="${boardInfo.boardDate}" pattern="d" />
+				if(${nowDate - writeDate} > 0) {
+					document.write(${nowDate - writeDate} + "일 전");
+				} else if (${nowDate - writeDate} == 0) {
+					//시간
+					<fmt:formatDate var = "nowDate" value="${now}" pattern="k" />
+					<fmt:formatDate var = "writeDate" value="${boardInfo.boardDate}" pattern="k" />
+					if (${nowDate - writeDate} > 0) {
+						document.write(${nowDate - writeDate} + "시간 전");					
+					} else if (${nowDate - writeDate} == 0) {
+						//분
+						<fmt:formatDate var = "nowDate" value="${now}" pattern="mm" />
+						<fmt:formatDate var = "writeDate" value="${boardInfo.boardDate}" pattern="mm" />
+						if (${nowDate - writeDate} > 0) {
+							document.write(${nowDate - writeDate} + "분 전");								
+						} else {
+							document.write("방금");
+						}
+					}
+				}
+			}
+		}
 	}
 </script>
 <style>
@@ -216,7 +270,9 @@
 	.all_comment_frame {
 		margin : 2px;
 		width : 99.3%;
-		margin-bottom : 5%;
+		padding-bottom : 2%;
+		padding-top : 2%;
+		border-bottom : 1px solid #BC8F8F;
 	}
 	.all_user_picture_name{
 	 	margin : 2px;
@@ -232,9 +288,10 @@
 	 	margin : 2px;
 	 	width : 99.3%;
 	 	height : 20px;
+	 	font-size : 80%;
+	 	margin-top : 2%;
 	 }
 	.child_comment_sympathy_btn{
-		border-bottom : 1px solid #BC8F8F;
 		margin : 2px;
 		width : 99.3%;
 		height : 20px;
@@ -363,66 +420,16 @@
 	
 	<div class = "commu_board_frame">
 		<div class = "commu_board_subject"> <!-- 선택 분류 -->
-			${board[0].boardSubject }
+			${boardInfo.boardSubject }
 		</div>
 		<div class = "commu_board_title"> <!-- 제목 -->
-			${board[0].boardTitle }
+			${boardInfo.boardTitle }
 		</div>
-		<div class = "commu_board_user"> <!-- 사용자/관리자   시간   url복사  / 1 ~ 7 / 일 ~ 토-->
+		<div class = "commu_board_user"> <!-- 사용자/관리자   시간   url복사  / 1 ~ 7 / 일 ~ 토 / -->
 			<table>
 				<tr>
-					<td class = "commu_board_user_writer">${board[0].boardWriter}</td>
-					<c:set var="now" value="<%=new java.util.Date()%>" /> 
-					<fmt:formatDate var = "nowDate" value="${now}" pattern="y" />
-					<fmt:formatDate var = "writeDate" value="${board[0].boardDate}" pattern="y" />
-					<c:choose>
-						<c:when test = "${nowDate - writeDate > 0}">
-							<td class = "commu_board_user_time">${nowDate - writeDate}년 전</td>
-						</c:when>
-						<c:when test = "${nowDate - writeDate eq 0}">
-							<fmt:formatDate var = "nowDate" value="${now}" pattern="M" />
-							<fmt:formatDate var = "writeDate" value="${board[0].boardDate}" pattern="M" />
-							<c:choose>
-								<c:when test = "${nowDate - writeDate > 0 }">
-									<td class = "commu_board_user_time">${nowDate - writeDate}달 전</td>
-								</c:when>
-								<c:when test = "${nowDate - writeDate eq 0 }">
-									<fmt:formatDate var = "nowDate" value="${now}" pattern="d" />
-									<fmt:formatDate var = "writeDate" value="${board[0].boardDate}" pattern="d" />
-									<c:choose>
-										<c:when test = "${nowDate - writeDate > 0}">
-											<td class = "commu_board_user_time">${nowDate - writeDate}일 전</td>
-										</c:when>
-										<c:when test = "${nowDate - writeDate eq 0}">
-											<fmt:formatDate var = "nowDate" value="${now}" pattern="k" />
-											<fmt:formatDate var = "writeDate" value="${board[0].boardDate}" pattern="k" />
-											<c:choose>
-												<c:when test = "${nowDate - writeDate > 0}">
-													<td class = "commu_board_user_time">${nowDate - writeDate}시간 전</td>
-												</c:when>
-												<c:when test = "${nowDate - writeDate eq 0}">
-													<fmt:formatDate var = "nowDate" value="${now}" pattern="mm" />
-													<fmt:formatDate var = "writeDate" value="${board[0].boardDate}" pattern="mm" />
-													<c:choose>
-														<c:when test = "${nowDate - writeDate > 0}">
-															<td class = "commu_board_user_time">${nowDate - writeDate}분 전</td>
-														</c:when>
-														<c:when test = "${nowDate - writeDate eq 0}">
-															<td class = "commu_board_user_time">방금</td>
-														</c:when>
-													</c:choose>
-												</c:when>
-											</c:choose>
-										</c:when>
-									</c:choose>
-								</c:when>
-							</c:choose>
-						</c:when>
-						<c:otherwise>
-							<td class = "commu_board_user_time">에러</td>
-						</c:otherwise>
-					</c:choose>
-					
+					<td class = "commu_board_user_writer">${boardInfo.boardWriter}</td>
+					<td class = "commu_board_user_time"><script>writeDate()</script></td>
 					<td class = "commu_board_user_url"><a href="#" onclick="clip(); return false;">URL주소복사</a></td>
 				</tr>
 			</table>
@@ -438,10 +445,10 @@
 				</c:when>
 				<c:when test = "${ssVar ne null }">
 					<c:choose>
-						<c:when test = "${boardSympathyList[0].boardSympathy eq 0 }">
+						<c:when test = "${boardSympathy eq 0 }">
 							<button type = "button" id = "sympathy_btn" onclick = "sympathy_button()">공감<span id = "sympathyBtn" style = "color : red;">♡</span></button>
 						</c:when>
-						<c:when test = "${boardSympathyList[0].boardSympathy eq 1 }">
+						<c:when test = "${boardSympathy eq 1 }">
 							<button type = "button" id = "sympathy_btn" onclick = "sympathy_button()">공감<span id = "sympathyBtn" style = "color : white;">♡</span></button>
 						</c:when>
 					</c:choose>
@@ -452,20 +459,23 @@
 		
 		
 		<div id = "comment_frame" class = "comment_frame">
-			<div class = "all_comment_frame">
-				<div class = "all_user_picture_name">
-					사진 / 이름
+			<c:forEach items = "${boardCommentList }" var = "boardComment">
+				<div class = "all_comment_frame">
+					<div class = "all_user_picture_name">
+						${boardComment.userName}
+					</div>
+					<div class = "all_user_comment">
+						${boardComment.boardComment}
+					</div>
+					<div class = "all_user_comment_time">
+						<fmt:formatDate var = "boardCommentTime" value="${boardComment.boardCommentDate }" pattern="yyyy-MM-dd HH:ss" />
+						${boardCommentTime}
+					</div>
+					<div class = "child_comment_sympathy_btn">
+						답글버튼<span>공감버튼</span>
+					</div>
 				</div>
-				<div class = "all_user_comment">
-					내용
-				</div>
-				<div class = "all_user_comment_time">
-					시간
-				</div>
-				<div class = "child_comment_sympathy_btn">
-					답글버튼<span>공감버튼</span>
-				</div>
-			</div> 
+ 			</c:forEach>
 			<div class = "my_comment_frame">
 				<c:choose>
 					<c:when test = "${ssVar eq null }">

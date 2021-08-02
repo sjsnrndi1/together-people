@@ -120,9 +120,11 @@ drop SEQUENCE boardSympathyNumber_seq;
 
 CREATE TABLE boardCommentInfo (
 	boardCommentNumber NUMBER NOT NULL,
-	boardNumber NUMBER,
+	boardNumber NUMBER NOT NULL,
 	userId VARCHAR2(100) NOT NULL,
-	boardComment VARCHAR2(3000),
+	userName VARCHAR2(100) NOT NULL,
+	boardComment VARCHAR2(4000) NOT NULL,
+	boardCommentDate DATE NOT NULL,
 	
 	PRIMARY KEY(boardCommentNumber)
 );

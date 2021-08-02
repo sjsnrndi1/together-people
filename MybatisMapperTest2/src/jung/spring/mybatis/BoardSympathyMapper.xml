@@ -17,7 +17,7 @@
 			UPDATE boardSympathyInfo SET boardSympathy = #{boardSympathy} WHERE boardNumber = #{boardNumber} AND userId = #{userId}
 		</update>
 		
-		<select id = "getBoardSympathys" parameterType = "map" resultType = "jung.spring.vo.BoardSympathyInfoVO">
+		<select id = "getBoardSympathy" parameterType = "map" resultType = "jung.spring.vo.BoardSympathyInfoVO">
 			SELECT * FROM boardSympathyInfo WHERE boardNumber = #{boardNumber} AND userId = #{userId}
-		</select>  
+		</select>
 	</mapper>

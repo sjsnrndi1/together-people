@@ -160,10 +160,10 @@ public class UserInfoServiceImpl implements UserInfoService {
 	
 	/* ===========게시글 화면 가져오는서비스============ */
 	@Override
-	public List<BoardInfoVO> getBoard(int boardNumber) {
+	public BoardInfoVO getBoard(int boardNumber) {
 		// TODO Auto-generated method stub
-		ArrayList<BoardInfoVO> board = userInfoDAO.getBoard(boardNumber);
-		return board;
+		BoardInfoVO boardInfo = userInfoDAO.getBoard(boardNumber);
+		return boardInfo;
 	}
 	/* ===========게시글 화면 가져오는서비스============ */
 	
@@ -202,26 +202,26 @@ public class UserInfoServiceImpl implements UserInfoService {
 	
 	/* ===========사용자 공감 목록 가져오기 서비스============ */
 	@Override
-	public List<BoardSympathyInfoVO> getBoardSympathys(int boardNumber, String name) {
+	public BoardSympathyInfoVO getBoardSympathy(int boardNumber, String name) {
 		// TODO Auto-generated method stub
-		ArrayList<BoardSympathyInfoVO> boardSympathys = userInfoDAO.getBoardSympathys(boardNumber, name);
-		return boardSympathys;
+		BoardSympathyInfoVO boardSympathyInfo = userInfoDAO.getBoardSympathy(boardNumber, name);
+		return boardSympathyInfo;
 	}
 	/* ===========사용자 공감 목록 가져오기 서비스============ */
 	
 	/* ===========게시글 댓글 생성 서비스============ */
 	@Override
-	public void addBoardComment(int boardNumber, String name) {
+	public void addBoardComment(int boardNumber, String name, String comment, String userName) {
 		// TODO Auto-generated method stub
-		userInfoDAO.addBoardComment(boardNumber, name);
+		userInfoDAO.addBoardComment(boardNumber, name, comment, userName);
 	}
 	/* ===========게시글 댓글 생성 서비스============ */
 	
 	/* ===========사용자 댓글 목록 가져오기 서비스============ */
 	@Override
-	public List<BoardCommentInfoVO> getBoardComments(int boardNumber, String name) {
+	public List<BoardCommentInfoVO> getBoardComments(int boardNumber) {
 		// TODO Auto-generated method stub
-		ArrayList<BoardCommentInfoVO> boardComments = userInfoDAO.getBoardComments(boardNumber, name);
+		ArrayList<BoardCommentInfoVO> boardComments = userInfoDAO.getBoardComments(boardNumber);
 		return boardComments;
 	}
 	/* ===========사용자 댓글 목록 가져오기 서비스============ */

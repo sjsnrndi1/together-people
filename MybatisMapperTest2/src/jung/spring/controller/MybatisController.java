@@ -564,27 +564,29 @@ public class MybatisController {
 		if (name != null) {
 			UserInfoVO userInfo = userInfoService.getUser(name);
 			mav.addObject("userInfo", userInfo);
-			List<BoardSympathyInfoVO> boardSympathys = userInfoService.getBoardSympathys(boardNumber, name);
-			List<BoardCommentInfoVO> boardComments = userInfoService.getBoardComments(boardNumber, name);
+			BoardSympathyInfoVO boardSympathyInfo = userInfoService.getBoardSympathy(boardNumber, name);
 			
-			if(boardSympathys.size() == 0) {			
+			if(boardSympathyInfo == null) {
 				userInfoService.addBoardSympathy(boardNumber, name);
-				List<BoardSympathyInfoVO> boardSympathys_result = userInfoService.getBoardSympathys(boardNumber, name);
-				mav.addObject("boardSympathyList", boardSympathys_result);
+				BoardSympathyInfoVO boardSympathyInfo_result = userInfoService.getBoardSympathy(boardNumber, name);
+				mav.addObject("boardSympathy", boardSympathyInfo_result.getBoardSympathy());
+			} else {
+				mav.addObject("boardSympathy", boardSympathyInfo.getBoardSympathy());
 			}
-			if(boardComments.size() == 0) {
+			/*if(boardComments == null) {
 				userInfoService.addBoardComment(boardNumber, name);
 				List<BoardCommentInfoVO> boardComments_result = userInfoService.getBoardComments(boardNumber, name);
 				mav.addObject("boardCommentList", boardComments_result);
-			}
+			}*/
 		}
 		
-		List<BoardInfoVO> board = userInfoService.getBoard(boardNumber);
-		String boardContent = board.get(0).getBoardContent().replace("\r\n", "<br>");
+		List<BoardCommentInfoVO> boardComments = userInfoService.getBoardComments(boardNumber);
+		mav.addObject("boardCommentList", boardComments);
+		
+		BoardInfoVO boardInfo = userInfoService.getBoard(boardNumber);
+		String boardContent = boardInfo.getBoardContent().replace("\r\n", "<br>");
 		mav.addObject("boardContent", boardContent);
-		mav.addObject("boardTitle", board.get(0).getBoardTitle());
-		mav.addObject("board", board);
-
+		mav.addObject("boardInfo", boardInfo);
 		mav.setViewName("Tp_communityContentView");
 		return mav;
 	}
@@ -604,15 +606,15 @@ public class MybatisController {
 	@ResponseBody
 	@RequestMapping(value = "comment_test", method = RequestMethod.POST)
 	public void My_comment_input_form(HttpServletRequest request, String comment, int boardNumber) throws Exception {
-		/*
-		List<BoardInfoVO> board = userInfoService.getBoard(boardNumber);
-		String boardContent = board.get(0).getBoardContent().replace("\r\n", "<br>");
-		mav.addObject("boardContent", boardContent);
-		mav.addObject("boardTitle", board.get(0).getBoardTitle());
-		mav.addObject("board", board);
 		
-		mav.setViewName("Tp_communityContentView");
-		*/
+		String name = httpServletRequest(request);
+		if (name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			String userName = userInfo.getUser_name();
+			userInfoService.addBoardComment(boardNumber, name, comment, userName);
+		}
+		System.out.println(comment);
+
 	}
 	/* =========== Ä¿¹Â´ÏÆ¼ °Ô½Ã±Û ´ñ±Û =========== */
 	

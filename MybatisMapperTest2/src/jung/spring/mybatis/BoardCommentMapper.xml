@@ -7,15 +7,17 @@
 			<result property = "boardCommentNumber" column = "BOARDCOMMENTNUMBER"/>
 			<result property = "boardNumber" column = "BOARDNUMBER"/>
 			<result property = "userId" column = "USERID"/>
+			<result property = "userName" column = "USERNAME"/>
 			<result property = "boardComment" column = "BOARDCOMMENT"/>
+			<result property = "boardCommentDate" column = "BOARDCOMMENTDATE"/>
 		</resultMap>
 		
 		<insert id = "addBoardComment" parameterType = "map">
-			INSERT INTO boardCommentInfo VALUES ( boardCommentNumber_seq.nextval, #{boardNumber}, #{userId}, #{boardComment})
+			INSERT INTO boardCommentInfo VALUES ( boardCommentNumber_seq.nextval, #{boardNumber}, #{userId}, #{userName}, #{boardComment}, #{boardCommentDate})
 		</insert>
 		
-		<select id = "getBoardComments" resultType = "jung.spring.vo.BoardCommentInfoVO">
-			SELECT * FROM boardCommentInfo WHERE boardNumber = #{boardNumber} AND userId = #{userId}
+		<select id = "getBoardComments" parameterType = "int" resultType = "jung.spring.vo.BoardCommentInfoVO">
+			SELECT * FROM boardCommentInfo WHERE boardNumber = #{boardNumber} ORDER BY boardCommentNumber DESC
 		</select>
 		
 	</mapper>
