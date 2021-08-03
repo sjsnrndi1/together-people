@@ -226,6 +226,31 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 	/* ===========사용자 댓글 목록 가져오기 서비스============ */
 	
+	/* ===========사용자 댓글 삭제 서비스============ */
+	@Override
+	public void deleteBoardComment(int boardCommentNumber) {
+		// TODO Auto-generated method stub
+		userInfoDAO.deleteBoardComment(boardCommentNumber);
+	}
+	/* ===========사용자 댓글 삭제 서비스============ */
+	
+	/* ===========게시글 정렬 서비스============ */
+	@Override
+	public List<BoardInfoVO> getBoardSort(String subject) {
+		// TODO Auto-generated method stub
+		ArrayList<BoardInfoVO> boardSortList = userInfoDAO.getBoardSort(subject);
+		return boardSortList;
+	}
+	/* ===========게시글 정렬 서비스============ */
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

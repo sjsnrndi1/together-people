@@ -20,4 +20,7 @@
 			SELECT * FROM boardCommentInfo WHERE boardNumber = #{boardNumber} ORDER BY boardCommentNumber DESC
 		</select>
 		
+		<delete id = "deleteBoardComment" parameterType = "int">
+			DELETE boardCommentInfo WHERE boardCommentNumber = #{boardCommentNumber}
+		</delete>
 	</mapper>

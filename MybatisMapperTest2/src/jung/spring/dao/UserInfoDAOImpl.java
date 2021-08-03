@@ -354,6 +354,90 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	}
 	/* ===========사용자 댓글 목록 가져오기 서비스============ */
 	
+	/* ===========사용자 댓글 삭제 서비스============ */
+	@Override
+	public void deleteBoardComment(int boardCommentNumber) {
+		// TODO Auto-generated method stub
+		BoardCommentMapper boardCommentMapper = sqlSession.getMapper(BoardCommentMapper.class);
+		boardCommentMapper.deleteBoardComment(boardCommentNumber);
+	}
+	/* ===========사용자 댓글 삭제 서비스============ */
+
+	/* ===========게시글 정렬 서비스============ */
+	boolean boardNumber_sort = false;
+	boolean boardTitle_sort = false;
+	boolean boardWriter_sort = false;
+	boolean boardDate_sort = false;
+	//boolean boardNumber_sort = false;
+	@Override
+	public ArrayList<BoardInfoVO> getBoardSort(String subject) {
+		// TODO Auto-generated method stub
+		BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
+		
+		switch (subject) {
+		case "No.":
+			if(boardNumber_sort == false) {
+				ArrayList<BoardInfoVO> boardSortNumber = boardMapper.getBoardNumberSort();
+				boardNumber_sort = true;
+				return boardSortNumber;
+			} else {
+				ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
+				boardNumber_sort = false;
+				return boardSortList;
+			}
+		case "제목":
+			if(boardTitle_sort == false) {
+				ArrayList<BoardInfoVO> boardSortNumber = boardMapper.getBoardTitleSort();
+				boardTitle_sort = true;
+				return boardSortNumber;
+			} else {
+				ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
+				boardTitle_sort = false;
+				return boardSortList;
+			}
+		case "작성자":
+			if(boardWriter_sort == false) {
+				ArrayList<BoardInfoVO> boardSortNumber = boardMapper.getBoardWriterSort();
+				boardWriter_sort = true;
+				return boardSortNumber;
+			} else {
+				ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
+				boardWriter_sort = false;
+				return boardSortList;
+			}
+		case "작성일":
+			if(boardDate_sort == false) {
+				ArrayList<BoardInfoVO> boardSortNumber = boardMapper.getBoardDateSort();
+				boardDate_sort = true;
+				return boardSortNumber;
+			} else {
+				ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
+				boardDate_sort = false;
+				return boardSortList;
+			}
+		default:
+			ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
+			return boardSortList;
+		}
+			
+	}
+	/* ===========게시글 정렬 서비스============ */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

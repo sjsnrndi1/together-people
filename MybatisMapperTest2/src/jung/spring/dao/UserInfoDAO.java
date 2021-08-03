@@ -49,5 +49,7 @@ public interface UserInfoDAO {
 	int getBoardNumber(); //게시글 자식 생성을 위환 게시글 번호 가져오기
 	BoardSympathyInfoVO getBoardSympathy(int boardNumber, String name); // 사용자 공감 가져오기
 	ArrayList<BoardCommentInfoVO> getBoardComments(int boardNumber); // 사용자 댓글 목록 가져오기
+	void deleteBoardComment(int boardCommentNumber);//사용자 댓글 삭제
+	ArrayList<BoardInfoVO> getBoardSort(String subject); //게시글 정렬
 	/********** 게시글 **********/
 }

@@ -4,6 +4,8 @@ import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.ftp.FTPSClient;
+import org.json.simple.JSONObject;
+import net.sf.json.*;
 
 import java.util.HashMap;
 import java.io.File;
@@ -16,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -604,8 +607,8 @@ public class MybatisController {
 	
 	/* =========== 커뮤니티 게시글 댓글 =========== */
 	@ResponseBody
-	@RequestMapping(value = "comment_test", method = RequestMethod.POST)
-	public void My_comment_input_form(HttpServletRequest request, String comment, int boardNumber) throws Exception {
+	@RequestMapping(value = "comment_insert", method = RequestMethod.POST)
+	public void Comment_Insert(HttpServletRequest request, String comment, int boardNumber) throws Exception {
 		
 		String name = httpServletRequest(request);
 		if (name != null) {
@@ -613,15 +616,59 @@ public class MybatisController {
 			String userName = userInfo.getUser_name();
 			userInfoService.addBoardComment(boardNumber, name, comment, userName);
 		}
-		System.out.println(comment);
 
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "comment_delete", method = RequestMethod.POST)
+	public void Comment_Delete(int boardCommentNumber) {
+		
+		userInfoService.deleteBoardComment(boardCommentNumber);
+		
 	}
 	/* =========== 커뮤니티 게시글 댓글 =========== */
 	
+	/* =========== 커뮤니티 게시글 정렬 =========== */
 	
+	@ResponseBody
+	@RequestMapping(value = "boardSort", method = RequestMethod.POST)
+	public void Board_Sort(String subject, HttpServletRequest request) throws Exception {
 	
+		List<BoardInfoVO> boardList = userInfoService.getBoardSort(subject);
+		CommunityView(request, boardList);
+	}
 	
+	public ModelAndView CommunityView(HttpServletRequest request, List<BoardInfoVO> boardList) throws Exception {
+		ModelAndView mav = new ModelAndView();
+
+		String name = httpServletRequest(request);
+		if (name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+		mav.addObject("boardList", boardList);
+		mav.setViewName("Tp_communityView");
+		return mav;
+	}
+	/* =========== 커뮤니티 게시글 정렬 =========== */
 	
+	@RequestMapping(value = "/communityView_sort")
+	public ModelAndView CommunityView_sort(HttpServletRequest request, String subject) throws Exception {
+		System.out.println(subject);
+		ModelAndView mav = new ModelAndView();
+
+		String name = httpServletRequest(request);
+		if (name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+				
+		List<BoardInfoVO> boardList = userInfoService.getBoardSort(subject);
+		
+		mav.addObject("boardList", boardList);
+		mav.setViewName("Tp_communityView");
+		return mav;
+	}
 	
 	
 	

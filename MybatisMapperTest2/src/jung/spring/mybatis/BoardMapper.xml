@@ -17,13 +17,32 @@
 		<select id = "getBoards" resultType = "jung.spring.vo.BoardInfoVO">
 			SELECT * FROM boardInfo ORDER BY boardNumber DESC
 		</select>
+		
 		<select id = "getBoard" parameterType = "int" resultType = "jung.spring.vo.BoardInfoVO">
 			SELECT * FROM boardInfo WHERE boardNumber = #{boardNumber}
 		</select>
+		
 		<update id = "countBoardViews" parameterType = "map">
 			UPDATE boardInfo SET boardViews = #{count} WHERE boardNumber = #{boardNumber}
 		</update>
+		
 		<insert id = "addBoard" parameterType = "map">
 			INSERT INTO boardInfo VALUES(boardNumber_seq.nextval, #{boardUserId}, #{boardTitle}, #{boardWriter}, #{boardContent}, #{boardDate}, #{boardSubject}, #{boardViews})
 		</insert>
+		
+		<select id = "getBoardWriterSort" resultType = "jung.spring.vo.BoardInfoVO">
+			SELECT * FROM boardInfo ORDER BY boardWriter
+		</select>
+		
+		<select id = "getBoardDateSort" resultType = "jung.spring.vo.BoardInfoVO">
+			SELECT * FROM boardInfo ORDER BY boardDate
+		</select>
+		
+		<select id = "getBoardTitleSort" resultType = "jung.spring.vo.BoardInfoVO">
+			SELECT * FROM boardInfo ORDER BY boardTitle
+		</select>
+		
+		<select id = "getBoardNumberSort" resultType = "jung.spring.vo.BoardInfoVO">
+			SELECT * FROM boardInfo ORDER BY boardNumber
+		</select>
 	</mapper>

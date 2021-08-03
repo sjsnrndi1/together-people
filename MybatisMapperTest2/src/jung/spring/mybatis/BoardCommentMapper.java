@@ -11,4 +11,6 @@ public interface BoardCommentMapper {
 
 	ArrayList<BoardCommentInfoVO> getBoardComments(int boardNumber); //사용자 댓글 목록 가져오기
 
+	void deleteBoardComment(int boardCommentNumber); //사용자 댓글 삭제
+
 }

@@ -10,6 +10,7 @@
 <title>${boardInfo.boardTitle }</title>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- 제이쿼리 -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css"> <!-- 폰트 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/sidebar.css"> <!-- 사이드바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/titlebar.css"> <!-- 타이틀바 -->
@@ -113,30 +114,40 @@
 	  	$("#comment_frame").toggle();
 	  });
 	});
-	
-	function testtest() {
-		<c:set var = "userName" value = "${userInfo.user_name}" />
-		$.ajax({
-			url: "comment_test",
-		    data: "comment=" + document.getElementById("test").innerHTML + "&boardNumber=" + ${boardInfo.boardNumber},
-		    type: "POST"
-		}).done(function(result) {
-			console.log("결과확인");
-			var html = jQuery('<div>').html(result);
-			var contents = html.find("div#all_comment_frame").html();
-			if(tab == "ing"){
-				$("#tabl1").html(contents);
-			} else if(tab == "end"){
-				$("#tabl2").html(contents);
-			}
-		}).fail(function (jqXHR, textStatus, errorThrown) {
-			console.log("에러");
-			console.log(jqXHR);
-			console.log(textStatus);
-			console.log(errorThrown);
-		});
 
-		document.getElementById("test").innerHTML = "";
+	
+	function autoRefresh_sample_div() {
+		var currentLocation = window.location;
+		$("#all_comment_frame").load(currentLocation + ' #all_comment_frame');
+	}
+	
+	function inputComment() {
+		var check = document.getElementById("test").innerHTML;
+		if (check == "") {
+			alert("내용을 입력해주세요.");
+		} else {
+			<c:set var = "userName" value = "${userInfo.user_name}" />
+			$.ajax({
+				url: "comment_insert",
+			    data: "comment=" + document.getElementById("test").innerHTML + "&boardNumber=" + ${boardInfo.boardNumber},
+			    type: "POST"
+			});
+			
+			setTimeout('autoRefresh_sample_div()', 0);
+			
+			document.getElementById("test").innerHTML = "";
+		}
+	}
+	
+	function deleteComment(boardCommentNumber) {
+		$.ajax({
+			url: "comment_delete",
+		    data: "boardCommentNumber=" + boardCommentNumber,
+		    type: "POST"
+		});
+		
+		setTimeout('autoRefresh_sample_div()', 0);
+		
 	}
 	
 	function writeDate() {
@@ -287,12 +298,12 @@
 		width : 99.3%;
 		padding-bottom : 2%;
 		padding-top : 2%;
-		border-bottom : 1px solid #BC8F8F;
 	}
 	.all_user_picture_name{
 	 	margin : 2px;
 	 	width : 99.3%;
 	 	height : 25px;
+	 	margin-top : 2%;
 	}
 	.all_user_comment{
 	 	margin : 2px;
@@ -309,10 +320,8 @@
 	.child_comment_sympathy_btn{
 		margin : 2px;
 		width : 99.3%;
+		border-bottom : 1px solid #BC8F8F;
 		height : 20px;
-	}
-	.child_comment_sympathy_btn span {
-		margin-left : 88.5%;
 	}
 	.my_comment_frame{
 		border : 1px solid #8B4513;
@@ -374,6 +383,13 @@
 	.login_before_my_comment a:visited { text-decoration : none;color : #E9967A;}
 	.login_before_my_comment a:active {text-decoration : none; color : #E9967A; }
 	.login_before_my_comment a:hover { text-decoration : none; color : #E9967A;}
+	.deleteCommentbtn {
+		float: right;
+		border-radius : 5px;
+		background-color : white;
+		border : 1px solid #BC8F8F;
+		color : #BC8F8F;
+	}
 </style>
 </head>
 <body>
@@ -456,15 +472,15 @@
 		<div class = "commu_board_sympathy_comment"> <!-- 공감/댓글 -->
 			<c:choose>
 				<c:when test = "${ssVar eq null }">
-					<button type = "button" id = "sympathy_btn" onclick = "login_before_popup()">공감<span id = "sympathyBtn">♡</span></button>
+					<button type = "button" onclick = "login_before_popup()">공감<span id = "sympathyBtn">♡</span></button>
 				</c:when>
 				<c:when test = "${ssVar ne null }">
 					<c:choose>
 						<c:when test = "${boardSympathy eq 0 }">
-							<button type = "button" id = "sympathy_btn" onclick = "sympathy_button()">공감<span id = "sympathyBtn" style = "color : red;">♡</span></button>
+							<button type = "button" onclick = "sympathy_button()">공감<span id = "sympathyBtn" style = "color : red;">♡</span></button>
 						</c:when>
 						<c:when test = "${boardSympathy eq 1 }">
-							<button type = "button" id = "sympathy_btn" onclick = "sympathy_button()">공감<span id = "sympathyBtn" style = "color : white;">♡</span></button>
+							<button type = "button" onclick = "sympathy_button()">공감<span id = "sympathyBtn" style = "color : white;">♡</span></button>
 						</c:when>
 					</c:choose>
 				</c:when>
@@ -474,23 +490,24 @@
 		
 		
 		<div id = "comment_frame" class = "comment_frame">
-			<c:forEach items = "${boardCommentList }" var = "boardComment">
-				<div id = "all_comment_frame" class = "all_comment_frame">
+			<div id = "all_comment_frame" class = "all_comment_frame">
+				<c:forEach items = "${boardCommentList }" var = "boardComment">
 					<div class = "all_user_picture_name">
 						${boardComment.userName}
+						<c:if test = "${boardComment.userId eq ssVar }">
+							<input type = "button" class = "deleteCommentbtn" value = "x" onclick = "deleteComment(${boardComment.boardCommentNumber})">
+						</c:if>
 					</div>
 					<div class = "all_user_comment">
 						${boardComment.boardComment}
 					</div>
 					<div class = "all_user_comment_time">
-						<fmt:formatDate var = "boardCommentTime" value="${boardComment.boardCommentDate }" pattern="yyyy-MM-dd HH:ss" />
+						<fmt:formatDate var = "boardCommentTime" value="${boardComment.boardCommentDate }" pattern="yyyy-MM-dd HH:mm" />
 						${boardCommentTime}
 					</div>
-					<div class = "child_comment_sympathy_btn">
-						답글버튼<span>공감버튼</span>
-					</div>
-				</div>
- 			</c:forEach>
+					<div class = "child_comment_sympathy_btn"></div>
+ 				</c:forEach>
+			</div>
 			<div class = "my_comment_frame">
 				<c:choose>
 					<c:when test = "${ssVar eq null }">
@@ -503,18 +520,16 @@
 							${userInfo.user_name }
 						</div>
 						<form action = "my_comment_input_form" name = "myCommentInputForm" method = "POST" onsubmit = "return check()">
-							<div contentEditable="true" id = "test" spellcheck="false" class = "my_comment_write_frame">
-							
+							<div contentEditable="true" id = "test" spellcheck="false" class = "my_comment_write_frame"></div>
+							<div class = "writeNumber_frame">
+								타자 수
 							</div>
-						<div class = "writeNumber_frame">
-							타자 수
-						</div>
-						<div class = "empty_frame">
-							
-						</div>
-						<div class = "my_comment_input_frame">
-							<input type = "button" onclick = "testtest()" value = "등록"/>
-						</div>
+							<div class = "empty_frame">
+								
+							</div>
+							<div class = "my_comment_input_frame">
+								<input type = "button" id = "comment_input_btn" onclick = "inputComment()" value = "등록"/>
+							</div>
 						</form>
 					</c:when>
 				</c:choose>

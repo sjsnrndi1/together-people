@@ -9,6 +9,8 @@
 <meta charset="UTF-8">
 <title>커뮤니티 | 자유게시판</title>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- 제이쿼리 -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/hanna.css"> <!-- 폰트 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/sidebar.css"> <!-- 사이드바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/titlebar.css"> <!-- 타이틀바 -->
@@ -92,6 +94,7 @@
 		width : 100%;
 		text-align : center;
 		padding-top : 10px;
+		padding-bottom : 10px;
 	}
 	.commu_board_table {
 		width : 99.3%;
@@ -213,26 +216,22 @@
 			<c:if test = "${ssVar ne null}">
 				<a href = "communityCreateBoard">작성</a>
 			</c:if>
-			<select name = "sorts" id = "commu_sort" class = "commu_sort">
-				<option value="">정렬</option>
-				<option value="number">번호</option>
-				<option value="writer">작성자</option>
-				<option value="nowDate">작성일</option>
-			</select>
 		</div>
-		<div class = "commu_title_frame">
-			<table class = "commu_title_table">
-				<thead>
-					<tr>
-						<td style = "width : 5%; border-right : 1px solid #BC8F8F;">No.</td>
-						<td style = "width : 60%; border-right : 1px solid #BC8F8F;">제목</td>
-						<td style = "width : 12%; border-right : 1px solid #BC8F8F;">작성자</td>
-						<td style = "width : 10%; border-right : 1px solid #BC8F8F;">작성일</td>
-						<td style = "width : 10%;">조회수</td>
-					</tr>
-				</thead>
-			</table>
-		</div>
+		<form method="post" action = "communityView_sort">
+			<div class = "commu_title_frame">
+				<table class = "commu_title_table">
+					<thead>
+						<tr>
+							<td style = "width : 5%; border-right : 1px solid #BC8F8F;"><input type = "submit" value = "No." name = "subject" style = "font-family: 'Hanna'; background-color : white; color : black; border : 1px solid white; padding : 0; margin:0; height : 80%;"></td>
+							<td style = "width : 60%; border-right : 1px solid #BC8F8F;">제목</td>
+							<td style = "width : 12%; border-right : 1px solid #BC8F8F;">작성자</td>
+							<td style = "width : 10%; border-right : 1px solid #BC8F8F;">작성일</td>
+							<td style = "width : 10%;">조회수</td>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</form>
 		<div class = "commu_content_frame">
 			<c:forEach items = "${boardList }" var = "board" varStatus = "status">
 				<c:if test = "${board.boardSubject eq 'freedom' }">

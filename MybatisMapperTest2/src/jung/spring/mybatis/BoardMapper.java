@@ -14,5 +14,13 @@ public interface BoardMapper {
 	void countBoardViews(HashMap<Object, Object> map); //게시글 조회 수 업
 
 	void addBoard(HashMap<Object, Object> map); //게시글 생성
+	
+	ArrayList<BoardInfoVO> getBoardNumberSort(); // 게시글 번호 정렬
+	
+	ArrayList<BoardInfoVO> getBoardTitleSort(); // 게시글 제목 정렬
+	
+	ArrayList<BoardInfoVO> getBoardWriterSort(); // 게시글 작성자 정렬
+	
+	ArrayList<BoardInfoVO> getBoardDateSort(); // 게시글 작성자 정렬
 
 }
