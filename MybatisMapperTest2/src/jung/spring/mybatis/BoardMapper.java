@@ -23,4 +23,6 @@ public interface BoardMapper {
 	
 	ArrayList<BoardInfoVO> getBoardDateSort(); // 게시글 작성자 정렬
 
+	ArrayList<BoardInfoVO> getBoardReadSort(); //게시글 조회수 정렬
+
 }

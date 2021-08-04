@@ -32,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+
+import jung.spring.dao.UserInfoDAOImpl;
 import jung.spring.svc.UserInfoService;
 import jung.spring.vo.BoardSympathyInfoVO;
 import jung.spring.vo.BoardCommentInfoVO;
@@ -516,7 +518,7 @@ public class MybatisController {
 		}
 		
 		List<BoardInfoVO> boardList = userInfoService.getBoards();
-		
+		mav.addObject("pageNumber", 0);
 		mav.addObject("boardList", boardList);
 		mav.setViewName("Tp_communityView");
 		return mav;
@@ -627,34 +629,30 @@ public class MybatisController {
 		
 	}
 	/* =========== 커뮤니티 게시글 댓글 =========== */
-	
-	/* =========== 커뮤니티 게시글 정렬 =========== */
-	
-	@ResponseBody
-	@RequestMapping(value = "boardSort", method = RequestMethod.POST)
-	public void Board_Sort(String subject, HttpServletRequest request) throws Exception {
-	
-		List<BoardInfoVO> boardList = userInfoService.getBoardSort(subject);
-		CommunityView(request, boardList);
-	}
-	
-	public ModelAndView CommunityView(HttpServletRequest request, List<BoardInfoVO> boardList) throws Exception {
-		ModelAndView mav = new ModelAndView();
 
-		String name = httpServletRequest(request);
-		if (name != null) {
-			UserInfoVO userInfo = userInfoService.getUser(name);
-			mav.addObject("userInfo", userInfo);
-		}
-		mav.addObject("boardList", boardList);
-		mav.setViewName("Tp_communityView");
-		return mav;
-	}
 	/* =========== 커뮤니티 게시글 정렬 =========== */
-	
 	@RequestMapping(value = "/communityView_sort")
-	public ModelAndView CommunityView_sort(HttpServletRequest request, String subject) throws Exception {
-		System.out.println(subject);
+	public ModelAndView CommunityView_sort(HttpServletRequest request, @RequestParam("subject") String subject, @RequestParam("pageNumber") int pageNumber) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		String name = httpServletRequest(request);
+		if (name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+
+		List<BoardInfoVO> boardList = userInfoService.getBoardSort(subject);
+		int page = (pageNumber * 10) - 10;
+		mav.addObject("pageNumber", page);
+		mav.addObject("subject", subject);
+		mav.addObject("boardList", boardList);
+		mav.setViewName("Tp_communityView");
+		return mav;
+	}
+	/* =========== 커뮤니티 게시글 정렬 =========== */
+	
+	/* =========== 커뮤니티 페이지 이동 =========== */
+	@RequestMapping(value = "/page_move")
+	public ModelAndView Page_Move(HttpServletRequest request, @RequestParam("pageNumber") int pageNumber) throws Exception {
 		ModelAndView mav = new ModelAndView();
 
 		String name = httpServletRequest(request);
@@ -662,13 +660,47 @@ public class MybatisController {
 			UserInfoVO userInfo = userInfoService.getUser(name);
 			mav.addObject("userInfo", userInfo);
 		}
-				
-		List<BoardInfoVO> boardList = userInfoService.getBoardSort(subject);
 		
+		List<BoardInfoVO> boardList = userInfoService.getBoards();
+		int page = (pageNumber * 10) - 10;
+		mav.addObject("pageNumber", page);
 		mav.addObject("boardList", boardList);
 		mav.setViewName("Tp_communityView");
 		return mav;
 	}
+	
+	@RequestMapping(value = "/page_move_left_right")
+	public ModelAndView Page_Move_Left_Right(HttpServletRequest request, @RequestParam("pageNumber") int pageNumber, @RequestParam("move") String move) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		System.out.println(pageNumber);
+		String name = httpServletRequest(request);
+		if (name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+		
+		List<BoardInfoVO> boardList = userInfoService.getBoards();
+		int page = 0;
+		if(move.equals("left")) {
+			page = (pageNumber * 10) - 20;
+		} else if(move.equals("right")) {
+			page = ((pageNumber + 1) * 10) - 10;
+		}
+		mav.addObject("pageNumber", page);
+		mav.addObject("boardList", boardList);
+		mav.setViewName("Tp_communityView");
+		return mav;
+	}
+	/* =========== 커뮤니티 페이지 이동 =========== */
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

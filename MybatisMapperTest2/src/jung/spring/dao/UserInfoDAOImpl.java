@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -364,28 +365,17 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	/* ===========사용자 댓글 삭제 서비스============ */
 
 	/* ===========게시글 정렬 서비스============ */
-	boolean boardNumber_sort = false;
 	boolean boardTitle_sort = false;
 	boolean boardWriter_sort = false;
 	boolean boardDate_sort = false;
-	//boolean boardNumber_sort = false;
+	boolean boardRead_sort = false;
 	@Override
 	public ArrayList<BoardInfoVO> getBoardSort(String subject) {
 		// TODO Auto-generated method stub
 		BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
 		
 		switch (subject) {
-		case "No.":
-			if(boardNumber_sort == false) {
-				ArrayList<BoardInfoVO> boardSortNumber = boardMapper.getBoardNumberSort();
-				boardNumber_sort = true;
-				return boardSortNumber;
-			} else {
-				ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
-				boardNumber_sort = false;
-				return boardSortList;
-			}
-		case "제목":
+		case "title":
 			if(boardTitle_sort == false) {
 				ArrayList<BoardInfoVO> boardSortNumber = boardMapper.getBoardTitleSort();
 				boardTitle_sort = true;
@@ -395,24 +385,34 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 				boardTitle_sort = false;
 				return boardSortList;
 			}
-		case "작성자":
+		case "writer":
 			if(boardWriter_sort == false) {
-				ArrayList<BoardInfoVO> boardSortNumber = boardMapper.getBoardWriterSort();
+				ArrayList<BoardInfoVO> boardSortWriter = boardMapper.getBoardWriterSort();
 				boardWriter_sort = true;
-				return boardSortNumber;
+				return boardSortWriter;
 			} else {
 				ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
 				boardWriter_sort = false;
 				return boardSortList;
 			}
-		case "작성일":
+		case "date":
 			if(boardDate_sort == false) {
-				ArrayList<BoardInfoVO> boardSortNumber = boardMapper.getBoardDateSort();
+				ArrayList<BoardInfoVO> boardSortDate = boardMapper.getBoardDateSort();
 				boardDate_sort = true;
-				return boardSortNumber;
+				return boardSortDate;
 			} else {
 				ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
 				boardDate_sort = false;
+				return boardSortList;
+			}
+		case "read":
+			if(boardRead_sort == false) {
+				ArrayList<BoardInfoVO> boardSortRead = boardMapper.getBoardReadSort(); 
+				boardRead_sort = true;
+				return boardSortRead;
+			} else {
+				ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
+				boardRead_sort = false;
 				return boardSortList;
 			}
 		default:

@@ -60,6 +60,32 @@
         fr.submit();
         fr.target = "_self";
 	}
+	/*$( document ).ready( function() {
+        $(".boardNumberMoveBtn").click(function(){
+			//ajax 사용
+			alert($(this).attr('value'));
+			$.ajax({
+				url : "page_move",
+				type : "POST",
+				data : "pageNumber=" + $(this).attr('value') 
+			})
+			
+			setTimeout('autoRefresh_sample_div()', 0);
+        });
+  
+    });
+	 	<c:set var = "userName" value = "${userInfo.user_name}" />
+			$.ajax({
+				url: "comment_insert",
+			    data: "comment=" + document.getElementById("test").innerHTML + "&boardNumber=" + ${boardInfo.boardNumber},
+			    type: "POST"
+			});
+	
+
+	function autoRefresh_sample_div() {
+		var currentLocation = window.location;
+		$("#commu_content_frame").load(currentLocation + ' #commu_content_frame');
+	}*/
 </script>
 <style>
 	.floorBar {
@@ -117,7 +143,6 @@
  		float : left;
  		width : 19%;
  		height : 80%;
- 		border : 1px solid red;
  		text-align : right;
  	}
  	.commu_number_frame{	
@@ -125,7 +150,6 @@
  		float : left;
  		width : 60%;
  		height : 80%;
- 		border : 1px solid red;
  		text-align : center;
  	}
  	.commu_right_frame{
@@ -133,7 +157,6 @@
  		float : left;
  		width : 19%;
  		height : 80%;
- 		border : 1px solid red;
  		text-align : left;
  	}
  	.commu_create_frame {
@@ -146,10 +169,35 @@
 	.commu_create_frame a:visited { text-decoration : none;color : #696969;}
 	.commu_create_frame a:active {text-decoration : none; color : #2F4F4F; }
 	.commu_create_frame a:hover { text-decoration : none; color : #2F4F4F;}
-	.commu_sort {
-		float : right;
-		margin-right : 7px;
+	.boardSortStyle {
+		font-family: 'Hanna';
+		background-color : white;
+		color : black;
+		border : 1px solid white;
+		padding : 0;
+		margin:0;
+		height : 80%;
+		font-size : 100%;
 	}
+	.boardNumberMoveBtn{
+		width : 8.9%;
+		height : 77%;
+		border-radius : 0;
+		border : 1px solid white;
+		border-right : 1px solid #BC8F8F;
+		margin : 0;
+		margin-top : 2px;
+		padding : 0;
+		background-color : white;
+		color : black;
+	}
+	.commu_title_table td {
+		border-right : 1px solid #BC8F8F;
+	}
+	.commu_title_table td a:link { text-decoration : none; color : #696969;}
+	.commu_title_table td a:visited { text-decoration : none; color : #696969;}
+	.commu_title_table td a:active { text-decoration : none; color : #2F4F4F;}
+	.commu_title_table td a:hover { text-decoration : none; color : #2F4F4F;}
 </style>
 </head>
 <body>
@@ -209,61 +257,77 @@
 		</div>					
 	</div>
 	
-	
-	
-	<div class = "commu_frame">
+	<%! int check = 1; %>
+	<c:set var = "page_check_Number" value = "1"/>
+	<div class = "commu_frame" id = "commu_frame">
 		<div class = "commu_create_frame">
 			<c:if test = "${ssVar ne null}">
 				<a href = "communityCreateBoard">작성</a>
 			</c:if>
 		</div>
-		<form method="post" action = "communityView_sort">
-			<div class = "commu_title_frame">
-				<table class = "commu_title_table">
-					<thead>
-						<tr>
-							<td style = "width : 5%; border-right : 1px solid #BC8F8F;"><input type = "submit" value = "No." name = "subject" style = "font-family: 'Hanna'; background-color : white; color : black; border : 1px solid white; padding : 0; margin:0; height : 80%;"></td>
-							<td style = "width : 60%; border-right : 1px solid #BC8F8F;">제목</td>
-							<td style = "width : 12%; border-right : 1px solid #BC8F8F;">작성자</td>
-							<td style = "width : 10%; border-right : 1px solid #BC8F8F;">작성일</td>
-							<td style = "width : 10%;">조회수</td>
-						</tr>
-					</thead>
-				</table>
-			</div>
-		</form>
+		<div class = "commu_title_frame">
+			<table class = "commu_title_table">
+				<thead>
+					<tr>
+						<td style = "width : 5%;">순번</td><!-- ${page_check_Number} -->
+						<td style = "width : 60%;"><a href = "communityView_sort?pageNumber=<%=check %>&subject=title" class = "boardSortStyle">제목</a></td>
+						<td style = "width : 12%;"><a href = "communityView_sort?pageNumber=<%=check %>&subject=writer" class = "boardSortStyle">작성자</a></td>
+						<td style = "width : 10%;"><a href = "communityView_sort?pageNumber=<%=check %>&subject=date" class = "boardSortStyle">작성일</a></td>
+						<td style = "width : 10%;"><a href = "communityView_sort?pageNumber=<%=check %>&subject=read" class = "boardSortStyle">조회수</a></td>
+					</tr>
+				</thead>
+			</table>
+		</div>
 		<div class = "commu_content_frame">
-			<c:forEach items = "${boardList }" var = "board" varStatus = "status">
+			<c:forEach items = "${boardList }" var = "board" varStatus = "status" begin = "${pageNumber }">
 				<c:if test = "${board.boardSubject eq 'freedom' }">
-					<table class = "commu_board_table">
-						<thead>
-							<tr>
-								<td style = "width : 5%;">${fn:length(boardList) - status.index}</td>
-								<td style = "width : 60%;"><a href = "communityContentView?boardNumber=${board.boardNumber }">${board.boardTitle}</a></td>
-								<td style = "width : 12%;">${board.boardWriter}</td>
-								<fmt:formatDate var = "date" value="${board.boardDate}" pattern="yyyy-MM-dd" />
-								<td style = "width : 10%;">${date}</td>
-								<td style = "width : 10%;">${board.boardViews }</td>
-							</tr>
-						</thead>
-					</table>
+					<c:if test = "${status.count < 11 }">					
+						<table class = "commu_board_table">
+							<thead>
+								<tr>
+									<td style = "width : 5%;">${fn:length(boardList) - status.index}</td>
+									<td style = "width : 60%;"><a href = "communityContentView?boardNumber=${board.boardNumber }">${board.boardTitle}</a></td>
+									<td style = "width : 12%;">${board.boardWriter}</td>
+									<fmt:formatDate var = "date" value="${board.boardDate}" pattern="yyyy-MM-dd" />
+									<td style = "width : 10%;">${date}</td>
+									<td style = "width : 10%;">${board.boardViews }</td>
+								</tr>
+							</thead>
+						</table>
+					</c:if>
 				</c:if>
 			</c:forEach>
 		</div>
 		<div class = "commu_footer_frame">
 			<div class = "commu_left_frame">
-				<a href = "#"> ◀ </a>
+				<c:if test = "${fn:length(boardList) > 10}">
+					<a href = "page_move_left_right?pageNumber=<%=check %>&move=left"> ◀ </a>
+				</c:if>
 			</div>
-			<div class = "commu_number_frame" >
-				<table>
-					<tr>
-						<td style = "border-right : 1px solid #BC8F8F;">1</td>
-					</tr>
-				</table>
+			<div class = "commu_number_frame">
+				<div style = "width : 99%; height : 99%;">
+					
+					<c:forEach items = "${boardList }" var = "board" varStatus = "status">
+						<c:choose>
+							<c:when test = "${fn:length(boardList) < 11}">
+								1
+							</c:when>
+							<c:when test = "${fn:length(boardList) / 10 > 0}">
+								<c:if test = "${status.count % 10 eq 1}">
+									<a href = "page_move?pageNumber=<%=check %>" class = "boardNumberMoveBtn"><%=check %></a>
+									<%! check += 1; %>
+									<!-- <c:set var = "page_check_Number" value = "<%=check+1 %>"/> -->
+								</c:if>
+							</c:when>
+						</c:choose>
+					</c:forEach>
+				</div>
 			</div>
 			<div class = "commu_right_frame">
-				<a href = "#"> ▶ </a>
-			</div>
+				<c:if test = "${fn:length(boardList) > 10}">
+					<a href = "page_move_left_right?pageNumber=<%=check %>&move=right"> ▶ </a>
+				</c:if>
+			</div> 
 		</div>
 	</div>
 	
