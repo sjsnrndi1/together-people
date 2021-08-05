@@ -12,6 +12,7 @@
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/titlebar.css"> <!-- 타이틀바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/footerbar.css"> <!-- 바닥바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
+<script type = "text/javascript" src = "http://sjsnrndi12.dothome.co.kr/js/basicAct.js"></script> <!-- 기본 행동 -->
 <script>
 	function check(){
 		let pw = document.getElementById("user_name").value;
@@ -26,12 +27,6 @@
 			alert("비밀번호가 일치하지 않습니다.");
 			return false;
 		}
-	}
-	function openNav() {
-		document.getElementById('mysidenav').style.width = '300px';
-	}
-	function closeNav() {
-		document.getElementById('mysidenav').style.width = '0';
 	}
 	function userPwSetting() {
 		let password = document.getElementById("user_password").value;

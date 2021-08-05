@@ -12,6 +12,7 @@
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/titlebar.css"> <!-- 타이틀바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/footerbar.css"> <!-- 바닥바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
+<script type = "text/javascript" src = "http://sjsnrndi12.dothome.co.kr/js/basicAct.js"></script> <!-- 기본 행동 -->
 <script>
 	function minusCut(loc) {
 		if(/[^0123456789]/g.test(loc.value)) {
@@ -198,12 +199,6 @@
 			alert(userRegistInfo.user_name.value + "님\n회원가입을 되셨습니다.\n로그인 후 이용 부탁드리겠습니다.");
 			return true;
 		}
-	}
-	function openNav() {
-		document.getElementById('mysidenav').style.width = '300px';
-	}
-	function closeNav() {
-		document.getElementById('mysidenav').style.width = '0';
 	}
 </script>
 <style>

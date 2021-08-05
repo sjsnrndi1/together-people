@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import jung.spring.mybatis.BoardSympathyMapper;
+import jung.spring.controller.MybatisController;
 import jung.spring.mybatis.BoardCommentMapper;
 import jung.spring.mybatis.BoardMapper;
 import jung.spring.mybatis.MemberMapper;
@@ -370,50 +371,95 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	boolean boardDate_sort = false;
 	boolean boardRead_sort = false;
 	@Override
-	public ArrayList<BoardInfoVO> getBoardSort(String subject) {
+	public ArrayList<BoardInfoVO> getBoardSort(String subject, String move) {
 		// TODO Auto-generated method stub
 		BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
 		
 		switch (subject) {
 		case "title":
-			if(boardTitle_sort == false) {
-				ArrayList<BoardInfoVO> boardSortNumber = boardMapper.getBoardTitleSort();
-				boardTitle_sort = true;
-				return boardSortNumber;
+			if(move.equals("default")) {
+				if(boardTitle_sort == false) {
+					ArrayList<BoardInfoVO> boardSortNumber = boardMapper.getBoardTitleSort();
+					boardTitle_sort = true;
+					boardWriter_sort = false;
+					boardDate_sort = false;
+					boardRead_sort = false;
+					return boardSortNumber;
+				} else {
+					ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
+					boardTitle_sort = false;
+					boardWriter_sort = false;
+					boardDate_sort = false;
+					boardRead_sort = false;
+					return boardSortList;
+				}
 			} else {
-				ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
-				boardTitle_sort = false;
-				return boardSortList;
+				ArrayList<BoardInfoVO> boardSortNumber = boardMapper.getBoardReadSort();
+				return boardSortNumber;
 			}
 		case "writer":
-			if(boardWriter_sort == false) {
-				ArrayList<BoardInfoVO> boardSortWriter = boardMapper.getBoardWriterSort();
-				boardWriter_sort = true;
-				return boardSortWriter;
+			if(move.equals("default")) {
+				if(boardWriter_sort == false) {
+					ArrayList<BoardInfoVO> boardSortWriter = boardMapper.getBoardWriterSort();
+					boardTitle_sort = false;
+					boardWriter_sort = true;
+					boardDate_sort = false;
+					boardRead_sort = false;
+					return boardSortWriter;
+				} else {
+					ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
+					boardTitle_sort = false;
+					boardWriter_sort = false;
+					boardDate_sort = false;
+					boardRead_sort = false;
+					return boardSortList;
+				}
 			} else {
-				ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
-				boardWriter_sort = false;
-				return boardSortList;
+				ArrayList<BoardInfoVO> boardSortWriter = boardMapper.getBoardReadSort();
+				return boardSortWriter;
 			}
 		case "date":
-			if(boardDate_sort == false) {
-				ArrayList<BoardInfoVO> boardSortDate = boardMapper.getBoardDateSort();
-				boardDate_sort = true;
-				return boardSortDate;
+			if(move.equals("default")) {
+				if(boardDate_sort == false) {
+					ArrayList<BoardInfoVO> boardSortDate = boardMapper.getBoardDateSort();
+					boardTitle_sort = false;
+					boardWriter_sort = false;
+					boardDate_sort = true;
+					boardRead_sort = false;
+					return boardSortDate;
+				} else {
+					ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
+					boardTitle_sort = false;
+					boardWriter_sort = false;
+					boardDate_sort = false;
+					boardRead_sort = false;
+					return boardSortList;
+				}
 			} else {
-				ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
-				boardDate_sort = false;
-				return boardSortList;
+				ArrayList<BoardInfoVO> boardSortDate = boardMapper.getBoardReadSort();
+				return boardSortDate;
 			}
 		case "read":
-			if(boardRead_sort == false) {
-				ArrayList<BoardInfoVO> boardSortRead = boardMapper.getBoardReadSort(); 
-				boardRead_sort = true;
-				return boardSortRead;
+			if(move.equals("default")) {
+				if(boardRead_sort == false) {
+					ArrayList<BoardInfoVO> boardSortRead = boardMapper.getBoardReadSort(); 
+					boardTitle_sort = false;
+					boardWriter_sort = false;
+					boardDate_sort = false;
+					boardRead_sort = true;
+					return boardSortRead;
+				} else {
+					ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
+					boardTitle_sort = false;
+					boardWriter_sort = false;
+					boardDate_sort = false;
+					boardRead_sort = false;
+					return boardSortList;
+				}
 			} else {
-				ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
-				boardRead_sort = false;
-				return boardSortList;
+				System.out.println(boardRead_sort);
+				ArrayList<BoardInfoVO> boardSortRead = boardMapper.getBoardReadSort();
+				return boardSortRead;
 			}
 		default:
 			ArrayList<BoardInfoVO> boardSortList = boardMapper.getBoards();
@@ -421,10 +467,8 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 		}
 			
 	}
+
 	/* ===========게시글 정렬 서비스============ */
-	
-	
-	
 	
 	
 	

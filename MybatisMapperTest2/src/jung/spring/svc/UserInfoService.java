@@ -49,6 +49,6 @@ public interface UserInfoService {
 	BoardSympathyInfoVO getBoardSympathy(int boardNumber, String name); // 사용자 공감 가져오기
 	List<BoardCommentInfoVO> getBoardComments(int boardNumber); // 사용자 댓글 목록 가져오기
 	void deleteBoardComment(int boardCommentNumber); //사용자 댓글 삭제
-	List<BoardInfoVO> getBoardSort(String subject); //게시글 정렬
+	List<BoardInfoVO> getBoardSort(String subject, String move); //게시글 정렬
 	/********** 커뮤니티 **********/
 }

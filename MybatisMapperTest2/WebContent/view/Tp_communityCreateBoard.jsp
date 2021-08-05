@@ -16,13 +16,8 @@
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/popupbar.css"> <!-- 전화서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/submenubar.css"> <!-- 우측서브메뉴바 -->
+<script type = "text/javascript" src = "http://sjsnrndi12.dothome.co.kr/js/basicAct.js"></script> <!-- 기본 행동 -->
 <script>
-	function openNav() {
-		document.getElementById('mysidenav').style.width = '300px';
-	}
-	function closeNav() {
-		document.getElementById('mysidenav').style.width = '0';
-	}
 	function check(){
 		if(boardRegist.commu_subject.value == ""){
 			alert("카테고리를 선택해주세요.");

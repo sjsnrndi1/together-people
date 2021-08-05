@@ -18,75 +18,7 @@
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/popupbar.css"> <!-- 전화서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/submenubar.css"> <!-- 우측서브메뉴바 -->
-<script>
-	function openNav() {
-		document.getElementById('mysidenav').style.width = '300px';
-	}
-	function closeNav() {
-		document.getElementById('mysidenav').style.width = '0';
-	}
-	function showPopup(hasFilter) {
-		const popup = document.querySelector('#popup');
-	  
-	  if (hasFilter) {
-	  	popup.classList.add('has-filter');
-	  } else {
-	  	popup.classList.remove('has-filter');
-	  }
-	  
-	  popup.classList.remove('hide');
-	}
-	function closePopup() {
-		const popup = document.querySelector('#popup');
-	  popup.classList.add('hide');
-	}
-	function login_before_popup() {
-		alert("로그인 후 이용해주세요.");	
-	}
-	function login_after_popup() {
-		var popupWindow = "";
-		var fr = document.getElementById("popupForm");
-		
-		var url = "popup";
-        var name = "popup test";
-        var option = "width = 450, height = 800, top = 100, left = 200, location = no, resizable = no";
-        
-        popupWindow = window.open("", name, option);
-        popupWindow.focus();
-        
-        fr.action = url;
-        fr.method = "post";
-        fr.target = name;
-        fr.submit();
-        fr.target = "_self";
-	}
-	/*$( document ).ready( function() {
-        $(".boardNumberMoveBtn").click(function(){
-			//ajax 사용
-			alert($(this).attr('value'));
-			$.ajax({
-				url : "page_move",
-				type : "POST",
-				data : "pageNumber=" + $(this).attr('value') 
-			})
-			
-			setTimeout('autoRefresh_sample_div()', 0);
-        });
-  
-    });
-	 	<c:set var = "userName" value = "${userInfo.user_name}" />
-			$.ajax({
-				url: "comment_insert",
-			    data: "comment=" + document.getElementById("test").innerHTML + "&boardNumber=" + ${boardInfo.boardNumber},
-			    type: "POST"
-			});
-	
-
-	function autoRefresh_sample_div() {
-		var currentLocation = window.location;
-		$("#commu_content_frame").load(currentLocation + ' #commu_content_frame');
-	}*/
-</script>
+<script type = "text/javascript" src = "http://sjsnrndi12.dothome.co.kr/js/basicAct.js"></script> <!-- 기본 행동 -->
 <style>
 	.floorBar {
 		position : absolute;
@@ -256,9 +188,7 @@
 			<a href="#">고객지원</a>
 		</div>					
 	</div>
-	
-	<%! int check = 1; %>
-	<c:set var = "page_check_Number" value = "1"/>
+	<%-- <c:set var = "page_check_Number" value = "1" scope = "request"/> --%>
 	<div class = "commu_frame" id = "commu_frame">
 		<div class = "commu_create_frame">
 			<c:if test = "${ssVar ne null}">
@@ -270,10 +200,10 @@
 				<thead>
 					<tr>
 						<td style = "width : 5%;">순번</td><!-- ${page_check_Number} -->
-						<td style = "width : 60%;"><a href = "communityView_sort?pageNumber=<%=check %>&subject=title" class = "boardSortStyle">제목</a></td>
-						<td style = "width : 12%;"><a href = "communityView_sort?pageNumber=<%=check %>&subject=writer" class = "boardSortStyle">작성자</a></td>
-						<td style = "width : 10%;"><a href = "communityView_sort?pageNumber=<%=check %>&subject=date" class = "boardSortStyle">작성일</a></td>
-						<td style = "width : 10%;"><a href = "communityView_sort?pageNumber=<%=check %>&subject=read" class = "boardSortStyle">조회수</a></td>
+						<td style = "width : 60%;"><a href = "communityView_sort?pageNumber=${page_check_Number}&subject=title" class = "boardSortStyle">제목</a></td>
+						<td style = "width : 12%;"><a href = "communityView_sort?pageNumber=${page_check_Number}&subject=writer" class = "boardSortStyle">작성자</a></td>
+						<td style = "width : 10%;"><a href = "communityView_sort?pageNumber=${page_check_Number}&subject=date" class = "boardSortStyle">작성일</a></td>
+						<td style = "width : 10%; border : 1px solid white;"><a href = "communityView_sort?pageNumber=${page_check_Number}&subject=read" class = "boardSortStyle">조회수</a></td>
 					</tr>
 				</thead>
 			</table>
@@ -301,12 +231,12 @@
 		<div class = "commu_footer_frame">
 			<div class = "commu_left_frame">
 				<c:if test = "${fn:length(boardList) > 10}">
-					<a href = "page_move_left_right?pageNumber=<%=check %>&move=left"> ◀ </a>
+					<a href = "page_move_left_right?pageNumber=${page_check_Number}&move=left&subject=${subject}"> ◀ </a>
 				</c:if>
 			</div>
 			<div class = "commu_number_frame">
 				<div style = "width : 99%; height : 99%;">
-					
+					<c:set var = "pageCheckNumber" value = "1"/>
 					<c:forEach items = "${boardList }" var = "board" varStatus = "status">
 						<c:choose>
 							<c:when test = "${fn:length(boardList) < 11}">
@@ -314,9 +244,10 @@
 							</c:when>
 							<c:when test = "${fn:length(boardList) / 10 > 0}">
 								<c:if test = "${status.count % 10 eq 1}">
-									<a href = "page_move?pageNumber=<%=check %>" class = "boardNumberMoveBtn"><%=check %></a>
-									<%! check += 1; %>
-									<!-- <c:set var = "page_check_Number" value = "<%=check+1 %>"/> -->
+									<%-- <a href = "page_move?pageNumber=${page_check_Number}" class = "boardNumberMoveBtn">${page_check_Number}</a>
+									<c:set var = "page_check_Number" value = "${page_check_Number + 1}" scope = "request"/> --%>
+									<a href = "page_move?pageNumber=${pageCheckNumber}&subject=${subject}" class = "boardNumberMoveBtn">${pageCheckNumber}</a>
+									<c:set var = "pageCheckNumber" value = "${pageCheckNumber + 1}"/>
 								</c:if>
 							</c:when>
 						</c:choose>
@@ -325,7 +256,7 @@
 			</div>
 			<div class = "commu_right_frame">
 				<c:if test = "${fn:length(boardList) > 10}">
-					<a href = "page_move_left_right?pageNumber=<%=check %>&move=right"> ▶ </a>
+					<a href = "page_move_left_right?pageNumber=${page_check_Number}&move=right&subject=${subject}"> ▶ </a>
 				</c:if>
 			</div> 
 		</div>

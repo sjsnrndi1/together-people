@@ -236,9 +236,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 	
 	/* ===========게시글 정렬 서비스============ */
 	@Override
-	public List<BoardInfoVO> getBoardSort(String subject) {
+	public List<BoardInfoVO> getBoardSort(String subject, String move) {
 		// TODO Auto-generated method stub
-		ArrayList<BoardInfoVO> boardSortList = userInfoDAO.getBoardSort(subject);
+		ArrayList<BoardInfoVO> boardSortList = userInfoDAO.getBoardSort(subject, move);
 		return boardSortList;
 	}
 	/* ===========게시글 정렬 서비스============ */

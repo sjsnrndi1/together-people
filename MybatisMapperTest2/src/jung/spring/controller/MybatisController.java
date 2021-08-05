@@ -518,6 +518,7 @@ public class MybatisController {
 		}
 		
 		List<BoardInfoVO> boardList = userInfoService.getBoards();
+		mav.addObject("page_check_Number", 1);
 		mav.addObject("pageNumber", 0);
 		mav.addObject("boardList", boardList);
 		mav.setViewName("Tp_communityView");
@@ -639,10 +640,11 @@ public class MybatisController {
 			UserInfoVO userInfo = userInfoService.getUser(name);
 			mav.addObject("userInfo", userInfo);
 		}
-
-		List<BoardInfoVO> boardList = userInfoService.getBoardSort(subject);
+		String move = "default";
+		List<BoardInfoVO> boardList = userInfoService.getBoardSort(subject, move);
 		int page = (pageNumber * 10) - 10;
 		mav.addObject("pageNumber", page);
+		mav.addObject("page_check_Number", pageNumber);
 		mav.addObject("subject", subject);
 		mav.addObject("boardList", boardList);
 		mav.setViewName("Tp_communityView");
@@ -652,7 +654,7 @@ public class MybatisController {
 	
 	/* =========== 커뮤니티 페이지 이동 =========== */
 	@RequestMapping(value = "/page_move")
-	public ModelAndView Page_Move(HttpServletRequest request, @RequestParam("pageNumber") int pageNumber) throws Exception {
+	public ModelAndView Page_Move(HttpServletRequest request, @RequestParam("pageNumber") int pageNumber, @RequestParam("subject") String subject) throws Exception {
 		ModelAndView mav = new ModelAndView();
 
 		String name = httpServletRequest(request);
@@ -660,9 +662,13 @@ public class MybatisController {
 			UserInfoVO userInfo = userInfoService.getUser(name);
 			mav.addObject("userInfo", userInfo);
 		}
-		
-		List<BoardInfoVO> boardList = userInfoService.getBoards();
+		System.out.println(pageNumber + "번호 눌러서 페이지 이동함");
+		String move = "default";
+		List<BoardInfoVO> boardList = userInfoService.getBoardSort(subject, move);
+		//List<BoardInfoVO> boardList = userInfoService.getBoards();
 		int page = (pageNumber * 10) - 10;
+		mav.addObject("page_check_Number", pageNumber);
+		mav.addObject("subject", subject);
 		mav.addObject("pageNumber", page);
 		mav.addObject("boardList", boardList);
 		mav.setViewName("Tp_communityView");
@@ -670,22 +676,48 @@ public class MybatisController {
 	}
 	
 	@RequestMapping(value = "/page_move_left_right")
-	public ModelAndView Page_Move_Left_Right(HttpServletRequest request, @RequestParam("pageNumber") int pageNumber, @RequestParam("move") String move) throws Exception {
+	public ModelAndView Page_Move_Left_Right(HttpServletRequest request, @RequestParam("pageNumber") int pageNumber, @RequestParam("move") String move,
+			@RequestParam("subject") String subject) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		System.out.println(pageNumber);
 		String name = httpServletRequest(request);
 		if (name != null) {
 			UserInfoVO userInfo = userInfoService.getUser(name);
 			mav.addObject("userInfo", userInfo);
 		}
-		
-		List<BoardInfoVO> boardList = userInfoService.getBoards();
+		System.out.println(subject);
+		System.out.println(move);
+		System.out.println("현재 페이지 : " + pageNumber + " 에서");
+		List<BoardInfoVO> boardList = userInfoService.getBoardSort(subject, move);
+		//List<BoardInfoVO> boardList = userInfoService.getBoards();
 		int page = 0;
 		if(move.equals("left")) {
 			page = (pageNumber * 10) - 20;
+			if(page < 0) {
+				page = 0;
+				pageNumber = 1;
+				mav.addObject("page_check_Number", 1);
+				System.out.println("첫번째");
+			} else {
+				pageNumber -= 1;
+				mav.addObject("page_check_Number", pageNumber);
+				System.out.println("두번째");
+			}
 		} else if(move.equals("right")) {
 			page = ((pageNumber + 1) * 10) - 10;
+			if(boardList.size()/10 < page/10) { //   1 < 2
+				page -= 10;
+				mav.addObject("page_check_Number", pageNumber);
+				System.out.println("세번째");
+			} else {
+				pageNumber += 1;
+				mav.addObject("page_check_Number", pageNumber);
+				System.out.println("네번째");
+			}
 		}
+		System.out.println("<>을 눌러서 : " + pageNumber + "페이지로 이동함.");
+		System.out.println("<>을 눌러서 : " + page + "페이지의 시작번호");
+		System.out.println("------------------------------------------");
+		mav.addObject("subject", subject);
 		mav.addObject("pageNumber", page);
 		mav.addObject("boardList", boardList);
 		mav.setViewName("Tp_communityView");

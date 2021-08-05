@@ -18,50 +18,11 @@
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/popupbar.css"> <!-- 전화서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/submenubar.css"> <!-- 우측서브메뉴바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/communityContentbar.css"> <!-- 커뮤니티바 -->
+<script type = "text/javascript" src = "http://sjsnrndi12.dothome.co.kr/js/basicAct.js"></script> <!-- 기본 행동 -->
 <script>
-	function openNav() {
-		document.getElementById('mysidenav').style.width = '300px';
-	}
-	function closeNav() {
-		document.getElementById('mysidenav').style.width = '0';
-	}
-	function showPopup(hasFilter) {
-		const popup = document.querySelector('#popup');
-	  
-	  if (hasFilter) {
-	  	popup.classList.add('has-filter');
-	  } else {
-	  	popup.classList.remove('has-filter');
-	  }
-	  
-	  popup.classList.remove('hide');
-	}
-	function closePopup() {
-		const popup = document.querySelector('#popup');
-	  popup.classList.add('hide');
-	}
-	function login_before_popup() {
-		alert("로그인 후 이용해주세요.");	
-	}
-	function login_after_popup() {
-		var popupWindow = "";
-		var fr = document.getElementById("popupForm");
-		
-		var url = "popup";
-        var name = "popup test";
-        var option = "width = 450, height = 800, top = 100, left = 200, location = no, resizable = no";
-        
-        popupWindow = window.open("", name, option);
-        popupWindow.focus();
-        
-        fr.action = url;
-        fr.method = "post";
-        fr.target = name;
-        fr.submit();
-        fr.target = "_self";
-	}
+	//url복사 스크립트
 	function clip(){
-
 		var url = '';
 		var textarea = document.createElement("textarea");
 		document.body.appendChild(textarea);
@@ -73,6 +34,7 @@
 		alert("URL이 복사되었습니다.")
 	}
 	
+	//공감 버튼 스크립트
 	<c:choose>
 		<c:when test = "${ssVar eq null }">
 			var sym_count = 1;
@@ -97,6 +59,7 @@
 		}
 	}
 	
+	//댓글 스크립트
 	var comm_count = 1;
 	function comment_button(){
 		var property = document.getElementById("commentBtn");
@@ -150,6 +113,7 @@
 		
 	}
 	
+	//글 작성일 기분 ~일 전 스크립트
 	function writeDate() {
 		<c:set var = "now" value = "<%=new java.util.Date()%>" />
 		<fmt:formatDate var = "nowDate" value="${now}" pattern="y" />
@@ -204,193 +168,6 @@
 		}
 	}
 </script>
-<style>
-	.commu_board_frame {
-		width : 50%;
-		height : auto;
-		margin-top : 1%;
-		margin-left : 26%;
-		color : #696969;
-	}
-	.commu_board_subject {
-		width : 97%;
-		margin : 2px;
-		height : 5%;
-		padding-left : 22px;
-		padding-top : 15px;
-		padding-bottom : 10px;
-	}
-	.commu_board_title {
-		width : 97%;
-		margin : 2px;
-		height : 5%;
-		padding-left : 22px;
-		padding-top : 15px;
-		font-size : 120%;
-		padding-bottom : 15px;
-	}
-	.commu_board_user {
-		width : 99.3%;
-		margin : 2px;
-		height : 40px;
-		border-bottom : 1px solid #BC8F8F;
-	}
-	.commu_board_user table {
-		width : 100%;
-		margin-top : 8px;
-	}
-	.commu_board_user_writer {
-		width : 7%;
-		text-align : right;
-		border-right : 1px solid #BC8F8F;
-		padding-right : 10px;
-	}
-	.commu_board_user_time {
-		width : 80%;
-		text-align : left;
-		padding-left : 8px;
-	}
-	.commu_board_user_url {
-		 width : 10%;
-		 text-align : center;
-		 border-left : 1px solid #BC8F8F;
-	}
-	.commu_board_content{ /* 476 */
-		width : 97%;
-		margin : 2px;
-		height : auto;
-		padding-left : 22px;
-		padding-top : 15px;
-		border-bottom : 1px solid #BC8F8F;
-	}
-	.commu_board_sympathy_comment{
-		width : 97%;
-		margin : 2px;
-		height : 8%;
-		padding-left : 22px;
-		float : left;
-	}
-	button {
-		margin-left : 20px;
-	}
-	.commu_board_user a:link { color: #696969; text-decoration: none;}
-	.commu_board_user a:visited { color: #696969; text-decoration: none;}
- 	.commu_board_user a:hover { color: black; text-decoration: none;}
- 	
- 	.floorBar {
- 		float : left;
- 		margin-top : 10%;
- 		bottom : 0;
- 	}
- 	.comment_frame {
-		display : none;
-		margin : 2px;
-		float : left;
-		width : 100%;
-		height : auto;
-		border-top : 1px solid #BC8F8F;
-	}
-	textarea:focus {
-		outline : none;
-	}
-	.all_comment_frame {
-		margin : 2px;
-		width : 99.3%;
-		padding-bottom : 2%;
-		padding-top : 2%;
-	}
-	.all_user_picture_name{
-	 	margin : 2px;
-	 	width : 99.3%;
-	 	height : 25px;
-	 	margin-top : 2%;
-	}
-	.all_user_comment{
-	 	margin : 2px;
-	 	width : 99.3%;
-	 	height : auto;
-	}
-	.all_user_comment_time{
-	 	margin : 2px;
-	 	width : 99.3%;
-	 	height : 20px;
-	 	font-size : 80%;
-	 	margin-top : 2%;
-	 }
-	.child_comment_sympathy_btn{
-		margin : 2px;
-		width : 99.3%;
-		border-bottom : 1px solid #BC8F8F;
-		height : 20px;
-	}
-	.my_comment_frame{
-		border : 1px solid #8B4513;
-		margin : 2px;
-		width : 99.3%;
-		height : 132px;
-		border-radius : 5px; 
-	}
-	.my_name_frame{
-		margin : 2px;
-		width : 99.3%;
-		height : 20px;
-	}
-	.my_comment_write_frame{
-		border : 1px solid #BC8F8F;
-		border-radius : 5px;
-		margin : 2px;
-		width : 99.3%;
-		height : 50px;
-	}
-	.my_comment_write_frame:focus {
-		outline : none;
-	}
-	.writeNumber_frame{
-		border-bottom : 1px solid #BC8F8F;
-		margin : 2px;
-		width : 99.3%;
-		height : 20px;
-		text-align : right;
-	}
-	.empty_frame{
-		border-right : 1px solid #BC8F8F;
-		margin : 2px;
-		width : 93%;
-		height : 22px;
-		float : left;
-	}
-	.my_comment_input_frame{
-		margin : 2px;
-		width : 5.6%;
-		height : 22px;
-		float : left;
-	}
-	.my_comment_input_frame input{
-		width : 100%;
-		height : 100%;
-		background-color : white;
-		border : 1px solid white;
-		font-weight : bold;
-	}
-	.login_before_my_comment {
-		display : flex;
-		height : 132px;
-		justify-content : center;
-		align-items : center;
-		border : 1px sold gray;
-	}
-	.login_before_my_comment a:link { text-decoration : none; color : #E9967A;}
-	.login_before_my_comment a:visited { text-decoration : none;color : #E9967A;}
-	.login_before_my_comment a:active {text-decoration : none; color : #E9967A; }
-	.login_before_my_comment a:hover { text-decoration : none; color : #E9967A;}
-	.deleteCommentbtn {
-		float: right;
-		border-radius : 5px;
-		background-color : white;
-		border : 1px solid #BC8F8F;
-		color : #BC8F8F;
-	}
-</style>
 </head>
 <body>
 	<input type = "hidden" value = "${ssVar}" id = "user_id_session" name = "user_id_session"/>
