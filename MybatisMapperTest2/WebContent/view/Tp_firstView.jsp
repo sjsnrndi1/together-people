@@ -143,8 +143,8 @@
 				</li>
 				<li><a href="communityView">커뮤니티</a>
 					<ul>
-						<li><a href="#">자유게시판</a></li>
-						<li><a href="#">참여게시판</a></li>
+						<li><a href="communityView">자유게시판</a></li>
+						<li><a href="joinView">참여게시판</a></li>
 						<li><a href="#">이용후기</a></li>
 					</ul>
 				</li>
@@ -175,7 +175,7 @@
 			<a href="#" class="closebtn" onclick='closeNav()'>x</a>
 			<a href="noticeView">소개</a>
 			<a href="userTpView">가이드</a>
-			<a href="#">커뮤니티</a>
+			<a href="communityView">커뮤니티</a>
 			<a href="#">고객지원</a>
 		</div>					
 	</div>

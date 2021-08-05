@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import jung.spring.mybatis.BoardSympathyMapper;
+import jung.spring.mybatis.JoinBoardMapper;
 import jung.spring.controller.MybatisController;
 import jung.spring.mybatis.BoardCommentMapper;
 import jung.spring.mybatis.BoardMapper;
@@ -19,6 +20,7 @@ import jung.spring.mybatis.PopupChatMapper;
 import jung.spring.mybatis.PopupMapper;
 import jung.spring.mybatis.PostingMapper;
 import jung.spring.vo.BoardSympathyInfoVO;
+import jung.spring.vo.JoinBoardInfoVO;
 import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
@@ -469,6 +471,53 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	}
 
 	/* ===========게시글 정렬 서비스============ */
+	
+	/* =========== 참여 게시글 생성 서비스============ */
+	@Override
+	public void addJoinBoard(String name, String title, String content, String subject) {
+		// TODO Auto-generated method stub
+		JoinBoardMapper joinBoardMapper = sqlSession.getMapper(JoinBoardMapper.class);
+		MemberMapper userMapper = sqlSession.getMapper(MemberMapper.class);
+		UserInfoVO userInfo = userMapper.getUser(name);
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("joinBoardUserId", name);
+		map.put("joinBoardTitle", title);
+		map.put("joinBoardWriter", userInfo.getUser_name());
+		map.put("joinBoardContent", content);
+		map.put("joinBoardDate", new Date());
+		map.put("joinBoardSubject", subject);
+		map.put("joinBoard_joinUserNumber", 1);
+		joinBoardMapper.addJoinBoard(map);
+	}
+	/* =========== 참여 게시글 생성 서비스============ */
+	
+	/* =========== 참여 게시글 목록 가져오기 서비스============ */
+	@Override
+	public ArrayList<JoinBoardInfoVO> getJoinBoards() {
+		// TODO Auto-generated method stub
+		JoinBoardMapper joinBoardMapper = sqlSession.getMapper(JoinBoardMapper.class);
+		ArrayList<JoinBoardInfoVO> joinBoardList = joinBoardMapper.getJoinBoards();
+		return joinBoardList;
+	}
+	/* =========== 참여 게시글 목록 가져오기 서비스============ */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

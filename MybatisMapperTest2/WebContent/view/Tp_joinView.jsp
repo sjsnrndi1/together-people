@@ -18,43 +18,44 @@
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/popupbar.css"> <!-- 전화서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/submenubar.css"> <!-- 우측서브메뉴바 -->
+<!-- <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/communityViewbar.css"> 커뮤니티 전체 목록 스타일 -->
 <script type = "text/javascript" src = "http://sjsnrndi12.dothome.co.kr/js/basicAct.js"></script> <!-- 기본 행동 -->
 <style>
 	.floorBar {
 		position : absolute;
 	}
-	.commu_frame {
+	.join_frame	{
 		width : 50%;
 		height : 600px;
-		margin-top : 1%;
+		margin-top : 0.5%;
 		margin-left : 26%;
 		color : #696969;
 	}
-	.commu_title_frame {
+	.join_title_frame {
 		width : 99.3%;
 		height : 7.4%;
 		margin : 2px;
 		border-top : 2px solid #BC8F8F;
 		border-bottom : 2px solid #BC8F8F;
 	}
-	.commu_content_frame {
+	.join_content_frame {
 		width : 99.3%;
 		height : 85%;
 		margin : 2px;
 		border-bottom : 2px solid #BC8F8F;
 	}
-	.commu_footer_frame {
+	.join_footer_frame {
 		width : 99.3%;
 		height : 5%;
 		margin : 2px;
 	}
-	.commu_title_table {
+	.join_title_table {
 		width : 100%;
 		text-align : center;
 		padding-top : 10px;
 		padding-bottom : 10px;
 	}
-	.commu_board_table {
+	.join_board_table {
 		width : 99.3%;
 		text-align : center;
 		padding-top : 10px;
@@ -63,44 +64,44 @@
 		border-bottom : 1px solid #BC8F8F;
 	}
 	
-	.commu_board_table a:link { color: #696969; text-decoration: none;}
-	.commu_board_table a:visited { color: #696969; text-decoration: none;}
- 	.commu_board_table a:hover { color: black; text-decoration: none;}
-	.commu_footer_frame a:link { color: #696969; text-decoration: none;}
-	.commu_footer_frame a:visited { color: #696969; text-decoration: none;}
- 	.commu_footer_frame a:hover { color: black; text-decoration: none;}
+	.join_board_table a:link { color: #696969; text-decoration: none;}
+	.join_board_table a:visited { color: #696969; text-decoration: none;}
+ 	.join_board_table a:hover { color: black; text-decoration: none;}
+	.join_footer_frame a:link { color: #696969; text-decoration: none;}
+	.join_footer_frame a:visited { color: #696969; text-decoration: none;}
+ 	.join_footer_frame a:hover { color: black; text-decoration: none;}
  	
- 	.commu_left_frame {
+ 	.join_left_frame {
  		margin : 2px;
  		float : left;
  		width : 19%;
  		height : 80%;
  		text-align : right;
  	}
- 	.commu_number_frame{	
+ 	.join_number_frame{	
  		margin : 2px;
  		float : left;
  		width : 60%;
  		height : 80%;
  		text-align : center;
  	}
- 	.commu_right_frame{
+ 	.join_right_frame{
  		margin : 2px;
  		float : left;
  		width : 19%;
  		height : 80%;
  		text-align : left;
  	}
- 	.commu_create_frame {
+ 	.join_create_frame {
  		font-size : 120%;
 		width : 100%;
-		height : 20px;
+		height : 40px;
 		color : #696969;
 	}
-	.commu_create_frame a:link { text-decoration : none; color : #696969;}
-	.commu_create_frame a:visited { text-decoration : none;color : #696969;}
-	.commu_create_frame a:active {text-decoration : none; color : #2F4F4F; }
-	.commu_create_frame a:hover { text-decoration : none; color : #2F4F4F;}
+	.join_create_frame a:link { text-decoration : none; color : #696969;}
+	.join_create_frame a:visited { text-decoration : none;color : #696969;}
+	.join_create_frame a:active {text-decoration : none; color : #2F4F4F; }
+	.join_create_frame a:hover { text-decoration : none; color : #2F4F4F;}
 	.boardSortStyle {
 		font-family: 'Hanna';
 		background-color : white;
@@ -123,13 +124,13 @@
 		background-color : white;
 		color : black;
 	}
-	.commu_title_table td {
+	.join_title_table td {
 		border-right : 1px solid #BC8F8F;
 	}
-	.commu_title_table td a:link { text-decoration : none; color : #696969;}
-	.commu_title_table td a:visited { text-decoration : none; color : #696969;}
-	.commu_title_table td a:active { text-decoration : none; color : #2F4F4F;}
-	.commu_title_table td a:hover { text-decoration : none; color : #2F4F4F;}
+	.join_title_table td a:link { text-decoration : none; color : #696969;}
+	.join_title_table td a:visited { text-decoration : none; color : #696969;}
+	.join_title_table td a:active { text-decoration : none; color : #2F4F4F;}
+	.join_title_table td a:hover { text-decoration : none; color : #2F4F4F;}
 </style>
 </head>
 <body>
@@ -153,7 +154,7 @@
 				<li><a href="communityView">커뮤니티</a>
 					<ul>
 						<li><a href="communityView">자유게시판</a></li>
-						<li><a href="#">참여게시판</a></li>
+						<li><a href="joinView">참여게시판</a></li>
 						<li><a href="#">이용후기</a></li>
 					</ul>
 				</li>
@@ -184,57 +185,66 @@
 			<a href="#" class="closebtn" onclick='closeNav()'>x</a>
 			<a href="noticeView">소개</a>
 			<a href="userTpView">가이드</a>
-			<a href="#">커뮤니티</a>
+			<a href="communityView">커뮤니티</a>
 			<a href="#">고객지원</a>
 		</div>					
 	</div>
 	<%-- <c:set var = "page_check_Number" value = "1" scope = "request"/> --%>
-	<div class = "commu_frame" id = "commu_frame">
-		<div class = "commu_create_frame">
+	<div class = "join_frame" id = "join_frame">
+		<div class = "join_create_frame">
 			<c:if test = "${ssVar ne null}">
-				<a href = "communityCreateBoard">작성</a>
+				<div style = "float: left;">
+					<a href = "joinCreateBoard">작성</a>
+				</div>
 			</c:if>
+			<div style = "border-left : 1px solid #BC8F8F; width : 95%; height : 100%; float : right; padding : 0; margin : 0;">
+				<c:forEach items = "${subjectList}" var = "subjectList">
+					<div style = "border : 1px solid #BC8F8F; text-align : center; border-radius : 3px; float : left; width : 10%; height : 40%; margin : 2px; font-size : 80%;">
+						<a href = "joinView_sort?subject=${subjectList}">${subjectList}</a>
+					</div>
+				</c:forEach>
+			</div>
 		</div>
-		<div class = "commu_title_frame">
-			<table class = "commu_title_table">
+		<div class = "join_title_frame">
+			<table class = "join_title_table">
 				<thead>
 					<tr>
-						<td style = "width : 5%;">순번</td><!-- ${page_check_Number} -->
-						<td style = "width : 60%;"><a href = "communityView_sort?pageNumber=${page_check_Number}&subject=title" class = "boardSortStyle">제목</a></td>
-						<td style = "width : 12%;"><a href = "communityView_sort?pageNumber=${page_check_Number}&subject=writer" class = "boardSortStyle">작성자</a></td>
-						<td style = "width : 10%;"><a href = "communityView_sort?pageNumber=${page_check_Number}&subject=date" class = "boardSortStyle">작성일</a></td>
-						<td style = "width : 10%; border : 1px solid white;"><a href = "communityView_sort?pageNumber=${page_check_Number}&subject=read" class = "boardSortStyle">조회수</a></td>
+						<td style = "width : 5%;">순번</td>
+						<td style = "width : 10%;"><a href = "joinView_sort?pageNumber=${page_check_Number}&subject=${subject}" class = "boardSortStyle">카테고리</a></td>
+						<td style = "width : 50%;"><a href = "joinView_sort?pageNumber=${page_check_Number}&subject=title" class = "boardSortStyle">제목</a></td>
+						<td style = "width : 12%;"><a href = "joinView_sort?pageNumber=${page_check_Number}&subject=writer" class = "boardSortStyle">작성자</a></td>
+						<td style = "width : 10%;"><a href = "joinView_sort?pageNumber=${page_check_Number}&subject=date" class = "boardSortStyle">작성일</a></td>
+						<td style = "width : 10%; border : 1px solid white;"><a href = "joinView_sort?pageNumber=${page_check_Number}&subject=join" class = "boardSortStyle">참여인원</a></td>
 					</tr>
 				</thead>
 			</table>
 		</div>
-		<div class = "commu_content_frame">
-			<c:forEach items = "${boardList }" var = "board" varStatus = "status" begin = "${pageNumber }">
-				<c:if test = "${board.boardSubject eq 'freedom' }">
-					<c:if test = "${status.count < 11 }">					
-						<table class = "commu_board_table">
-							<thead>
-								<tr>
-									<td style = "width : 5%;">${fn:length(boardList) - status.index}</td>
-									<td style = "width : 60%;"><a href = "communityContentView?boardNumber=${board.boardNumber }">${board.boardTitle}</a></td>
-									<td style = "width : 12%;">${board.boardWriter}</td>
-									<fmt:formatDate var = "date" value="${board.boardDate}" pattern="yyyy-MM-dd" />
-									<td style = "width : 10%;">${date}</td>
-									<td style = "width : 10%;">${board.boardViews }</td>
-								</tr>
-							</thead>
-						</table>
-					</c:if>
+		<div class = "join_content_frame">
+			<c:forEach items = "${joinBoardList }" var = "joinBoard" varStatus = "status" begin = "${pageNumber }">
+				<c:if test = "${status.count < 11 }">					
+					<table class = "join_board_table">
+						<thead>
+							<tr>
+								<td style = "width : 5%;">${fn:length(joinBoardList) - status.index}</td>
+								<td style = "width : 10%;">${joinBoard.joinBoardSubject}</td>
+								<td style = "width : 50%;"><a href = "joinContentView?boardNumber=${joinBoard.joinBoardNumber }">${joinBoard.joinBoardTitle}</a></td>
+								<td style = "width : 12%;">${joinBoard.joinBoardWriter}</td>
+								<fmt:formatDate var = "date" value="${joinBoard.joinBoardDate}" pattern="yyyy-MM-dd" />
+								<td style = "width : 10%;">${date}</td>
+								<td style = "width : 10%;">${joinBoard.joinBoard_joinUserNumber }</td>
+							</tr>
+						</thead>
+					</table>
 				</c:if>
 			</c:forEach>
 		</div>
-		<div class = "commu_footer_frame">
-			<div class = "commu_left_frame">
+		<div class = "join_footer_frame">
+			<div class = "join_left_frame">
 				<c:if test = "${fn:length(boardList) > 10}">
 					<a href = "page_move_left_right?pageNumber=${page_check_Number}&move=left&subject=${subject}"> ◀ </a>
 				</c:if>
 			</div>
-			<div class = "commu_number_frame">
+			<div class = "join_number_frame">
 				<div style = "width : 99%; height : 99%;">
 					<c:set var = "pageCheckNumber" value = "1"/>
 					<c:forEach items = "${boardList }" var = "board" varStatus = "status">
@@ -254,7 +264,7 @@
 					</c:forEach>
 				</div>
 			</div>
-			<div class = "commu_right_frame">
+			<div class = "join_right_frame">
 				<c:if test = "${fn:length(boardList) > 10}">
 					<a href = "page_move_left_right?pageNumber=${page_check_Number}&move=right&subject=${subject}"> ▶ </a>
 				</c:if>

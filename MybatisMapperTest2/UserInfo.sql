@@ -137,6 +137,55 @@ drop TABLE boardCommentInfo;
 drop SEQUENCE boardCommentNumber_seq;
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+CREATE TABLE joinBoardInfo (
+	joinBoardNumber NUMBER NOT NULL,
+	joinBoardUserId VARCHAR2(100) NOT NULL,
+	joinBoardTitle VARCHAR2(1000) NOT NULL,
+	joinBoardWriter VARCHAR2(100) NOT NULL,
+	joinBoardContent VARCHAR2(3000) NOT NULL,
+	joinBoardDate DATE NOT NULL,
+	joinBoardSubject VARCHAR2(100) NOT NULL,
+	joinBoard_joinUserNumber NUMBER NOT NULL,
+	
+	PRIMARY KEY(joinBoardNumber)
+);
+
+CREATE SEQUENCE joinBoardNumber_seq;
+
+select * from joinBoardInfo;
+
+drop TABLE joinBoardInfo;
+drop SEQUENCE joinBoardNumber_seq;
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE joinBoard_joinUserInfo (
+	joinBoard_number NUMBER NOT NULL,
+	joinBoard_boardNumber NUMBER NOT NULL,
+	joinBoard_userId VARCHAR2(1000) NOT NULL,
+	verified CHAR(1) CONSTRAINT joinBoard_joinCheck CHECK(verified = '0' OR verified = '1'),
+		
+	PRIMARY KEY(joinBoard_number)
+);
+
+CREATE SEQUENCE joinBoard_number_seq;
+
+select * from joinBoard_joinUserInfo;
+
+drop TABLE joinBoard_joinUserInfo;
+drop SEQUENCE joinBoard_number_seq;
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

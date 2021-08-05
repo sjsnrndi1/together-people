@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import jung.spring.vo.BoardSympathyInfoVO;
+import jung.spring.vo.JoinBoardInfoVO;
 import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
@@ -50,5 +51,7 @@ public interface UserInfoService {
 	List<BoardCommentInfoVO> getBoardComments(int boardNumber); // 사용자 댓글 목록 가져오기
 	void deleteBoardComment(int boardCommentNumber); //사용자 댓글 삭제
 	List<BoardInfoVO> getBoardSort(String subject, String move); //게시글 정렬
+	void addJoinBoard(String name, String title, String content, String subject); //참여게시글 생성
+	List<JoinBoardInfoVO> getJoinBoards(); //참여게시글 목록 가져오기
 	/********** 커뮤니티 **********/
 }

@@ -39,6 +39,7 @@ import jung.spring.vo.BoardSympathyInfoVO;
 import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.ChatInfoVO;
+import jung.spring.vo.JoinBoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
 import jung.spring.vo.UserInfoVO;
@@ -579,11 +580,6 @@ public class MybatisController {
 			} else {
 				mav.addObject("boardSympathy", boardSympathyInfo.getBoardSympathy());
 			}
-			/*if(boardComments == null) {
-				userInfoService.addBoardComment(boardNumber, name);
-				List<BoardCommentInfoVO> boardComments_result = userInfoService.getBoardComments(boardNumber, name);
-				mav.addObject("boardCommentList", boardComments_result);
-			}*/
 		}
 		
 		List<BoardCommentInfoVO> boardComments = userInfoService.getBoardComments(boardNumber);
@@ -662,10 +658,8 @@ public class MybatisController {
 			UserInfoVO userInfo = userInfoService.getUser(name);
 			mav.addObject("userInfo", userInfo);
 		}
-		System.out.println(pageNumber + "번호 눌러서 페이지 이동함");
 		String move = "default";
 		List<BoardInfoVO> boardList = userInfoService.getBoardSort(subject, move);
-		//List<BoardInfoVO> boardList = userInfoService.getBoards();
 		int page = (pageNumber * 10) - 10;
 		mav.addObject("page_check_Number", pageNumber);
 		mav.addObject("subject", subject);
@@ -684,11 +678,7 @@ public class MybatisController {
 			UserInfoVO userInfo = userInfoService.getUser(name);
 			mav.addObject("userInfo", userInfo);
 		}
-		System.out.println(subject);
-		System.out.println(move);
-		System.out.println("현재 페이지 : " + pageNumber + " 에서");
 		List<BoardInfoVO> boardList = userInfoService.getBoardSort(subject, move);
-		//List<BoardInfoVO> boardList = userInfoService.getBoards();
 		int page = 0;
 		if(move.equals("left")) {
 			page = (pageNumber * 10) - 20;
@@ -696,27 +686,20 @@ public class MybatisController {
 				page = 0;
 				pageNumber = 1;
 				mav.addObject("page_check_Number", 1);
-				System.out.println("첫번째");
 			} else {
 				pageNumber -= 1;
 				mav.addObject("page_check_Number", pageNumber);
-				System.out.println("두번째");
 			}
 		} else if(move.equals("right")) {
 			page = ((pageNumber + 1) * 10) - 10;
 			if(boardList.size()/10 < page/10) { //   1 < 2
 				page -= 10;
 				mav.addObject("page_check_Number", pageNumber);
-				System.out.println("세번째");
 			} else {
 				pageNumber += 1;
 				mav.addObject("page_check_Number", pageNumber);
-				System.out.println("네번째");
 			}
 		}
-		System.out.println("<>을 눌러서 : " + pageNumber + "페이지로 이동함.");
-		System.out.println("<>을 눌러서 : " + page + "페이지의 시작번호");
-		System.out.println("------------------------------------------");
 		mav.addObject("subject", subject);
 		mav.addObject("pageNumber", page);
 		mav.addObject("boardList", boardList);
@@ -724,6 +707,98 @@ public class MybatisController {
 		return mav;
 	}
 	/* =========== 커뮤니티 페이지 이동 =========== */
+	
+	/* =========== 커뮤니티 참여게시판 이동 =========== */
+	
+	public List<String> subjects_gether() {
+		String[] subjects = {"운동/스포츠", "인문학/책/글", "외국/언어", "문화/공연/축제", "음악/악기", "공예/만들기", "댄스/무용",
+				"봉사활동", "사교/인맥", "차/오토바이", "사진/영상", "야구관람", "게임/오락", "요리/제조", "반려동물", "가족/결혼"};
+		List<String> subjectList = new ArrayList<String>();
+		for (int i = 0; i < subjects.length; i++) {
+			subjectList.add(subjects[i]);
+		}
+		return subjectList;		
+	}
+	@RequestMapping(value = "/joinView")
+	public ModelAndView JoinView(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+
+		String name = httpServletRequest(request);
+		if (name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+		//List<BoardInfoVO> boardList = userInfoService.getBoards();
+		mav.addObject("page_check_Number", 1);
+		mav.addObject("pageNumber", 0);
+		//mav.addObject("boardList", boardList);
+		mav.addObject("subjectList", subjects_gether());
+		mav.setViewName("Tp_joinView");
+		return mav;
+	}
+	/* =========== 커뮤니티 참여게시판 이동 =========== */
+	
+	/* =========== 커뮤니티 참여게시판 정렬 =========== */
+	@RequestMapping(value = "/joinView_sort")
+	public ModelAndView JoinView_sort(HttpServletRequest request, @RequestParam("subject") String subject) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		String name = httpServletRequest(request);
+		if (name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+		//List<BoardInfoVO> boardList = userInfoService.getBoardSort(subject, move);
+		mav.addObject("subject", subject);
+		mav.addObject("subjectList", subjects_gether());
+		//mav.addObject("boardList", boardList);
+		mav.setViewName("Tp_joinView");
+		return mav;
+	}
+	/* =========== 커뮤니티 참여게시판 정렬 =========== */
+	
+	/* =========== 커뮤니티 게시글 생성 =========== */
+	@RequestMapping(value = "/joinCreateBoard")
+	public ModelAndView JoinCreateBoard(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String name = httpServletRequest(request);
+		if (name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+		mav.setViewName("Tp_joinCreateBoard");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/join_create_board_submit")
+	public ModelAndView Join_create_board_submit(HttpServletRequest request, @RequestParam("title") String title, 
+			@RequestParam("content") String content, @RequestParam("subject") String subject) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String name = httpServletRequest(request);
+		if (name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+		
+		userInfoService.addJoinBoard(name, title, content, subject);
+		List<JoinBoardInfoVO> joinBoardList = userInfoService.getJoinBoards();
+		
+		mav.addObject("joinBoardList", joinBoardList);
+		mav.setViewName("Tp_joinView");
+		return mav;
+	}
+
+	/* =========== 커뮤니티 게시글 생성 =========== */
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

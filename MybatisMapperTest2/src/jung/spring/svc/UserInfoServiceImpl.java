@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jung.spring.dao.UserInfoDAO;
 import jung.spring.vo.BoardSympathyInfoVO;
+import jung.spring.vo.JoinBoardInfoVO;
 import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
@@ -243,11 +244,22 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 	/* ===========게시글 정렬 서비스============ */
 	
+	/* =========== 참여 게시글 생성 서비스============ */
+	@Override
+	public void addJoinBoard(String name, String title, String content, String subject) {
+		// TODO Auto-generated method stub
+		userInfoDAO.addJoinBoard(name, title, content, subject);
+	}
+	/* =========== 참여 게시글 생성 서비스============ */
 	
-	
-	
-	
-	
+	/* =========== 참여 게시글 목록 서비스============ */
+	@Override
+	public List<JoinBoardInfoVO> getJoinBoards() {
+		// TODO Auto-generated method stub
+		ArrayList<JoinBoardInfoVO> joinBoardList = userInfoDAO.getJoinBoards();
+		return joinBoardList;
+	}
+	/* =========== 참여 게시글 목록 서비스============ */
 	
 	
 	
