@@ -18,7 +18,7 @@
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/popupbar.css"> <!-- 전화서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/submenubar.css"> <!-- 우측서브메뉴바 -->
-<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/communityContentbar.css"> <!-- 커뮤니티바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/communityContentbar.css"> <!-- 커뮤니티 게시글 스타일 -->
 <script type = "text/javascript" src = "http://sjsnrndi12.dothome.co.kr/js/basicAct.js"></script> <!-- 기본 행동 -->
 <script>
 	//url복사 스크립트

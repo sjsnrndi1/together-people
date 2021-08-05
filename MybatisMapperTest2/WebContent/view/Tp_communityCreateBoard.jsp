@@ -16,6 +16,7 @@
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/dropmenubar.css"> <!-- 서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/popupbar.css"> <!-- 전화서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/submenubar.css"> <!-- 우측서브메뉴바 -->
+<link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/communityCreateBoardbar.css"> <!-- 커뮤니티 작성 화면 스타일 -->
 <script type = "text/javascript" src = "http://sjsnrndi12.dothome.co.kr/js/basicAct.js"></script> <!-- 기본 행동 -->
 <script>
 	function check(){
@@ -33,70 +34,6 @@
 		}
 	}
 </script>
-<style>
-	.commu_board_frame {
-		width : 50%;
-		height : 648px;
-		margin-top : 0.5%;
-		margin-left : 26%;
-		color : #696969;
-		border : 1px solid red;
-	}
-	.commu_board_subject {
-		width : 98.5%;
-		margin : 2px;
-		height : 5%;
-		padding-left : 7px;
-		padding-top : 7px;
-		border-bottom : 1px solid #BC8F8F;
-	}
-	.commu_board_title {
-		width : 98.5%;
-		margin : 2px;
-		height : 5%;
-		padding-left : 7px;
-		padding-top : 7px;
-		border-bottom : 1px solid #BC8F8F;
-	}
-	.commu_board_title input {
-		width : 98.5%;
-		height : 65%;
-		border : 1px solid white;
-	}
-	input:focus, textarea:focus, select:focus{
-		outline : none;
-	}
-	.commu_board_content{ /* 476 */
-		width : 98.5%;
-		margin : 2px;
-		height : 78%;
-		padding-left : 7px;
-		padding-top : 7px;
-		border-bottom : 1px solid #BC8F8F;
-	}
-	.commu_board_user a:link { color: #696969; text-decoration: none;}
-	.commu_board_user a:visited { color: #696969; text-decoration: none;}
- 	.commu_board_user a:hover { color: black; text-decoration: none;}
- 	.floorBar {
- 		position : absolute;
- 		bottom : 0;
- 	}
- 	.commu_submit {
- 		width : 98.5%;
-		margin : 2px;
-		height : 5%;
-		padding-left : 7px;
-		padding-top : 7px;
-		border : 1px solid red;
-		border-top : 1px solid #BC8F8F;
- 	}
- 	.commu_submit input {
-		width : 5%;
-		height : 85%;
-		margin-left : 48%;
- 		border : 1px solid #BC8F8F;
- 	}
-</style>
 </head>
 <body>
 	<input type = "hidden" value = "${ssVar}" id = "user_id_session" name = "user_id_session"/>
