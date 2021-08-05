@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace = "jung.spring.mybatis.JoinBoard_JoinUserMapper">
+		<resultMap type = "jung.spring.vo.JoinBoard_JoinUserInfoVO" id = "JoinBoard_JoinUserResultMap">			
+			<result property = "joinBoard_number" column = "JOINBOARD_NUMBER"/>
+			<result property = "joinBoard_boardNumber" column = "JOINBOARD_BOARDNUMBER"/>
+			<result property = "joinBoard_userId" column = "JOINBOARD_USERID"/>
+			<result property = "verified" column = "VERIFIED"/>
+		</resultMap>
+	</mapper>
