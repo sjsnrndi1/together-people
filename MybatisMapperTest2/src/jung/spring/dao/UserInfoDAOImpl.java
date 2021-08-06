@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import jung.spring.mybatis.BoardSympathyMapper;
 import jung.spring.mybatis.JoinBoardMapper;
+import jung.spring.mybatis.JoinBoard_JoinUserMapper;
 import jung.spring.controller.MybatisController;
 import jung.spring.mybatis.BoardCommentMapper;
 import jung.spring.mybatis.BoardMapper;
@@ -21,6 +22,7 @@ import jung.spring.mybatis.PopupMapper;
 import jung.spring.mybatis.PostingMapper;
 import jung.spring.vo.BoardSympathyInfoVO;
 import jung.spring.vo.JoinBoardInfoVO;
+import jung.spring.vo.JoinBoard_JoinUserInfoVO;
 import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
@@ -501,18 +503,67 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	}
 	/* =========== 참여 게시글 목록 가져오기 서비스============ */
 	
+	/* =========== 참여 게시글 보기 서비스============ */
+	@Override
+	public JoinBoardInfoVO getJoinBoard(int joinBoardNumber) {
+		// TODO Auto-generated method stub
+		JoinBoardMapper joinBoardMapper = sqlSession.getMapper(JoinBoardMapper.class);
+		JoinBoardInfoVO joinBoardInfo = joinBoardMapper.getJoinBoard(joinBoardNumber);
+		return joinBoardInfo;
+	}
+	/* =========== 참여 게시글 보기 서비스============ */
+	
+	/* =========== 참여 게시글 참여인원 생성 서비스============ */
+	@Override
+	public void addJoinBoard_joinUser(String name) {
+		// TODO Auto-generated method stub
+		JoinBoardMapper joinBoardMapper = sqlSession.getMapper(JoinBoardMapper.class);
+		JoinBoard_JoinUserMapper joinBoard_joinUserMapper = sqlSession.getMapper(JoinBoard_JoinUserMapper.class);
+		MemberMapper userMapper = sqlSession.getMapper(MemberMapper.class);
+		UserInfoVO userInfo = userMapper.getUser(name);
+		
+		ArrayList<JoinBoardInfoVO> joinBoardList = joinBoardMapper.getJoinBoards();
+		
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("joinBoard_boardNumber", joinBoardList.get(joinBoardList.size() - 1).getJoinBoardNumber());
+		map.put("joinBoard_userId", name);
+		map.put("joinBoard_userName", userInfo.getUser_name());
+		map.put("verified", 1);
+		joinBoard_joinUserMapper.addJoinBoard_joinUser(map);
+	}
+	/* =========== 참여 게시글 참여인원 생성 서비스============ */
+	
+	/* =========== 참여 게시글 참여인원 목록 가져오기 서비스============ */
+	@Override
+	public ArrayList<JoinBoard_JoinUserInfoVO> getJoinBoard_joinUsers(int joinBoardNumber) {
+		// TODO Auto-generated method stub
+		JoinBoard_JoinUserMapper joinBoard_joinUserMapper = sqlSession.getMapper(JoinBoard_JoinUserMapper.class);
+		ArrayList<JoinBoard_JoinUserInfoVO> joinBoard_joinUserList = joinBoard_joinUserMapper.getJoinBoard_joinUsers(joinBoardNumber);
+		return joinBoard_joinUserList;
+	}
+	/* =========== 참여 게시글 참여인원 목록 가져오기 서비스============ */
+	
+	/* =========== 참여 게시글 참여신청 서비스============ */
+	@Override
+	public void addJoinBoard_joinUser_regist(String name, int joinBoardNumber) {
+		// TODO Auto-generated method stub
+		JoinBoard_JoinUserMapper joinBoard_joinUserMapper = sqlSession.getMapper(JoinBoard_JoinUserMapper.class);
+		MemberMapper userMapper = sqlSession.getMapper(MemberMapper.class);
+		UserInfoVO userInfo = userMapper.getUser(name);
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("joinBoard_boardNumber", joinBoardNumber);
+		map.put("joinBoard_userId", name);
+		map.put("joinBoard_userName", userInfo.getUser_name());
+		map.put("verified", 0);
+		joinBoard_joinUserMapper.addJoinBoard_joinUser(map);
+	}
+	/* =========== 참여 게시글 참여신청 서비스============ */
 	
 	
 	
+
 	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	

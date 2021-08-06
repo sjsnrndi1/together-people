@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import jung.spring.dao.UserInfoDAO;
 import jung.spring.vo.BoardSympathyInfoVO;
 import jung.spring.vo.JoinBoardInfoVO;
+import jung.spring.vo.JoinBoard_JoinUserInfoVO;
 import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
@@ -260,6 +261,45 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return joinBoardList;
 	}
 	/* =========== 참여 게시글 목록 서비스============ */
+	
+	/* =========== 참여 게시글 보기 서비스============ */
+	@Override
+	public JoinBoardInfoVO getJoinBoard(int joinBoardNumber) {
+		// TODO Auto-generated method stub
+		JoinBoardInfoVO joinBoardInfo = userInfoDAO.getJoinBoard(joinBoardNumber);
+		return joinBoardInfo;
+	}
+	/* =========== 참여 게시글 보기 서비스============ */
+	
+	/* =========== 참여 게시글 참여인원 생성 서비스============ */
+	@Override
+	public void addJoinBoard_joinUser(String name) {
+		// TODO Auto-generated method stub
+		userInfoDAO.addJoinBoard_joinUser(name);
+	}
+	/* =========== 참여 게시글 참여인원 생성 서비스============ */
+	
+	/* =========== 참여 게시글 참여인원 목록 가져오기 서비스============ */
+	@Override
+	public List<JoinBoard_JoinUserInfoVO> getJoinBoard_joinUsers(int joinBoardNumber) {
+		// TODO Auto-generated method stub
+		ArrayList<JoinBoard_JoinUserInfoVO> joinBoard_joinUserList = userInfoDAO.getJoinBoard_joinUsers(joinBoardNumber);
+		return joinBoard_joinUserList;
+	}
+	/* =========== 참여 게시글 참여인원 목록 가져오기 서비스============ */
+	
+	/* =========== 참여 게시글 참여신청 서비스============ */
+	@Override
+	public void addJoinBoard_joinUser_regist(String name, int joinBoardNumber) {
+		// TODO Auto-generated method stub
+		userInfoDAO.addJoinBoard_joinUser_regist(name, joinBoardNumber);
+	}
+	/* =========== 참여 게시글 참여신청 서비스============ */
+	
+	
+	
+	
+	
 	
 	
 	

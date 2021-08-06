@@ -20,6 +20,11 @@
 		</insert>
 		
 		<select id = "getJoinBoards" resultType = "jung.spring.vo.JoinBoardInfoVO">
-			SELECT * FROM joinBoardInfo;
+			SELECT * FROM joinBoardInfo
 		</select>
+		
+		<select id = "getJoinBoard" parameterType = "int" resultType = "jung.spring.vo.JoinBoardInfoVO">
+			SELECT * FROM joinBoardInfo WHERE joinBoardNumber = #{joinBoardNumber}
+		</select>
+		
 	</mapper>

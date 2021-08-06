@@ -97,6 +97,7 @@
 		width : 100%;
 		height : 40px;
 		color : #696969;
+		margin-bottom : 3px;
 	}
 	.join_create_frame a:link { text-decoration : none; color : #696969;}
 	.join_create_frame a:visited { text-decoration : none;color : #696969;}
@@ -131,6 +132,29 @@
 	.join_title_table td a:visited { text-decoration : none; color : #696969;}
 	.join_title_table td a:active { text-decoration : none; color : #2F4F4F;}
 	.join_title_table td a:hover { text-decoration : none; color : #2F4F4F;}
+	.join_create_button {
+		float: left;
+		margin-top : 10px;
+		margin-left : 30px;
+	}
+	.join_subject_frame {
+		border-left : 1px solid #BC8F8F;
+		width : 90%;
+		height : 100%;
+		float : right;
+		padding : 0;
+		margin : 0;
+	}
+	.joni_subjects {
+		border : 1px solid #BC8F8F;
+		text-align : center;
+		border-radius : 3px;
+		float : right;
+		width : 12%;
+		height : 40%;
+		margin : 1px;
+		font-size : 80%;
+	}
 </style>
 </head>
 <body>
@@ -193,13 +217,13 @@
 	<div class = "join_frame" id = "join_frame">
 		<div class = "join_create_frame">
 			<c:if test = "${ssVar ne null}">
-				<div style = "float: left;">
+				<div class = "join_create_button">
 					<a href = "joinCreateBoard">작성</a>
 				</div>
 			</c:if>
-			<div style = "border-left : 1px solid #BC8F8F; width : 95%; height : 100%; float : right; padding : 0; margin : 0;">
+			<div class = "join_subject_frame">
 				<c:forEach items = "${subjectList}" var = "subjectList">
-					<div style = "border : 1px solid #BC8F8F; text-align : center; border-radius : 3px; float : left; width : 10%; height : 40%; margin : 2px; font-size : 80%;">
+					<div class = "joni_subjects">
 						<a href = "joinView_sort?subject=${subjectList}">${subjectList}</a>
 					</div>
 				</c:forEach>
@@ -227,7 +251,7 @@
 							<tr>
 								<td style = "width : 5%;">${fn:length(joinBoardList) - status.index}</td>
 								<td style = "width : 10%;">${joinBoard.joinBoardSubject}</td>
-								<td style = "width : 50%;"><a href = "joinContentView?boardNumber=${joinBoard.joinBoardNumber }">${joinBoard.joinBoardTitle}</a></td>
+								<td style = "width : 50%;"><a href = "joinContentView?joinBoardNumber=${joinBoard.joinBoardNumber }">${joinBoard.joinBoardTitle}</a></td>
 								<td style = "width : 12%;">${joinBoard.joinBoardWriter}</td>
 								<fmt:formatDate var = "date" value="${joinBoard.joinBoardDate}" pattern="yyyy-MM-dd" />
 								<td style = "width : 10%;">${date}</td>

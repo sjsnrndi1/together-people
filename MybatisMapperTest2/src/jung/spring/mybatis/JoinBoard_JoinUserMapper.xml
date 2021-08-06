@@ -7,6 +7,15 @@
 			<result property = "joinBoard_number" column = "JOINBOARD_NUMBER"/>
 			<result property = "joinBoard_boardNumber" column = "JOINBOARD_BOARDNUMBER"/>
 			<result property = "joinBoard_userId" column = "JOINBOARD_USERID"/>
+			<result property = "joinBoard_userName" column = "JOINBOARD_USERNAME"/>
 			<result property = "verified" column = "VERIFIED"/>
 		</resultMap>
+		
+		<insert id = "addJoinBoard_joinUser" parameterType = "map">
+			INSERT INTO joinBoard_joinUserInfo VALUES(joinBoard_number_seq.nextval, #{joinBoard_boardNumber}, #{joinBoard_userId}, #{joinBoard_userName}, #{verified})
+		</insert>
+		
+		<select id = "getJoinBoard_joinUsers" parameterType = "int" resultType = "jung.spring.vo.JoinBoard_JoinUserInfoVO">
+			SELECT * FROM joinBoard_joinUserInfo WHERE joinBoard_boardNumber = #{joinBoardNumber}
+		</select>
 	</mapper>

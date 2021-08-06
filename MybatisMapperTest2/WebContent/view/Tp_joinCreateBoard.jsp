@@ -20,13 +20,13 @@
 <script type = "text/javascript" src = "http://sjsnrndi12.dothome.co.kr/js/basicAct.js"></script> <!-- 기본 행동 -->
 <script>
 	function check(){
-		if(boardRegist.commu_subject.value == ""){
+		if(joinBoardRegist.join_subject.value == ""){
 			alert("카테고리를 선택해주세요.");
 			return false;
-		} else if(boardRegist.title.value == ""){
+		} else if(joinBoardRegist.title.value == ""){
 			alert("제목을 입력해주세요.");
 			return false;
-		} else if(boardRegist.content.value == ""){
+		} else if(joinBoardRegist.content.value == ""){
 			alert("내용을 입력해주세요.");
 			return false;
 		} else {
@@ -41,7 +41,6 @@
 		margin-top : 0.5%;
 		margin-left : 26%;
 		color : #696969;
-		border : 1px solid red;
 	}
 	.join_board_subject {
 		width : 98.5%;
@@ -88,13 +87,12 @@
 		height : 5%;
 		padding-left : 7px;
 		padding-top : 7px;
-		border : 1px solid red;
-		border-top : 1px solid #BC8F8F;
  	}
  	.join_submit input {
 		width : 5%;
 		height : 85%;
 		margin-left : 48%;
+		border-radius : 3px;
  		border : 1px solid #BC8F8F;
  	}
 </style>
@@ -156,28 +154,28 @@
 		</div>					
 	</div>
 	
-	<form action = "join_create_board_submit" name = "boardRegist" method = "POST" onsubmit = "return check()">
+	<form action = "join_create_board_submit" name = "joinBoardRegist" method = "POST" onsubmit = "return check()">
 		<div class = "join_board_frame">
 			<div class = "join_board_subject">
 				<select name = "subject" id = "join_subject" class = "join_subject">
 					<option value="">카테고리</option>
-					<option value="outdoor">아웃도어/여행</option>
-					<option value="sport">운동/스포츠</option>
-					<option value="book">인문학/책/글</option>
-					<option value="language">외국/언어</option>
-					<option value="culture">문화/공연/축제</option>
-					<option value="music">음악/악기</option>
-					<option value="create">공예/만들기</option>
-					<option value="dance">댄스/무용</option>
-					<option value="volunteer">봉사활동</option>
-					<option value="society">사교/인맥</option>	
-					<option value="car">차/오토바이</option>
-					<option value="picture">사진/영상</option>
-					<option value="baseball">야구관람</option>
-					<option value="game">게임/오락</option>
-					<option value="cooking">요리/제조</option>
-					<option value="pet">반려동물</option>
-					<option value="family">가족/결혼</option>
+					<option value="아웃도어/여행">아웃도어/여행</option>
+					<option value="운동/스포츠">운동/스포츠</option>
+					<option value="인문학/책/글">인문학/책/글</option>
+					<option value="외국/언어">외국/언어</option>
+					<option value="문화/공연/축제">문화/공연/축제</option>
+					<option value="음악/악기">음악/악기</option>
+					<option value="공예/만들기">공예/만들기</option>
+					<option value="댄스/무용">댄스/무용</option>
+					<option value="봉사활동">봉사활동</option>
+					<option value="사교/인맥">사교/인맥</option>	
+					<option value="차/오토바이">차/오토바이</option>
+					<option value="사진/영상">사진/영상</option>
+					<option value="야구관람">야구관람</option>
+					<option value="게임/오락">게임/오락</option>
+					<option value="요리/제조">요리/제조</option>
+					<option value="반려동물">반려동물</option>
+					<option value="가족/결혼">가족/결혼</option>
 				</select>
 			</div>
 			<div class = "join_board_title">

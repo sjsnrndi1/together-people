@@ -11,4 +11,6 @@ public interface JoinBoardMapper {
 
 	ArrayList<JoinBoardInfoVO> getJoinBoards(); //참여게시글 목록 가져오기
 
+	JoinBoardInfoVO getJoinBoard(int joinBoardNumber); //참여게시글 보기
+
 }

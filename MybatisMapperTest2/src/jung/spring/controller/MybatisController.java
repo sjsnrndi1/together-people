@@ -40,6 +40,7 @@ import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.ChatInfoVO;
 import jung.spring.vo.JoinBoardInfoVO;
+import jung.spring.vo.JoinBoard_JoinUserInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
 import jung.spring.vo.UserInfoVO;
@@ -728,10 +729,10 @@ public class MybatisController {
 			UserInfoVO userInfo = userInfoService.getUser(name);
 			mav.addObject("userInfo", userInfo);
 		}
-		//List<BoardInfoVO> boardList = userInfoService.getBoards();
+		List<JoinBoardInfoVO> joinBoardList = userInfoService.getJoinBoards();
 		mav.addObject("page_check_Number", 1);
 		mav.addObject("pageNumber", 0);
-		//mav.addObject("boardList", boardList);
+		mav.addObject("joinBoardList", joinBoardList);
 		mav.addObject("subjectList", subjects_gether());
 		mav.setViewName("Tp_joinView");
 		return mav;
@@ -782,8 +783,12 @@ public class MybatisController {
 		}
 		
 		userInfoService.addJoinBoard(name, title, content, subject);
-		List<JoinBoardInfoVO> joinBoardList = userInfoService.getJoinBoards();
 		
+		userInfoService.addJoinBoard_joinUser(name);
+		List<JoinBoardInfoVO> joinBoardList = userInfoService.getJoinBoards();
+		mav.addObject("page_check_Number", 1);
+		mav.addObject("pageNumber", 0);
+		mav.addObject("subjectList", subjects_gether());
 		mav.addObject("joinBoardList", joinBoardList);
 		mav.setViewName("Tp_joinView");
 		return mav;
@@ -791,11 +796,56 @@ public class MybatisController {
 
 	/* =========== 커뮤니티 게시글 생성 =========== */
 	
+	/* =========== 커뮤니티 참여게시글 화면 =========== */
+	@RequestMapping(value = "/joinContentView")
+	public ModelAndView JoinContentView(HttpServletRequest request, @RequestParam("joinBoardNumber") int joinBoardNumber) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String name = httpServletRequest(request);
+		if (name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+		
+		JoinBoardInfoVO joinBoardInfo = userInfoService.getJoinBoard(joinBoardNumber);
+		List<JoinBoard_JoinUserInfoVO> JoinBoard_JoinUserList = userInfoService.getJoinBoard_joinUsers(joinBoardNumber);
+		String joinBoardContent = joinBoardInfo.getJoinBoardContent().replace("\r\n", "<br>");
+		String check = "noApplication";
+		for (int i = 0; i < JoinBoard_JoinUserList.size(); i++) {
+			if(JoinBoard_JoinUserList.get(i).getJoinBoard_userId().equals(name)) {
+				if(JoinBoard_JoinUserList.get(i).getVerified() == 1) {
+					check = "participation";
+				} else {
+					check = "wait";
+				}
+			}
+		}
+		
+		mav.addObject("check", check);
+		mav.addObject("joinBoardContent", joinBoardContent);
+		mav.addObject("joinBoardInfo", joinBoardInfo);
+		mav.addObject("JoinBoard_JoinUserList", JoinBoard_JoinUserList);
+		mav.setViewName("Tp_joinContentView");
+		return mav;
+	}
+	/* =========== 커뮤니티 참여게시글 화면 =========== */
 	
-	
-	
-	
-	
+	/* =========== 커뮤니티 참여게시글 참여신청 =========== */
+	@RequestMapping(value = "/joinBoard_joinUser_regist")
+	public ModelAndView JoinBoard_joinUser_regist(HttpServletRequest request, @RequestParam("joinBoardNumber") int joinBoardNumber) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String name = httpServletRequest(request);
+		if (name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+		
+		userInfoService.addJoinBoard_joinUser_regist(name, joinBoardNumber);
+				
+		return JoinContentView(request, joinBoardNumber);
+	}
+	/* =========== 커뮤니티 참여게시글 참여신청 =========== */
 	
 	
 	

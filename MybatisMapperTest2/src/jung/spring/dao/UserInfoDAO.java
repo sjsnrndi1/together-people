@@ -9,6 +9,7 @@ import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.ChatInfoVO;
 import jung.spring.vo.JoinBoardInfoVO;
+import jung.spring.vo.JoinBoard_JoinUserInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
 import jung.spring.vo.UserInfoVO;
@@ -54,5 +55,9 @@ public interface UserInfoDAO {
 	ArrayList<BoardInfoVO> getBoardSort(String subject, String move); //게시글 정렬
 	void addJoinBoard(String name, String title, String content, String subject); //참여 게시글 생성
 	ArrayList<JoinBoardInfoVO> getJoinBoards(); //참여게시글 목록 가져오기
+	JoinBoardInfoVO getJoinBoard(int joinBoardNumber); //참여게시글 보기
+	void addJoinBoard_joinUser(String name); //참여게시글  참여인원 생성
+	ArrayList<JoinBoard_JoinUserInfoVO> getJoinBoard_joinUsers(int joinBoardNumber); //참여게시글 참여인원 목록 가져오기
+	void addJoinBoard_joinUser_regist(String name, int joinBoardNumber); //참여게시글 참여신청
 	/********** 게시글 **********/
 }

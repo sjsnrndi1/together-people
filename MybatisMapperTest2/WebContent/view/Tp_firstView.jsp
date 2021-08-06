@@ -308,11 +308,13 @@
 					</div>
 				</c:when>
 				<c:when test = "${ssVar ne null }">
-					<div id = "submenu-chat-app" class = "submenu-chat-app">
-						<img src = "http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG" 
-						onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
-						onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" onclick = "login_after_popup()" id = "chat-app" alt = "채팅"/>
-					</div>
+					<c:if test = "${ssVar ne 'admin' }">
+						<div id = "submenu-chat-app" class = "submenu-chat-app">
+							<img src = "http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG" 
+							onmouseover = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkHoverImg.png'" 
+							onmouseout = "this.src='http://sjsnrndi12.dothome.co.kr/images/talktalkImg.PNG'" onclick = "login_after_popup()" id = "chat-app" alt = "채팅"/>
+						</div>
+					</c:if>
 				</c:when>
 			</c:choose>
 		</form>

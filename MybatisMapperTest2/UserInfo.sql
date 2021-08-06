@@ -23,8 +23,7 @@ CREATE SEQUENCE userInfo_seq;
 
 select * from userInfo
 
-INSERT INTO userInfo VALUES(userInfo_seq.nextval, 'admin', 'admin', '38455', '경북 경산시 진량읍 대구대로 299-31', '경북 경산시 진량읍 평사리 430-8', '아이파크원룸 210호', 
-'관리자', '남성', '1996', '2', '1', 'sjsnrndi12@naver.com', '6362', sysdate, 'null');
+INSERT INTO userInfo VALUES(userInfo_seq.nextval, 'admin', 'tkFKD465!@', '12345', '관리자', '관리자', '관리자', '관리자', '남성', '1', '1', '1', 'admin', '1234', sysdate, 'null');
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -162,6 +161,7 @@ CREATE TABLE joinBoard_joinUserInfo (
 	joinBoard_number NUMBER NOT NULL,
 	joinBoard_boardNumber NUMBER NOT NULL,
 	joinBoard_userId VARCHAR2(1000) NOT NULL,
+	joinBoard_userName VARCHAR2(100),
 	verified CHAR(1) CONSTRAINT joinBoard_joinCheck CHECK(verified = '0' OR verified = '1'),
 		
 	PRIMARY KEY(joinBoard_number)

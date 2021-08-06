@@ -6,6 +6,7 @@ import java.util.List;
 
 import jung.spring.vo.BoardSympathyInfoVO;
 import jung.spring.vo.JoinBoardInfoVO;
+import jung.spring.vo.JoinBoard_JoinUserInfoVO;
 import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
@@ -53,5 +54,9 @@ public interface UserInfoService {
 	List<BoardInfoVO> getBoardSort(String subject, String move); //게시글 정렬
 	void addJoinBoard(String name, String title, String content, String subject); //참여게시글 생성
 	List<JoinBoardInfoVO> getJoinBoards(); //참여게시글 목록 가져오기
+	JoinBoardInfoVO getJoinBoard(int joinBoardNumber); //참여게시글 보기
+	void addJoinBoard_joinUser(String name); //참여게시글 참여인원  생성
+	List<JoinBoard_JoinUserInfoVO> getJoinBoard_joinUsers(int joinBoardNumber); //참여게시글 참여인원 목록 가져오기
+	void addJoinBoard_joinUser_regist(String name, int joinBoardNumber); //참여게시글 참여신청
 	/********** 커뮤니티 **********/
 }
