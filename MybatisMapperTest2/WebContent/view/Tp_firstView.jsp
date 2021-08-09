@@ -155,14 +155,14 @@
 						<li><a href="#">신고</a></li>
 					</ul>
 				</li>
-				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
 				<c:choose>
 					<c:when test = "${ssVar eq null }">
 						<li><a href="loginView">로그인</a></li>
 						<li><a href="userRegist">회원가입</a></li>
 					</c:when>
 					<c:when test = "${ssVar ne null }">
-						<li><a href="myPageView">${userInfo.user_name }님</a></li>
+						<li><a href="myPageView">${userInfo.user_name }님</a><li>
 						<li><a href="user_loginOut">로그아웃</a></li>
 					</c:when>
 				</c:choose>
