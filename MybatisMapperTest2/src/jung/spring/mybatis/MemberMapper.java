@@ -22,4 +22,6 @@ public interface MemberMapper {
 	
 	void modifyPassword(HashMap<Object, Object> map); // 비밀번호 변경
 
+	void updateUserInformation(HashMap<Object, Object> map); // 내 정보 수정
+
 }

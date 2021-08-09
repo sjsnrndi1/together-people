@@ -58,5 +58,10 @@ public interface UserInfoService {
 	void addJoinBoard_joinUser(String name); //참여게시글 참여인원  생성
 	List<JoinBoard_JoinUserInfoVO> getJoinBoard_joinUsers(int joinBoardNumber); //참여게시글 참여인원 목록 가져오기
 	void addJoinBoard_joinUser_regist(String name, int joinBoardNumber); //참여게시글 참여신청
+	List<JoinBoardInfoVO> getJoinBoardSorts(String subject); //참여게시글 정렬 
 	/********** 커뮤니티 **********/
+	
+	/********** 마이페이지 **********/
+	void updateUserInformation(HashMap<Object, Object> map); //내 정보 수정
+	/********** 마이페이지 **********/
 }

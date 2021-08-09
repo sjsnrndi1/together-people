@@ -27,4 +27,7 @@
 			SELECT * FROM joinBoardInfo WHERE joinBoardNumber = #{joinBoardNumber}
 		</select>
 		
+		<select id = "getJoinBoardSorts" parameterType = "string" resultType = "jung.spring.vo.JoinBoardInfoVO">
+			SELECT * FROM joinBoardInfo WHERE joinBoardSubject = #{subject} ORDER BY joinBoardDate DESC
+		</select>
 	</mapper>

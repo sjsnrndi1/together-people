@@ -15,6 +15,7 @@ CREATE TABLE userInfo (
 	user_phone NUMBER NOT NULL,
 	user_date DATE NOT NULL,
 	user_picture VARCHAR2(300),
+	user_information VARCHAR2(3000),
 	
 	PRIMARY KEY(user_id, user_phone)
 );
@@ -25,8 +26,9 @@ select * from userInfo
 
 INSERT INTO userInfo VALUES(userInfo_seq.nextval, 'admin', 'tkFKD465!@', '12345', '관리자', '관리자', '관리자', '관리자', '남성', '1', '1', '1', 'admin', '1234', sysdate, 'null');
 
+drop TABLE userInfo;
+drop SEQUENCE userInfo_seq;
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 CREATE TABLE postingInfo(
 	postingNumber NUMBER PRIMARY KEY,
 	userId VARCHAR2(100),
@@ -38,12 +40,14 @@ CREATE TABLE postingInfo(
 	postingAnswerCount NUMBER NOT NULL,
 	postingDate DATE NOT NULL
 	
-)
+);
 
 CREATE SEQUENCE postingNumber_seq;
 
 select * from postingInfo
 
+drop TABLE postingInfo;
+drop SEQUENCE postingNumber_seq;
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 create table popupInfo (
@@ -51,11 +55,14 @@ create table popupInfo (
 	userId VARCHAR2(100) NOT NULL,
 	
 	PRIMARY KEY(popupNumber, userId)
-)
-create sequence popupNumber_seq
+);
+
+create sequence popupNumber_seq;
 
 select * from popupInfo
 
+drop TABLE popupInfo;
+drop SEQUENCE popupNumber_seq;
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 create table popupChatInfo (
@@ -67,14 +74,14 @@ create table popupChatInfo (
 	chat_date DATE NOT NULL,
 	
 	PRIMARY KEY(popupChatNumber)
-)
+);
 
-create sequence popupChatNumber_seq
+create sequence popupChatNumber_seq;
 
 select * from popupChatInfo
 
-insert into popupChatInfo values(popupChatNumber_seq.nextval, 1, 'admin', '관리자 테스트', '관리자 테스트', sysdate)
-
+drop TABLE popupChatInfo;
+drop SEQUENCE popupChatNumber_seq;
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE boardInfo (
@@ -88,16 +95,14 @@ CREATE TABLE boardInfo (
 	boardViews NUMBER NOT NULL,
 	
 	PRIMARY KEY(boardNumber)
-)
+);
 
 CREATE SEQUENCE boardNumber_seq;
 
 select * from boardInfo;
 
-insert into boardInfo values (boardNumber_seq.nextval, 'sjsnrndi12', '테스트', '김민성', '테스트중입니다.', sysdate, '자유', 0);
-insert into boardInfo values (boardNumber_seq.nextval, 'sjsnrndi12', '테스트2', '김민성', '테스트2중입니다.', sysdate, '자유', 0);
-insert into boardInfo values (boardNumber_seq.nextval, 'sjsnrndi12', '테스트3', '김민성', '테스트3중입니다.', sysdate, '자유', 0);
-
+drop TABLE boardInfo;
+drop SEQUENCE boardNumber_seq;
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE boardSympathyInfo (

@@ -21,6 +21,7 @@
 			<result property = "user_reportNumber" column = "USER_REPORTNUMBER"/>
 			<result property = "user_date" column = "USER_DATE"/>
 			<result property = "user_picture" column = "USER_PICTURE"/>
+			<result property = "user_information" column = "USER_INFORMATION"/>
 		</resultMap>
 		<!-- resultMap = "MemberResultMap" -->
 		<select id = "getMembers" resultType = "user">
@@ -37,7 +38,7 @@
 		
 		<insert id = "addMember" parameterType = "map">
 			INSERT INTO userInfo VALUES(userInfo_seq.nextval, #{user_id}, #{user_password}, #{user_postCode}, #{user_roadAddress}, #{user_jibunAddress}, #{user_detailAddress}, 
-			#{user_name}, #{user_gender}, #{user_birthday_year}, #{user_birthday_month}, #{user_birthday_day}, #{user_email}, #{user_phone}, #{user_date}, #{user_picture})
+			#{user_name}, #{user_gender}, #{user_birthday_year}, #{user_birthday_month}, #{user_birthday_day}, #{user_email}, #{user_phone}, #{user_date}, #{user_picture}, #{user_information})
 		</insert>
 		
 		<select id = "selectUserId" resultType = "user" parameterType = "map">
@@ -55,4 +56,12 @@
 		<update id = "modifyPassword" parameterType = "map">
 			UPDATE userInfo SET user_password = #{user_password} WHERE user_id = #{user_id}
 		</update>
+		
+		<update id = "updateUserInformation" parameterType = "map">
+			UPDATE userInfo SET user_postCode = #{user_postCode}, user_roadAddress = #{user_roadAddress}, user_jibunAddress = #{user_jibunAddress},
+			user_detailAddress = #{user_detailAddress}, user_email = #{user_email}, user_phone = #{user_phone}, user_information = #{user_information},
+			user_name = #{user_name} WHERE user_id = #{user_id}
+		</update>
+		
+		
 	</mapper>

@@ -559,10 +559,30 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	}
 	/* =========== 참여 게시글 참여신청 서비스============ */
 	
+	/* =========== 참여 게시글 정렬 서비스============ */
+	@Override
+	public ArrayList<JoinBoardInfoVO> getJoinBoardSorts(String subject) {
+		// TODO Auto-generated method stub
+		JoinBoardMapper joinBoardMapper = sqlSession.getMapper(JoinBoardMapper.class);
+		if(subject.equals("전체보기")) {
+			ArrayList<JoinBoardInfoVO> joinBoardSortList = joinBoardMapper.getJoinBoards();
+			return joinBoardSortList;
+		} else {
+			ArrayList<JoinBoardInfoVO> joinBoardSortList = joinBoardMapper.getJoinBoardSorts(subject);
+			return joinBoardSortList;
+		}
+		
+	}
+	/* =========== 참여 게시글 정렬 서비스============ */
 	
-	
-
-	
+	/* =========== 내 정보 수정 서비스============ */
+	@Override
+	public void updateUserInformation(HashMap<Object, Object> map) {
+		// TODO Auto-generated method stub
+		MemberMapper userMapper = sqlSession.getMapper(MemberMapper.class);
+		userMapper.updateUserInformation(map);
+	}
+	/* =========== 내 정보 수정 서비스============ */
 
 	
 	

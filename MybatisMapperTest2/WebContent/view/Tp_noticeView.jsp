@@ -176,9 +176,6 @@
 				</c:when>
 			</c:choose>
 		</form>
-		<div class = "submenu-top-app" onclick = "location.href='noticeView'">
-			∧<br>top
-		</div>
 	</div>
 	
 	<div id="popup" class="hide">

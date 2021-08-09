@@ -59,5 +59,10 @@ public interface UserInfoDAO {
 	void addJoinBoard_joinUser(String name); //참여게시글  참여인원 생성
 	ArrayList<JoinBoard_JoinUserInfoVO> getJoinBoard_joinUsers(int joinBoardNumber); //참여게시글 참여인원 목록 가져오기
 	void addJoinBoard_joinUser_regist(String name, int joinBoardNumber); //참여게시글 참여신청
+	ArrayList<JoinBoardInfoVO> getJoinBoardSorts(String subject); //참여게시글 정렬
 	/********** 게시글 **********/
+	
+	/********** 마이페이지 **********/
+	void updateUserInformation(HashMap<Object, Object> map);
+	/********** 마이페이지 **********/
 }

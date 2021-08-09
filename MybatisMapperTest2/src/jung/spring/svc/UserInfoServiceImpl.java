@@ -296,13 +296,22 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 	/* =========== 참여 게시글 참여신청 서비스============ */
 	
+	/* =========== 참여 게시글 정렬 서비스============ */
+	@Override
+	public List<JoinBoardInfoVO> getJoinBoardSorts(String subject) {
+		// TODO Auto-generated method stub
+		ArrayList<JoinBoardInfoVO> joinBoardSortList = userInfoDAO.getJoinBoardSorts(subject);
+		return joinBoardSortList;
+	}
+	/* =========== 참여 게시글 정렬 서비스============ */
 	
-	
-	
-	
-	
-	
-	
+	/* =========== 내 정보 수정 서비스============ */
+	@Override
+	public void updateUserInformation(HashMap<Object, Object> map) {
+		// TODO Auto-generated method stub
+		userInfoDAO.updateUserInformation(map);
+	}
+	/* =========== 내 정보 수정 서비스============ */
 	
 	
 	

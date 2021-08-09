@@ -327,9 +327,6 @@
 				</c:when>
 			</c:choose>
 		</form>
-		<div class = "submenu-top-app" onclick = "location.href='firstView'">
-			∧<br>top
-		</div>
 	</div>
 	
 	<div id="popup" class="hide">

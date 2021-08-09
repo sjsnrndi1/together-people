@@ -8,7 +8,7 @@ public class UserInfoVO {
 	private String user_password;
 	private int user_postCode;
 	private String user_roadAddress;
-	private String user_jibunaddress;
+	private String user_jibunAddress;
 	private String user_detailAddress;
 	private String user_name;
 	private String user_gender;
@@ -20,7 +20,14 @@ public class UserInfoVO {
 	private int user_reportNumber;
 	private Date user_date;
 	private String user_picture;
+	private String user_information;
 	
+	public String getUser_information() {
+		return user_information;
+	}
+	public void setUser_information(String user_information) {
+		this.user_information = user_information;
+	}
 	public int getUser_re_level() {
 		return user_re_level;
 	}
@@ -61,11 +68,11 @@ public class UserInfoVO {
 	}
 	
 	
-	public String getUser_jibunaddress() {
-		return user_jibunaddress;
+	public String getUser_jibunAddress() {
+		return user_jibunAddress;
 	}
-	public void setUser_jibunaddress(String user_jibunaddress) {
-		this.user_jibunaddress = user_jibunaddress;
+	public void setUser_jibunAddress(String user_jibunAddress) {
+		this.user_jibunAddress = user_jibunAddress;
 	}
 	
 	

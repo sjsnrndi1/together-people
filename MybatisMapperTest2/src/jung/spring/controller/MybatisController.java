@@ -8,6 +8,7 @@ import org.json.simple.JSONObject;
 import net.sf.json.*;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -201,6 +202,7 @@ public class MybatisController {
 		map.put("user_phone", user_phone);
 		map.put("user_date", new Date());
 		map.put("user_picture", "");
+		map.put("user_information", "");
 		userInfoService.addUserInfo(map);
 		userInfoService.addUserPopup(user_id);
 		mav.addObject("user_name", user_name);
@@ -713,7 +715,7 @@ public class MybatisController {
 	
 	public List<String> subjects_gether() {
 		String[] subjects = {"운동/스포츠", "인문학/책/글", "외국/언어", "문화/공연/축제", "음악/악기", "공예/만들기", "댄스/무용",
-				"봉사활동", "사교/인맥", "차/오토바이", "사진/영상", "야구관람", "게임/오락", "요리/제조", "반려동물", "가족/결혼"};
+				"봉사활동", "전체보기", "차/오토바이", "사진/영상", "야구관람", "게임/오락", "요리/제조", "반려동물", "사교/인맥"};
 		List<String> subjectList = new ArrayList<String>();
 		for (int i = 0; i < subjects.length; i++) {
 			subjectList.add(subjects[i]);
@@ -748,10 +750,10 @@ public class MybatisController {
 			UserInfoVO userInfo = userInfoService.getUser(name);
 			mav.addObject("userInfo", userInfo);
 		}
-		//List<BoardInfoVO> boardList = userInfoService.getBoardSort(subject, move);
+		List<JoinBoardInfoVO> joinBoardSortList = userInfoService.getJoinBoardSorts(subject);
 		mav.addObject("subject", subject);
+		mav.addObject("joinBoardList", joinBoardSortList);
 		mav.addObject("subjectList", subjects_gether());
-		//mav.addObject("boardList", boardList);
 		mav.setViewName("Tp_joinView");
 		return mav;
 	}
@@ -846,6 +848,91 @@ public class MybatisController {
 		return JoinContentView(request, joinBoardNumber);
 	}
 	/* =========== 커뮤니티 참여게시글 참여신청 =========== */
+	
+	/* =========== 마이페이지 화면 =========== */
+	@RequestMapping(value = "/myPageView")
+	public ModelAndView MypageView(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String name = httpServletRequest(request);
+		UserInfoVO userInfo = userInfoService.getUser(name);
+		mav.addObject("userInfo", userInfo);
+		int month = 0;
+		switch (userInfo.getUser_birthday_month()) {
+			case "january": month = 1; break;
+			case "february": month = 2; break;
+			case "march": month = 3; break;
+			case "april": month = 4; break;
+			case "may": month = 5; break;
+			case "june": month = 6; break;
+			case "july": month = 7; break;
+			case "augest": month = 8; break;
+			case "september": month = 9; break;
+			case "october": month = 10; break;
+			case "november": month = 11; break;
+			case "december": month = 12; break;
+		}
+		mav.addObject("month", month);
+		
+		String phoneNumber = Integer.toString(userInfo.getUser_phone());
+		mav.addObject("middle_phoneNumber", phoneNumber.substring(2, 6));
+		mav.addObject("last_phoneNumber", phoneNumber.substring(6, 10));
+		
+		mav.setViewName("Tp_mypageView");
+		return mav;
+	}
+	/* =========== 마이페이지 화면 =========== */
+	
+	/* =========== 마이페이지 내 정보 수정 화면 =========== */
+	@RequestMapping(value = "/mypage_information_update")
+	public ModelAndView Mypage_information_update(HttpServletRequest request, @RequestParam("user_name") String user_name, @RequestParam("sample4_postcode") String sample4_postcode,
+			@RequestParam("user_phone") String user_phone, @RequestParam("sample4_roadAddress") String sample4_roadAddress, @RequestParam("user_email") String user_email,
+			  @RequestParam("sample4_jibunAddress") String sample4_jibunAddress, @RequestParam("sample4_detailAddress") String sample4_detailAddress,
+			  @RequestParam("user_information") String user_information) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		String name = httpServletRequest(request);
+		UserInfoVO userInfo = userInfoService.getUser(name);
+		
+		int sample4_postcode_result = 0;
+		int user_phone_result = 0;
+		if(user_name.equals("")) { user_name = userInfo.getUser_name(); }
+		if(sample4_postcode.equals("")) { sample4_postcode_result = userInfo.getUser_postCode(); } else { sample4_postcode_result = Integer.parseInt(sample4_postcode); }
+		if(user_phone.equals("")) { user_phone_result = userInfo.getUser_phone(); } else { user_phone_result = Integer.parseInt(user_phone); }
+		if(sample4_roadAddress.equals("")) { sample4_roadAddress = userInfo.getUser_roadAddress(); }
+		if(user_email.equals("")) { user_email = userInfo.getUser_email(); }
+		if(sample4_jibunAddress.equals("")) { sample4_jibunAddress = userInfo.getUser_jibunAddress(); }
+		if(sample4_detailAddress.equals("")) { sample4_detailAddress = userInfo.getUser_detailAddress(); }
+		if(user_information.equals("")) { user_information = userInfo.getUser_information(); }
+		
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("user_postCode", sample4_postcode_result); map.put("user_roadAddress", sample4_roadAddress); map.put("user_jibunAddress", sample4_jibunAddress);
+		map.put("user_detailAddress", sample4_detailAddress); map.put("user_id", name); map.put("user_email", user_email); map.put("user_phone", user_phone_result);
+		map.put("user_information", user_information); map.put("user_name", user_name);
+		
+		userInfoService.updateUserInformation(map);
+		
+		UserInfoVO userInfo2 = userInfoService.getUser(name);
+		mav.addObject("userInfo", userInfo2);
+		
+		int month = 0;
+		switch (userInfo.getUser_birthday_month()) {
+			case "january": month = 1; break; case "february": month = 2; break; case "march": month = 3; break; case "april": month = 4; break; case "may": month = 5; break;
+			case "june": month = 6; break; case "july": month = 7; break; case "augest": month = 8; break; case "september": month = 9; break; case "october": month = 10; break;
+			case "november": month = 11; break; case "december": month = 12; break;
+		}
+		mav.addObject("month", month);
+		
+		String phoneNumber = Integer.toString(userInfo.getUser_phone());
+		mav.addObject("middle_phoneNumber", phoneNumber.substring(2, 6));
+		mav.addObject("last_phoneNumber", phoneNumber.substring(6, 10));
+		mav.setViewName("Tp_mypageView");
+		return mav;
+	}
+	/* =========== 마이페이지 내 정보 수정 화면 =========== */
+	
+	
+	
+	
 	
 	
 	

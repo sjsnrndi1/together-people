@@ -13,4 +13,6 @@ public interface JoinBoardMapper {
 
 	JoinBoardInfoVO getJoinBoard(int joinBoardNumber); //참여게시글 보기
 
+	ArrayList<JoinBoardInfoVO> getJoinBoardSorts(String subject); //참여게시글 정렬
+
 }
