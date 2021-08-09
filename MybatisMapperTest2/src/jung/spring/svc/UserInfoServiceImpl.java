@@ -313,9 +313,14 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 	/* =========== 내 정보 수정 서비스============ */
 	
-	
-	
-	
+	/* =========== 글 목록 내 글 가져오기 서비스============ */
+	@Override
+	public List<BoardInfoVO> getMyBoards(String name) {
+		// TODO Auto-generated method stub
+		ArrayList<BoardInfoVO> myBoardList = userInfoDAO.getMyBoards(name);
+		return myBoardList;
+	}
+	/* =========== 글 목록 내 글 가져오기 서비스============ */
 	
 	
 	

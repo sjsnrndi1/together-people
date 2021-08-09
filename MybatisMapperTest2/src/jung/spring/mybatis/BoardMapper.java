@@ -25,4 +25,6 @@ public interface BoardMapper {
 
 	ArrayList<BoardInfoVO> getBoardReadSort(); //게시글 조회수 정렬
 
+	ArrayList<BoardInfoVO> getMyBoards(String name); // 글 목록 내 글 가져오기
+
 }

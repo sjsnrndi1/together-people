@@ -63,6 +63,7 @@ public interface UserInfoDAO {
 	/********** 게시글 **********/
 	
 	/********** 마이페이지 **********/
-	void updateUserInformation(HashMap<Object, Object> map);
+	void updateUserInformation(HashMap<Object, Object> map); //내 정보 수정
+	ArrayList<BoardInfoVO> getMyBoards(String name); //글 목록 내 글 가져오기
 	/********** 마이페이지 **********/
 }

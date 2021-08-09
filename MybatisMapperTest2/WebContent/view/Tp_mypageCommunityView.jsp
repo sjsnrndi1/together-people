@@ -126,7 +126,7 @@
 	.floorBar {
 		position : absolute;
 	}
-	.mypage_frame {
+	.mypage_community_frame {
 		width : 50%;
 		height : 600px;
 		margin-left : 26%;
@@ -147,82 +147,7 @@
  		height : 100%;
  		text-align : center;
  	}
- 	.mypage_title_frame {
- 		width : 20%;
- 		height : 90%;
- 		margin : 2px;
- 		color : black;
- 		float : left;
- 	}
- 	.mypage_title {
- 		display : flex;
- 		width : 97%;
- 		justify-content : center;
- 		align-items : center;
- 		height : 10%;
- 		margin : 2px;
- 		border-bottom : 1px solid #BC8F8F;
- 	}
- 	.mypage_information_frame {
- 		width : 78.5%;
- 		height : 90%;
- 		margin : 2px;
- 		float : left;
- 	}
- 	.mypage_information {
- 		display : flex;
- 		width : 99%;
- 		justify-content : center;
- 		align-items : center;
- 		height : 10%;
- 		margin : 2px;
- 		border-bottom : 1px solid #BC8F8F;
- 	}
- 	.mypage_update_frame {
- 		float : left;
- 		margin : 2px;
- 		width : 99%;
- 		height : 10%;
- 	}
- 	.mypage_update {
- 		width : 99.3%;
- 		height : 91%;
- 		margin : 2px;
- 	}
- 	.mypage_update a {
- 		display : flex;
- 		justify-content : center;
- 		align-items : center;
- 		height : 100%;
- 	}
- 	.mypage_update a:link { color: #696969; text-decoration: none;}
-	.mypage_update a:visited { color: #696969; text-decoration: none;}
- 	.mypage_update a:hover { color: black; text-decoration: none;}
  	
-	#postingPopup .content {
-		height : 400px;
-	}
-	.content_frame {
-		width : 100%; height : 90%;
-	}
-	.content_btn {
-		margin : 2px; width : 99%; height : 5%;
-	}
-	.content_title_frame {
-		margin : 2px; width : 20%; height : 92.5%; float : left; 
-	}
-	.content_title {
-		margin : 2px; width : 94%; height : 10%; display : flex; justify-content : center; align-items : center; border-bottom : 1px solid #BC8F8F;
-	}
-	.content_input_frame {
-		margin : 2px; width : 77%; height : 92.5%; float : left; 
-	}
-	.content_input {
-		margin : 2px; width : 98%; height : 10%; display : flex; justify-content : center; align-items : center; border-bottom : 1px solid #BC8F8F;
-	}
-	.content_input input {
-		border : 1px solid white;
-	}
 </style>
 </head>
 <body>
@@ -282,7 +207,7 @@
 		</div>					
 	</div>
 	<!-- 마이페이지 / 회원정보 / 즐겨찾기 / 포스팅 / 기타사항 -->
-	<div class = "mypage_frame">
+	<div class = "mypage_community_frame">
 		<div class = "mypage_move_btn">
 			<table>
 				<tr>
@@ -292,68 +217,34 @@
 				</tr>
 			</table>
 		</div>
-		<div class = "mypage_title_frame" >
-			<div class = "mypage_title">이름</div>
-			<div class = "mypage_title">성별</div>
-			<div class = "mypage_title">생년월일</div>
-			<div class = "mypage_title">주소</div>
-			<div class = "mypage_title">휴대폰</div>
-			<div class = "mypage_title">이메일</div>
-			<div class = "mypage_title">자기소개</div>
+		<div style = "border : 1px solid red; width : 99.3%; height : 10%; margin : 2px;">
+		
 		</div>
-		<div class = "mypage_information_frame">
-			<div class = "mypage_information">${userInfo.user_name}</div>
-			<div class = "mypage_information">
-				<c:if test = "${userInfo.user_gender eq 'male'}">남</c:if>
-				<c:if test = "${userInfo.user_gender eq 'female'}">여</c:if>
-			</div>
-			<div class = "mypage_information">${userInfo.user_birthday_year}.${month}.${userInfo.user_birthday_day}</div>
-			<div class = "mypage_information">(${userInfo.user_postCode})${userInfo.user_roadAddress}(지번 : ${userInfo.user_jibunAddress}) ${userInfo.user_detailAddress}</div>
-			<div class = "mypage_information">010-${middle_phoneNumber}-${last_phoneNumber}</div>
-			<div class = "mypage_information">${userInfo.user_email}</div>
-			<div class = "mypage_information">${userInfo.user_information}</div>
+		<div style = "border : 1px solid red; width : 99.3%; height : 10%; margin : 2px;">
+			<table style = "width : 100%; height : 10%;" border = '1'>
+				<tr>
+					<td></td>
+					<td>작성자</td>
+					<td>제목</td>
+					<td>작성일</td>
+					<td>조회수</td>
+				</tr>
+			</table>
 		</div>
-		<div class = "mypage_update_frame">
-			<div class = "mypage_update">
-				<a href = "#" onclick = "showPostingPopup(false)">수정</a>
-			</div>
+		<div style = "border : 1px solid red; width : 99.3%; height : 10%; margin : 2px;">
+			<c:forEach items = "${myBoardList }" var = "myBoard">
+			<table style = "width : 100%; height : 10%;" border = '1'>
+				<tr>
+					<td></td>
+					<td>작성자</td>
+					<td>제목</td>
+					<td>작성일</td>
+					<td>조회수</td>
+				</tr>
+			</table>
+			</c:forEach>
 		</div>
 	</div>
-
-	<form action = "mypage_information_update" name = "mypageInformationUpdate" method = "POST" onsubmit="return check()">
-		<div id = "postingPopup" class="hide">
-			<div class = "content">
-				<div class = "content_frame">
-					<div class = "content_btn">
-						<button type = "button" class = "closeBtn" style = "margin : 0; float : right;" onclick="closePostingPopup()">x</button>
-					</div>
-					<div class = "content_title_frame">
-						<div class = "content_title">이름</div>
-						<div class = "content_title" style = "height : 35%;">주소</div>
-						<div class = "content_title">휴대폰</div>
-						<div class = "content_title">이메일</div>
-						<div class = "content_title" style = "height : 27.5%;">자기소개</div>
-					</div>
-					<div class = "content_input_frame">
-						<div class = "content_input"><input type = "text" value = "" placeholder = "이름을 입력해주세요." id = "user_name" name = "user_name" style = "width : 98%;"/></div>
-						<div class = "content_input" style = "height : 35%; display : block;">
-							<input type = "button" onclick = "sample4_execDaumPostcode()" value="우편번호 찾기" style = "border : 1px solid black; border-radius : 3px; margin-bottom : 2px;"><br>
-							<input type = "text" id = "sample4_postcode" class = "sample4_postcode" name = "sample4_postcode" placeholder = "우편번호" style = "margin-bottom : 2px; width : 98%;"><br>
-							<input type = "text" id = "sample4_roadAddress" class = "sample4_roadAddress" name = "sample4_roadAddress" placeholder = "도로명주소" style = "margin-bottom : 2px; width : 98%;"><br>
-							<input type = "text" id = "sample4_jibunAddress" class = "sample4_jibunAddress" name = "sample4_jibunAddress" placeholder = "지번주소" style = "margin-bottom : 2px; width : 98%;"><br>
-							<span id = "guide" style = "color : #999; display : none"></span>
-							<input type = "text" id = "sample4_detailAddress" class = "sample4_detailAddress" name = "sample4_detailAddress" placeholder = "상세주소" style = "width : 98%;">
-						</div>
-						<div class = "content_input"><input type = "tel" value = "" id = "user_phone" name = "user_phone" placeholder = "-없이 입력하세요." onblur = "minusCut(this)" style = "width : 98%;"/></div>
-						<div class = "content_input"><input type = "email" value = "" id = "user_email" name = "user_email" placeholder = "이메일을 입력해주세요." style = "width : 98%;"/></div>
-						<div class = "content_input" style = "height : 27.5%;"><input type = "text" id = "user_information" value = "" placeholder = "자기소개를 입력해주세요." name = "user_information" style = "width : 98%; height : 93%;"/></div>
-						<script src = "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-					</div>
-				</div>
-				<input type = "submit" style = "margin-left : 45%; background-color : black; border : 1px solid black; color : white; border-radius : 5px;" value = "수정하기">
-			</div>
-		</div>
-	</form>
 	
 	<div class = "submenu-frame">
 		<div class = "submenu-phone-app">

@@ -930,6 +930,22 @@ public class MybatisController {
 	}
 	/* =========== 마이페이지 내 정보 수정 화면 =========== */
 	
+	/* =========== 마이페이지 글 목록 화면 =========== */
+	@RequestMapping(value = "/mypageCommunityView")
+	public ModelAndView MypageCommunityView(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String name = httpServletRequest(request);
+		UserInfoVO userInfo = userInfoService.getUser(name);
+		mav.addObject("userInfo", userInfo);
+		
+		List<BoardInfoVO> myBoardList = userInfoService.getMyBoards(name);
+		
+		mav.addObject("myBoardList", myBoardList);
+		mav.setViewName("Tp_mypageCommunityView");
+		return mav;
+	}
+	/* =========== 마이페이지 글 목록 화면 =========== */
 	
 	
 	
@@ -944,6 +960,30 @@ public class MybatisController {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/* =========== 마이페이지 포스팅 목록 화면 =========== */
+	@RequestMapping(value = "/mypagePostingView")
+	public ModelAndView MypagePostingView(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String name = httpServletRequest(request);
+		UserInfoVO userInfo = userInfoService.getUser(name);
+		mav.addObject("userInfo", userInfo);
+		
+		mav.setViewName("Tp_mypagePostingView");
+		return mav;
+	}
+	/* =========== 마이페이지 포스팅 목록 화면 =========== */
 	
 	
 	

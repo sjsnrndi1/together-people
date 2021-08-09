@@ -49,4 +49,8 @@
 		<select id = "getBoardReadSort" resultType = "jung.spring.vo.BoardInfoVO">
 			SELECT * FROM boardInfo ORDER BY boardViews DESC
 		</select>
+		
+		<select id = "getMyBoards" parameterType = "string" resultType = "jung.spring.vo.BoardInfoVO">
+			SELECT * FROM boardInfo WHERE boardUserId = #{name} ORDER BY boardViews DESC
+		</select>
 	</mapper>
