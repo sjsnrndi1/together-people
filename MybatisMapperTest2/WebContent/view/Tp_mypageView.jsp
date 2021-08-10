@@ -188,12 +188,9 @@
  		width : 99.3%;
  		height : 91%;
  		margin : 2px;
- 	}
- 	.mypage_update a {
  		display : flex;
  		justify-content : center;
  		align-items : center;
- 		height : 100%;
  	}
  	.mypage_update a:link { color: #696969; text-decoration: none;}
 	.mypage_update a:visited { color: #696969; text-decoration: none;}

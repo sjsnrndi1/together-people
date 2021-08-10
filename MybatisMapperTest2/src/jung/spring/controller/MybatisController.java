@@ -44,6 +44,7 @@ import jung.spring.vo.JoinBoardInfoVO;
 import jung.spring.vo.JoinBoard_JoinUserInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
+import jung.spring.vo.TestBean;
 import jung.spring.vo.UserInfoVO;
 
 @Controller
@@ -940,16 +941,24 @@ public class MybatisController {
 		mav.addObject("userInfo", userInfo);
 		
 		List<BoardInfoVO> myBoardList = userInfoService.getMyBoards(name);
-		
 		mav.addObject("myBoardList", myBoardList);
 		mav.setViewName("Tp_mypageCommunityView");
 		return mav;
 	}
 	/* =========== 마이페이지 글 목록 화면 =========== */
 	
-	
-	
-	
+	@ResponseBody
+	@RequestMapping(value = "mypage_delete_board", method = RequestMethod.POST)
+	public ModelAndView Mypage_delete_board(HttpServletRequest request, ArrayList<String> subject) throws Exception {
+		
+		String name = httpServletRequest(request);
+
+		for (int i = 0; i < subject.size(); i++) {
+			System.out.println(subject.get(i));
+		}
+		
+		return MypageCommunityView(request);
+	}
 	
 	
 	

@@ -1,10 +1,9 @@
-.commu_board_frame {
+	.commu_board_frame {
 		width : 50%;
 		height : 648px;
 		margin-top : 0.5%;
 		margin-left : 26%;
 		color : #696969;
-		border : 1px solid red;
 	}
 	.commu_board_subject {
 		width : 98.5%;
@@ -51,7 +50,6 @@
 		height : 5%;
 		padding-left : 7px;
 		padding-top : 7px;
-		border : 1px solid red;
 		border-top : 1px solid #BC8F8F;
  	}
  	.commu_submit input {

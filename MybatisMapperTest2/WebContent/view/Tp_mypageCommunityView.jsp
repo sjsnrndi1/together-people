@@ -121,33 +121,78 @@
 			return true;
 		}
 	}
+	function delete_board(){
+		var obj_length = document.getElementsByName("delete_board").length;
+		var checkList = new Array();
+		
+		var count = 0;
+		for (var i = 0; i < obj_length; i++) {
+			if(document.getElementsByName("delete_board")[i].checked == true){
+				checkList[count] = document.getElementsByName("delete_board")[i].value;
+				alert(checkList[count]);
+				count++;
+			}
+		}
+		
+		$.ajax({
+			url: "mypage_delete_board",
+		    data: "subject" + checkList,	
+		    type: "POST"
+		});
+	}
 </script>
 <style>
 	.floorBar {
 		position : absolute;
 	}
 	.mypage_community_frame {
-		width : 50%;
-		height : 600px;
-		margin-left : 26%;
-		margin-top : 0.5%;
-		color : #696969;
+		width : 50%; height : 600px; margin-left : 26%; margin-top : 0.5%; color : #696969;
 	}
 	.mypage_move_btn {
-		width : 99.3%;
-		height : 5%;
-		margin : 2px;
-		border-bottom : 1px solid #BC8F8F;
+		width : 99.3%; height : 5%; margin : 2px; border-bottom : 1px solid #BC8F8F;
 	}
 	.mypage_move_btn a:link { color: #696969; text-decoration: none;}
 	.mypage_move_btn a:visited { color: #696969; text-decoration: none;}
  	.mypage_move_btn a:hover { color: black; text-decoration: none;}
  	.mypage_move_btn table {
- 		width : 100%;
- 		height : 100%;
- 		text-align : center;
+ 		width : 100%; height : 100%; text-align : center;
  	}
- 	
+ 	.mypage_move_btn table td{
+ 		width : 33%;
+ 	}
+ 	.mypage_createDocBtn_joinDocBtn_frame {
+ 		border-bottom : 2px solid #BC8F8F; width : 99.3%; height : 4%; margin : 2px;
+ 	}
+ 	.mypage_createDocBtn_joinDocBtn {
+ 		display : flex; justify-content: center; align-items: center;
+ 	}
+ 	.mypage_createDocBtn_joinDocBtn a:link { color: #696969; text-decoration: none;}
+	.mypage_createDocBtn_joinDocBtn a:visited { color: #696969; text-decoration: none;}
+ 	.mypage_createDocBtn_joinDocBtn a:hover { color: black; text-decoration: none;}
+ 	.delete_btn {
+ 		width : 100%; margin : 2px; padding-top : 2px;
+ 	}
+ 	.delete_btn a:link { color: #696969; text-decoration: none;}
+	.delete_btn a:visited { color: #696969; text-decoration: none;}
+ 	.delete_btn a:hover { color: black; text-decoration: none;}
+ 	.mypage_community_title_frame {
+ 		width : 99.3%; margin : 2px; border-bottom : 2px solid #BC8F8F;
+ 	}
+ 	.mypage_community_title {
+ 		width : 99.3%; margin : 2px; padding : 2px;
+ 	}
+ 	.mypage_community_title table{
+		width : 100%; text-align : center;
+ 	}
+ 	.mypage_community_content_frame {
+ 		border-bottom : 2px solid #BC8F8F; width : 99.3%; height : 88%; margin : 2px; overflow-y : scroll;
+ 	}
+ 	.mypage_community_content {
+ 		width : 99.3%; height : 99%; margin : 2px;
+ 	}
+ 	.mypage_community_content table {
+ 		width : 100%; height : 8.1%; text-align : center; border-bottom : 1px solid #BC8F8F;
+ 	}
 </style>
 </head>
 <body>
@@ -211,38 +256,56 @@
 		<div class = "mypage_move_btn">
 			<table>
 				<tr>
-					<td style = "border-right : 1px solid #BC8F8F; width : 33%;"><a href = "myPageView">내 정보</a></td>
-					<td style = "border-right : 1px solid #BC8F8F; width : 33%;"><a href = "mypageCommunityView">글 목록</a></td>
-					<td style = "width : 33%;"><a href = "mypagePostingView">포스팅 목록</a></td>
+					<td style = "border-right : 1px solid #BC8F8F;"><a href = "myPageView">내 정보</a></td>
+					<td style = "border-right : 1px solid #BC8F8F;"><a href = "mypageCommunityView">글 목록</a></td>
+					<td><a href = "mypagePostingView">포스팅 목록</a></td>
 				</tr>
 			</table>
 		</div>
-		<div style = "border : 1px solid red; width : 99.3%; height : 10%; margin : 2px;">
-		
+		<div class = "mypage_createDocBtn_joinDocBtn_frame" style = "margin-top : 1%;">
+			<div class = "mypage_createDocBtn_joinDocBtn">
+				&nbsp;&nbsp;<a href = "mypageCommunityView">내 글 보기</a>
+				<a href = "#" style = "margin-left : 6%;">참여한 모임</a>
+			</div>
 		</div>
-		<div style = "border : 1px solid red; width : 99.3%; height : 10%; margin : 2px;">
-			<table style = "width : 100%; height : 10%;" border = '1'>
-				<tr>
-					<td></td>
-					<td>작성자</td>
-					<td>제목</td>
-					<td>작성일</td>
-					<td>조회수</td>
-				</tr>
-			</table>
+		<div class = "mypage_community_title_frame">
+			<div class = "mypage_community_title">
+				<table>
+					<tr>
+						<td style = "width : 2%; border-right : 1px solid #BC8F8F;"></td>
+						<td style = "width : 10%; border-right : 1px solid #BC8F8F;">카테고리</td>
+						<td style = "width : 40%; border-right : 1px solid #BC8F8F;">제목</td>
+						<td style = "width : 10%; border-right : 1px solid #BC8F8F;">작성일</td>
+						<td style = "width : 10%;">조회수/참여자수</td>
+					</tr>
+				</table>
+			</div>
+		</div>		
+		<div class = "mypage_community_content_frame">
+			<div class = "mypage_community_content">
+				<c:forEach items = "${myBoardList }" var = "myboard">
+					<table>
+						<tr>
+							<td style = "width : 2%;"><input type = "checkbox" name = "delete_board" value = "${myboard.boardSubject}/${myboard.boardNumber}"/></td>
+							<td style = "width : 10%;">
+								<c:if test = "${myboard.boardSubject eq 'freedom'}">자유</c:if>
+								<c:if test = "${myboard.boardSubject ne 'freedom'}">${myboard.boardSubject}</c:if>
+							</td>
+							<td style = "width : 40%;">${myboard.boardTitle}</td>
+							<fmt:formatDate value = "${myboard.boardDate}" pattern = "yyyy-MM-dd" var = "boardDate"/>
+							<td style = "width : 10%;">${boardDate}</td>
+							<td style = "width : 10%;">
+								${myboard.boardViews}
+								<c:if test = "${myboard.boardSubject eq 'freedom'}">회</c:if>
+								<c:if test = "${myboard.boardSubject ne 'freedom'}">명</c:if>
+							</td>
+						</tr>
+					</table>
+				</c:forEach>
+			</div>
 		</div>
-		<div style = "border : 1px solid red; width : 99.3%; height : 10%; margin : 2px;">
-			<c:forEach items = "${myBoardList }" var = "myBoard">
-			<table style = "width : 100%; height : 10%;" border = '1'>
-				<tr>
-					<td></td>
-					<td>작성자</td>
-					<td>제목</td>
-					<td>작성일</td>
-					<td>조회수</td>
-				</tr>
-			</table>
-			</c:forEach>
+		<div class = "delete_btn">
+			<button type = "button" onclick = "delete_board()" style = "margin : 0; padding : 0; background-color : white; color : black; border : 1px solid black; width : 4%; height : 50%;">삭제</button>
 		</div>
 	</div>
 	

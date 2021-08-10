@@ -14,6 +14,27 @@
 			<result property = "boardViews" column = "BOARDVIEWS"/>
 		</resultMap>
 		
+		<resultMap type = "jung.spring.vo.JoinBoardInfoVO" id = "JoinBoardResultMap">			
+			<result property = "joinBoardNumber" column = "JOINBOARDNUMBER"/>
+			<result property = "joinBoardUserId" column = "JOINBOARDUSERID"/>
+			<result property = "joinBoardTitle" column = "JOINBOARDTITLE"/>
+			<result property = "joinBoardWriter" column = "JOINBOARDWRITER"/>
+			<result property = "joinBoardContent" column = "JOINBOARDCONTENT"/>
+			<result property = "joinBoardDate" column = "JOINBOARDDATE"/>
+			<result property = "joinBoardSubject" column = "JOINBOARDSUBJECT"/>
+			<result property = "joinBoard_joinUserNumber" column = "JOINBOARD_JOINUSERNUMBER"/>
+		</resultMap>
+		
+	<!-- 	<resultMap type = "jung.spring.vo.TestBean" id = "TestBeanMap">
+			<collection property = "boardInfo" resultMap = "BoardResultMap"></collection>
+			<collection property = "joinBoardInfo" resultMap = "JoinBoardResultMap"></collection>
+		</resultMap> -->
+
+		<select id = "getMyBoards" parameterType = "string" resultType = "jung.spring.vo.BoardInfoVO">
+			<!-- SELECT DISTINCT * FROM boardInfo a, joinBoardInfo b WHERE a.boardUserId = b.joinBoardUserId ORDER BY a.boardDate DESC, b.joinBoardDate DESC -->
+			SELECT * FROM boardInfo WHERE boardUserId = #{name} UNION ALL SELECT * FROM joinBoardInfo WHERE JoinBoardUserId = #{name}
+		</select>
+
 		<select id = "getBoards" resultType = "jung.spring.vo.BoardInfoVO">
 			SELECT * FROM boardInfo ORDER BY boardNumber DESC
 		</select>
@@ -49,8 +70,5 @@
 		<select id = "getBoardReadSort" resultType = "jung.spring.vo.BoardInfoVO">
 			SELECT * FROM boardInfo ORDER BY boardViews DESC
 		</select>
-		
-		<select id = "getMyBoards" parameterType = "string" resultType = "jung.spring.vo.BoardInfoVO">
-			SELECT * FROM boardInfo WHERE boardUserId = #{name} ORDER BY boardViews DESC
-		</select>
+
 	</mapper>

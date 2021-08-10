@@ -275,8 +275,10 @@
 					<c:if test = "${joinUser.verified eq 1}">
 						<div class = "join_board_joinUsers">
 							${joinUser.joinBoard_userName}
-							<c:if test = "${joinUser.joinBoard_userId eq joinBoardInfo.joinBoardUserId}">
-								<span style = "font-size : 80%;">✨</span>
+							<c:if test = "${joinUser.joinBoard_boardNumber eq joinBoardInfo.joinBoardNumber}">
+								<c:if test = "${joinUser.joinBoard_userId eq joinBoardInfo.joinBoardUserId}">
+									<span style = "font-size : 80%;">✨</span>
+								</c:if>
 							</c:if>
 						</div>
 					</c:if>

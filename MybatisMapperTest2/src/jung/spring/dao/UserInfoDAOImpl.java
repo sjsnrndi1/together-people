@@ -27,6 +27,7 @@ import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
+import jung.spring.vo.TestBean;
 import jung.spring.vo.UserInfoVO;
 
 @Repository
@@ -593,9 +594,7 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 		return myBoardList;
 	}
 	/* =========== 글 목록 내 글 가져오기 서비스============ */
-	
-	
-	
+
 	
 	
 	

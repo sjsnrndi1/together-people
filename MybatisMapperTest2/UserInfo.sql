@@ -158,6 +158,14 @@ CREATE SEQUENCE joinBoardNumber_seq;
 
 select * from joinBoardInfo;
 
+SELECT a.boardNumber, a.boardTitle, a.boardSubject, a.boardDate, a.boardViews,
+		b.joinBoardNumber, b.joinBoardTitle, b.joinBoardSubject, b.joinBoardDate, b.joinBoard_joinUserNumber
+FROM boardInfo a
+JOIN joinBoardInfo b
+ON a.boardUserId = b.joinBoardUserId;
+
+SELECT * FROM joinBoardInfo WHERE JoinBoardUserId = 'sjsnrndi12' UNION ALL SELECT * FROM boardInfo WHERE boardUserId = 'sjsnrndi12';
+
 drop TABLE joinBoardInfo;
 drop SEQUENCE joinBoardNumber_seq;
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

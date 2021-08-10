@@ -12,6 +12,7 @@ import jung.spring.vo.JoinBoardInfoVO;
 import jung.spring.vo.JoinBoard_JoinUserInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
+import jung.spring.vo.TestBean;
 import jung.spring.vo.UserInfoVO;
 
 public interface UserInfoDAO {
