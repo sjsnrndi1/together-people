@@ -30,4 +30,8 @@
 		<select id = "getJoinBoardSorts" parameterType = "string" resultType = "jung.spring.vo.JoinBoardInfoVO">
 			SELECT * FROM joinBoardInfo WHERE joinBoardSubject = #{subject} ORDER BY joinBoardDate DESC
 		</select>
+		
+		<delete id = "deleteJoinBoard" parameterType = "map">
+			DELETE joinBoardInfo WHERE joinBoardNumber = #{joinBoardNumber} AND joinBoardSubject = #{joinBoardSubject}
+		</delete>
 	</mapper>

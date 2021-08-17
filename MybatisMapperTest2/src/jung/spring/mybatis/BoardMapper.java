@@ -28,4 +28,6 @@ public interface BoardMapper {
 
 	ArrayList<BoardInfoVO> getMyBoards(String name); // 글 목록 내 글 가져오기
 
+	void deleteBoard(HashMap<Object, Object> map); //내 글 삭제
+
 }

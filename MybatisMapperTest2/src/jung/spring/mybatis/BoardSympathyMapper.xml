@@ -20,4 +20,8 @@
 		<select id = "getBoardSympathy" parameterType = "map" resultType = "jung.spring.vo.BoardSympathyInfoVO">
 			SELECT * FROM boardSympathyInfo WHERE boardNumber = #{boardNumber} AND userId = #{userId}
 		</select>
+		
+		<delete id = "deleteBoardSympathy" parameterType = "map">
+			DELETE boardSympathyInfo WHERE boardNumber = #{boardNumber}
+		</delete>
 	</mapper>

@@ -823,7 +823,19 @@ public class MybatisController {
 				}
 			}
 		}
-		
+		List<JoinBoard_JoinUserInfoVO> joinUsers = new ArrayList<JoinBoard_JoinUserInfoVO>();
+		for (int i = 0; i < JoinBoard_JoinUserList.size(); i++) {
+			if(JoinBoard_JoinUserList.get(i).getVerified() == 0) {
+				JoinBoard_JoinUserInfoVO jj = new JoinBoard_JoinUserInfoVO();
+				jj.setJoinBoard_boardNumber(JoinBoard_JoinUserList.get(i).getJoinBoard_boardNumber());
+				jj.setJoinBoard_number(JoinBoard_JoinUserList.get(i).getJoinBoard_number());
+				jj.setJoinBoard_userId(JoinBoard_JoinUserList.get(i).getJoinBoard_userId());
+				jj.setJoinBoard_userName(JoinBoard_JoinUserList.get(i).getJoinBoard_userName());
+				jj.setVerified(JoinBoard_JoinUserList.get(i).getVerified());
+				joinUsers.add(jj);
+			}
+		}
+		mav.addObject("joinUsers", joinUsers);
 		mav.addObject("check", check);
 		mav.addObject("joinBoardContent", joinBoardContent);
 		mav.addObject("joinBoardInfo", joinBoardInfo);
@@ -941,24 +953,89 @@ public class MybatisController {
 		mav.addObject("userInfo", userInfo);
 		
 		List<BoardInfoVO> myBoardList = userInfoService.getMyBoards(name);
+		List<JoinBoard_JoinUserInfoVO> joinBoard_JoinUserList = userInfoService.getJoinBoard_joinUserList();
+		mav.addObject("joinBoard_JoinUserList", joinBoard_JoinUserList);
 		mav.addObject("myBoardList", myBoardList);
 		mav.setViewName("Tp_mypageCommunityView");
 		return mav;
 	}
 	/* =========== 마이페이지 글 목록 화면 =========== */
 	
-	@ResponseBody
-	@RequestMapping(value = "mypage_delete_board", method = RequestMethod.POST)
-	public ModelAndView Mypage_delete_board(HttpServletRequest request, ArrayList<String> subject) throws Exception {
-		
-		String name = httpServletRequest(request);
-
-		for (int i = 0; i < subject.size(); i++) {
-			System.out.println(subject.get(i));
-		}
+	/* =========== 마이페이지 글 삭제 =========== */
+	@RequestMapping(value = "/mypage_delete_board", method = RequestMethod.POST)
+	public ModelAndView Mypage_delete_board(HttpServletRequest request, @RequestParam("delete_board") String data) throws Exception {
+		userInfoService.deleteBoard(data);
 		
 		return MypageCommunityView(request);
 	}
+	/* =========== 마이페이지 글 삭제 =========== */
+	
+	/* =========== 마이페이지 게시글 화면 =========== */
+	@RequestMapping(value = "/mypageContentView")
+	public ModelAndView MypageContentView(HttpServletRequest request, @RequestParam("boardNumber") int boardNumber, @RequestParam("boardSubject") String boardSubject) throws Exception {
+		if(boardSubject.equals("freedom")) {
+			return CommunityContentView(request, boardNumber);
+		} else {
+			return JoinContentView(request, boardNumber);
+		}
+	}
+	/* =========== 마이페이지 게시글 화면 =========== */
+	
+	@ResponseBody
+	@RequestMapping(value = "joinUser_accept", method = RequestMethod.POST)
+	public void JoinUser_accept(int joinNumber) {
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

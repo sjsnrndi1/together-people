@@ -70,5 +70,8 @@
 		<select id = "getBoardReadSort" resultType = "jung.spring.vo.BoardInfoVO">
 			SELECT * FROM boardInfo ORDER BY boardViews DESC
 		</select>
-
+	
+		<delete id = "deleteBoard" parameterType = "map">
+			DELETE boardInfo WHERE boardNumber = #{boardNumber} AND boardSubject = #{boardSubject}
+		</delete>
 	</mapper>

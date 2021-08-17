@@ -19,7 +19,6 @@
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/popupbar.css"> <!-- 전화서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/submenubar.css"> <!-- 우측서브메뉴바 -->
 <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/postingpopupbar.css"> <!-- 포스팅서브메뉴바 -->
-<!-- <link rel = "stylesheet" href = "http://sjsnrndi12.dothome.co.kr/style/communityContentbar.css"> 커뮤니티 게시글 스타일 -->
 <script type = "text/javascript" src = "http://sjsnrndi12.dothome.co.kr/js/basicAct.js"></script> <!-- 기본 행동 -->
 <script>
 	//url복사 스크립트
@@ -48,6 +47,42 @@
 	function closePostingPopup() {
 		const popup = document.querySelector('#postingPopup');
 	  	popup.classList.add('hide');
+	}
+	function showKategoriPopup(hasFilter) {
+		const popup = document.querySelector('#kategoriPopup');
+	  
+		if (hasFilter) {
+	  		popup.classList.add('has-filter');
+	  	} else {
+	  		popup.classList.remove('has-filter');
+	  	}
+	  
+	  	popup.classList.remove('hide');
+	}
+	function closeKategoriPopup() {
+		const popup = document.querySelector('#kategoriPopup');
+	  	popup.classList.add('hide');
+	}
+	function join_accept(joinNumber){
+		$.ajax({
+			url: "joinUser_accept",
+		    data: "joinNumber=" + joinNumber,
+		    type: "POST"
+		})
+		setTimeout('autoRefresh_sample_div()', 0);
+	}
+	function join_refuse(joinNumber){
+		$.ajax({
+			url: "joinUser_refuse",
+		    data: "joinNumber=" + joinNumber,
+		    type: "POST"
+		})
+		setTimeout('autoRefresh_sample_div()', 0);
+	}
+	
+	function autoRefresh_sample_div() {
+		var currentLocation = window.location;
+		$("#content").load(currentLocation + '#content');
 	}
 </script>
 <style>
@@ -171,6 +206,33 @@
  		padding-bottom : 2px;
  		margin : 3px;
  	}
+ 	#kategoriPopup {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, .7);
+		z-index: 1;
+	}
+	#kategoriPopup.hide {
+		display: none;
+	}
+	#kategoriPopup.has-filter {
+		backdrop-filter: blur(4px);
+		-webkit-backdrop-filter: blur(4px);
+	}
+	#kategoriPopup .content {
+		padding: 20px;
+		background: #fff;
+		border-radius: 5px;
+		width : 500px;
+		height : 500px;
+		box-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+	}
 </style>
 </head>
 <body>
@@ -252,7 +314,10 @@
 		</div>
 		<div class = "join_board_joinApplication_frame">
 			<div class = "join_board_joinApplication">
-			<c:if test = "${ssVar ne null }">
+			<c:if test = "${ssVar eq joinBoardInfo.joinBoardUserId}">
+				<a href = "#" style = "float : left;" onclick = "showKategoriPopup(false)">참여신청목록</a>
+			</c:if>
+			<c:if test = "${ssVar ne null}">
 				<c:choose>
 					<c:when test = "${check eq 'noApplication'}">
 						<a href = "#" onclick = "showPostingPopup(false)">참여신청</a>
@@ -320,6 +385,44 @@
 		</div>
 	</form>
 	
+	<div id = "kategoriPopup" class = "hide">
+		<div class = "content" id = "content">
+			<input type = "hidden" value = "${joinBoardInfo.joinBoardNumber }" name = "joinBoardNumber" />
+			<button type = "button" class = "closeBtn" style = "margin : 0; float : right;" onclick="closeKategoriPopup()">x</button>
+			<br><br>
+			<div id = "content_frame" class = "content_frame" style = "border : 2px solid #BC8F8F; width : 100%; height : 87%; overflow-y : auto;">
+				<div style = "display: flex; justify-content: center; align-items: center; margin : 2px; width : 99%; height : 8%; text-align : center;">
+					<table style = "width : 99.3%; margin : 2px;">
+						<tr>
+							<td style = "width : 50%;">이름</td>
+							<td style = "width : 50%; border-left : 1px solid #BC8F8F">참여확인</td>
+						</tr>
+					</table>
+				</div>
+				<div style = "margin : 2px; width : 99%; height : 92%; border-top : 1px solid #BC8F8F; text-align : center">
+					<c:forEach items = "${joinUsers}" var = "joinUser">
+						<div style = "display: flex; justify-content: center; align-items: center; width : 99.3%; height : 10%; margin : 2px; border-bottom : 1px solid #BC8F8F;">
+							<table style = "width : 99.3%; margin : 2px;">
+								<tr>
+									<td style = "width : 50%;">${joinUser.joinBoard_userName}</td>
+									<td style = "width : 25%; border-left : 1px solid #BC8F8F">
+										<button type = "button" onclick = "join_accept(${joinUser.joinBoard_number})" style = "background-color : white; border : 1px solid white; color : black; font-weight : bold;">수락</button>
+									</td>
+									<td style = "width : 25%; border-left : 1px solid #BC8F8F">
+										<button type = "button" onclick = "join_refuse(${joinUser.joinBoard_number})" style = "background-color : white; border : 1px solid white; color : black; font-weight : bold;">거절</button>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+			<div style = "display: flex; justify-content: center; align-items: center; font-size : 120%; width : 100%; height : 8%;">
+				Together People~			
+			</div>
+		</div>
+	</div>
+	
 	<div class = "submenu-frame">
 		<div class = "submenu-phone-app">
 			<a href = "#" onclick = "showPopup(false)"><img src = "http://sjsnrndi12.dothome.co.kr/images/phoneImg.PNG"
@@ -366,7 +469,7 @@
 			</p>
 		<hr>
 		<br>
-		<button onclick="closePopup()">확인</button>
+		<button onclick="closePopup()" style = "margin-left : 40%;">확인</button>
 		</div>
 	</div>
 	

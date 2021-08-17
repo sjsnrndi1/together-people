@@ -15,4 +15,6 @@ public interface JoinBoardMapper {
 
 	ArrayList<JoinBoardInfoVO> getJoinBoardSorts(String subject); //참여게시글 정렬
 
+	void deleteJoinBoard(HashMap<Object, Object> map); //내 글 삭제
+
 }

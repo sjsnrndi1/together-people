@@ -13,4 +13,6 @@ public interface BoardSympathyMapper {
 
 	BoardSympathyInfoVO getBoardSympathy(HashMap<Object, Object> map); // 사용자 공감 가져오기
 
+	void deleteBoardSympathy(HashMap<Object, Object> map); // 공감 삭제
+
 }

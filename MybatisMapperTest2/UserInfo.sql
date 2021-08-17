@@ -22,7 +22,7 @@ CREATE TABLE userInfo (
 
 CREATE SEQUENCE userInfo_seq;
 
-select * from userInfo
+select * from userInfo;
 
 INSERT INTO userInfo VALUES(userInfo_seq.nextval, 'admin', 'tkFKD465!@', '12345', '包府磊', '包府磊', '包府磊', '包府磊', '巢己', '1', '1', '1', 'admin', '1234', sysdate, 'null');
 
@@ -182,7 +182,7 @@ CREATE TABLE joinBoard_joinUserInfo (
 
 CREATE SEQUENCE joinBoard_number_seq;
 
-select * from joinBoard_joinUserInfo;
+select * from joinBoard_joinUserInfo order by joinBoard_boardNumber;
 
 drop TABLE joinBoard_joinUserInfo;
 drop SEQUENCE joinBoard_number_seq;

@@ -100,45 +100,21 @@
         }).open();
     }       
 	function check(){
-		if(mypageInformationUpdate.user_name.value == "") {
-			if(mypageInformationUpdate.sample4_postcode.value == ""){
-				if(mypageInformationUpdate.sample4_roadAddress.value == ""){
-					if(mypageInformationUpdate.sample4_jibunAddress.value == ""){
-						if(mypageInformationUpdate.sample4_detailAddress.value == ""){
-							if(mypageInformationUpdate.user_phone.value == ""){
-								if(mypageInformationUpdate.user_email.value == ""){
-									if(mypageInformationUpdate.user_information.value == "") {
-										alert("아무거나 하나라도 입력해주세요.");
-										return false;
-									} else { return true;}
-								} else { return true;}
-							} else { return true;}
-						} else { return true;}
-					} else { return true;}
-				} else { return true;}
-			} else { return true;}
-		} else {
-			return true;
-		}
-	}
-	function delete_board(){
 		var obj_length = document.getElementsByName("delete_board").length;
-		var checkList = new Array();
+		
+		if(obj_length == 0) { return false; }
 		
 		var count = 0;
 		for (var i = 0; i < obj_length; i++) {
 			if(document.getElementsByName("delete_board")[i].checked == true){
-				checkList[count] = document.getElementsByName("delete_board")[i].value;
-				alert(checkList[count]);
 				count++;
 			}
 		}
-		
-		$.ajax({
-			url: "mypage_delete_board",
-		    data: "subject" + checkList,	
-		    type: "POST"
-		});
+		if(count == 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 </script>
 <style>
@@ -193,6 +169,12 @@
  	.mypage_community_content table {
  		width : 100%; height : 8.1%; text-align : center; border-bottom : 1px solid #BC8F8F;
  	}
+ 	.delete_btn input {
+ 		margin : 0; padding : 0; width : 4%; height : 50%;
+ 	}
+ 	.mypage_community_content a:link { color: #696969; text-decoration: none;}
+	.mypage_community_content a:visited { color: #696969; text-decoration: none;}
+ 	.mypage_community_content a:hover { color: black; text-decoration: none;}
 </style>
 </head>
 <body>
@@ -252,6 +234,7 @@
 		</div>					
 	</div>
 	<!-- 마이페이지 / 회원정보 / 즐겨찾기 / 포스팅 / 기타사항 -->
+	<form action = "mypage_delete_board" name = "mypageDeleteBoard" method = "POST" onsubmit = "return check()">
 	<div class = "mypage_community_frame">
 		<div class = "mypage_move_btn">
 			<table>
@@ -280,18 +263,29 @@
 					</tr>
 				</table>
 			</div>
-		</div>		
+		</div>
 		<div class = "mypage_community_content_frame">
 			<div class = "mypage_community_content">
 				<c:forEach items = "${myBoardList }" var = "myboard">
 					<table>
 						<tr>
-							<td style = "width : 2%;"><input type = "checkbox" name = "delete_board" value = "${myboard.boardSubject}/${myboard.boardNumber}"/></td>
+							<td style = "width : 2%;"><input type = "checkbox" name = "delete_board" value = "${myboard.boardSubject}-${myboard.boardNumber}"/></td>
 							<td style = "width : 10%;">
 								<c:if test = "${myboard.boardSubject eq 'freedom'}">자유</c:if>
 								<c:if test = "${myboard.boardSubject ne 'freedom'}">${myboard.boardSubject}</c:if>
 							</td>
-							<td style = "width : 40%;">${myboard.boardTitle}</td>
+							<td style = "width : 40%;">
+							<a href = "mypageContentView?boardNumber=${myboard.boardNumber}&boardSubject=${myboard.boardSubject}">${myboard.boardTitle}</a>
+								<c:forEach items = "${joinBoard_JoinUserList }" var = "joinUserList">
+									<c:if test = "${joinUserList.verified eq 0}">
+										<c:if test = "${myboard.boardNumber eq joinUserList.joinBoard_boardNumber }">
+											<c:if test = "${myboard.boardSubject ne 'freedom'}">
+												<span style = "color : red;">[신청!]</span>
+											</c:if>
+										</c:if>
+									</c:if>
+								</c:forEach>
+							</td>
 							<fmt:formatDate value = "${myboard.boardDate}" pattern = "yyyy-MM-dd" var = "boardDate"/>
 							<td style = "width : 10%;">${boardDate}</td>
 							<td style = "width : 10%;">
@@ -305,10 +299,11 @@
 			</div>
 		</div>
 		<div class = "delete_btn">
-			<button type = "button" onclick = "delete_board()" style = "margin : 0; padding : 0; background-color : white; color : black; border : 1px solid black; width : 4%; height : 50%;">삭제</button>
+			<input type = "submit" value = "삭제"/>
 		</div>
 	</div>
-	
+	</form>
+		
 	<div class = "submenu-frame">
 		<div class = "submenu-phone-app">
 			<a href = "#" onclick = "showPopup(false)"><img src = "http://sjsnrndi12.dothome.co.kr/images/phoneImg.PNG"

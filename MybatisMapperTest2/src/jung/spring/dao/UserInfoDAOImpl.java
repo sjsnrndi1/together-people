@@ -595,6 +595,63 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	}
 	/* =========== 글 목록 내 글 가져오기 서비스============ */
 
+	/* =========== 글 목록 내 글 삭제 서비스============ */
+	@Override
+	public void deleteBoard(String data) {
+		// TODO Auto-generated method stub
+		BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
+		JoinBoardMapper joinBoardMapper = sqlSession.getMapper(JoinBoardMapper.class);
+		BoardSympathyMapper boardSympathyMapper = sqlSession.getMapper(BoardSympathyMapper.class);
+		BoardCommentMapper boardCommentMapper = sqlSession.getMapper(BoardCommentMapper.class);
+		JoinBoard_JoinUserMapper joinBoard_joinUserMapper = sqlSession.getMapper(JoinBoard_JoinUserMapper.class);
+		String divData[] = data.split(",");
+		for (int i = 0; i < divData.length; i++) {
+			String temp[] = divData[i].split("-");
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			if(temp[0].equals("freedom")) {
+				map.put("boardSubject", temp[0]);
+				map.put("boardNumber", Integer.parseInt(temp[1]));
+				boardMapper.deleteBoard(map);
+				boardSympathyMapper.deleteBoardSympathy(map);
+				boardCommentMapper.deleteBoardComment(Integer.parseInt(temp[1]));
+			} else {
+				map.put("joinBoardSubject", temp[0]);
+				map.put("joinBoardNumber", Integer.parseInt(temp[1]));
+				joinBoardMapper.deleteJoinBoard(map);
+				joinBoard_joinUserMapper.deleteJoinBoard_joinUser(map);
+			}
+		}
+	}
+	/* =========== 글 목록 내 글 삭제 서비스============ */
+	
+	/* =========== 참여신청한 인원 목록 가져오기 서비스============ */
+	@Override
+	public ArrayList<JoinBoard_JoinUserInfoVO> getJoinBoard_joinUserList() {
+		// TODO Auto-generated method stub
+		JoinBoard_JoinUserMapper joinBoard_joinUserMapper = sqlSession.getMapper(JoinBoard_JoinUserMapper.class);
+		ArrayList<JoinBoard_JoinUserInfoVO> joinBoard_JoinUserList = joinBoard_joinUserMapper.getJoinBoard_joinUserList();
+
+		return joinBoard_JoinUserList;
+	}
+	/* =========== 참여신청한 인원 목록 가져오기 서비스============ */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

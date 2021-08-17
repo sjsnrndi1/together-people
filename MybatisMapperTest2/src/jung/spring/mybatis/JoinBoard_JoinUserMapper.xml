@@ -18,4 +18,12 @@
 		<select id = "getJoinBoard_joinUsers" parameterType = "int" resultType = "jung.spring.vo.JoinBoard_JoinUserInfoVO">
 			SELECT * FROM joinBoard_joinUserInfo WHERE joinBoard_boardNumber = #{joinBoardNumber}
 		</select>
+		
+		<delete id = "deleteJoinBoard_joinUser" parameterType = "map">
+			DELETE joinBoard_joinUserInfo WHERE joinBoard_boardNumber = #{joinBoardNumber}
+		</delete>
+		
+		<select id = "getJoinBoard_joinUserList" resultType = "jung.spring.vo.JoinBoard_JoinUserInfoVO">
+			SELECT * FROM joinBoard_joinUserInfo
+		</select>
 	</mapper>

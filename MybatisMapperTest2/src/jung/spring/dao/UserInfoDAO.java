@@ -66,5 +66,7 @@ public interface UserInfoDAO {
 	/********** 마이페이지 **********/
 	void updateUserInformation(HashMap<Object, Object> map); //내 정보 수정
 	ArrayList<BoardInfoVO> getMyBoards(String name); //글 목록 내 글 가져오기
+	void deleteBoard(String data); // 내 글 삭제
+	ArrayList<JoinBoard_JoinUserInfoVO> getJoinBoard_joinUserList(); //참여신청한 인원 목록 가져오기
 	/********** 마이페이지 **********/
 }

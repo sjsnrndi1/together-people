@@ -323,6 +323,28 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 	/* =========== 글 목록 내 글 가져오기 서비스============ */
 
+	/* =========== 글 목록 내 글 삭제 서비스============ */
+	@Override
+	public void deleteBoard(String data) {
+		// TODO Auto-generated method stub
+		userInfoDAO.deleteBoard(data);
+	}
+	/* =========== 글 목록 내 글 삭제 서비스============ */
+	
+	/* =========== 참여신청한 인원 목록 가져오기 서비스============ */
+	@Override
+	public List<JoinBoard_JoinUserInfoVO> getJoinBoard_joinUserList() {
+		// TODO Auto-generated method stub
+		ArrayList<JoinBoard_JoinUserInfoVO> joinBoard_JoinUserList = userInfoDAO.getJoinBoard_joinUserList();
+		return joinBoard_JoinUserList;
+	}
+	/* =========== 참여신청한 인원 목록 가져오기 서비스============ */
+	
+	
+	
+	
+	
+	
 	
 	
 	
