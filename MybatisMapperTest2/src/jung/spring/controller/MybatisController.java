@@ -4,11 +4,7 @@ import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.commons.net.ftp.FTPSClient;
-import org.json.simple.JSONObject;
-import net.sf.json.*;
-
 import java.util.HashMap;
-import java.util.Iterator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,12 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,18 +25,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
-
-import jung.spring.dao.UserInfoDAOImpl;
 import jung.spring.svc.UserInfoService;
 import jung.spring.vo.BoardSympathyInfoVO;
 import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
-import jung.spring.vo.ChatInfoVO;
 import jung.spring.vo.JoinBoardInfoVO;
 import jung.spring.vo.JoinBoard_JoinUserInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
-import jung.spring.vo.TestBean;
 import jung.spring.vo.UserInfoVO;
 
 @Controller
@@ -1021,71 +1009,7 @@ public class MybatisController {
 		return MypageJoinView(request);
 	}
 	/* =========== 마이페이지 글 삭제 =========== */
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/* =========== 마이페이지 포스팅 목록 화면 =========== */
 	@RequestMapping(value = "/mypagePostingView")
 	public ModelAndView MypagePostingView(HttpServletRequest request) throws Exception {
@@ -1099,6 +1023,71 @@ public class MybatisController {
 		return mav;
 	}
 	/* =========== 마이페이지 포스팅 목록 화면 =========== */
+	
+	/* =========== 마이페이지 댓글 목록 화면 =========== */
+	@RequestMapping(value = "/mypageCommentView")
+	public ModelAndView MypageCommentView(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String name = httpServletRequest(request);
+		UserInfoVO userInfo = userInfoService.getUser(name);
+		mav.addObject("userInfo", userInfo);
+		
+		List<BoardCommentInfoVO> boardCommentList = userInfoService.getBoardCommentList();
+		
+		mav.addObject("boardCommentList", boardCommentList);
+		mav.setViewName("Tp_mypageCommentView");
+		return mav;
+	}
+	/* =========== 마이페이지 댓글 목록 화면 =========== */
+	
+	/* =========== 마이페이지 댓글통한 게시글 화면 =========== */
+	@RequestMapping(value = "/mypageConmment_communityView")
+	public ModelAndView MypageConmment_communityView(HttpServletRequest request, @RequestParam("boardNumber") int boardNumber) throws Exception {
+		return CommunityContentView(request, boardNumber);
+	}
+	/* =========== 마이페이지 댓글통한 게시글 화면 =========== */
+	
+	/* =========== 마이페이지 댓글 삭제 =========== */
+	@RequestMapping(value = "/mypage_comment_delete", method = RequestMethod.POST)
+	public ModelAndView Mypage_comment_delete(HttpServletRequest request, @RequestParam("delete_board") String data) throws Exception {
+		int boardCommentNumber = Integer.parseInt(data);
+		userInfoService.deleteBoardComment(boardCommentNumber);
+		
+		return MypageCommentView(request);
+	}
+	/* =========== 마이페이지 댓글 삭제 =========== */
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

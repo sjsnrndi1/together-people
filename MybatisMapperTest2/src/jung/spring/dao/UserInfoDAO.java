@@ -3,16 +3,13 @@ package jung.spring.dao;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import jung.spring.vo.BoardSympathyInfoVO;
 import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
-import jung.spring.vo.ChatInfoVO;
 import jung.spring.vo.JoinBoardInfoVO;
 import jung.spring.vo.JoinBoard_JoinUserInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
-import jung.spring.vo.TestBean;
 import jung.spring.vo.UserInfoVO;
 
 public interface UserInfoDAO {
@@ -70,5 +67,6 @@ public interface UserInfoDAO {
 	ArrayList<BoardInfoVO> getMyBoards(String name); //글 목록 내 글 가져오기
 	void deleteBoard(String data); // 내 글 삭제
 	ArrayList<JoinBoard_JoinUserInfoVO> getJoinBoard_joinUserList(); //참여신청한 인원 목록 가져오기
+	ArrayList<BoardCommentInfoVO> getBoardCommentList(); //댓글 목록 가져오기
 	/********** 마이페이지 **********/
 }

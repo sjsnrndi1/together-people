@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${userInfo.user_name} | 글 목록</title>
+<title>${userInfo.user_name} | 댓글 목록</title>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- 제이쿼리 -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
@@ -171,7 +171,7 @@
 		</div>					
 	</div>
 	<!-- 마이페이지 / 회원정보 / 즐겨찾기 / 포스팅 / 기타사항 -->
-	<form action = "mypage_delete_board" name = "mypageDeleteBoard" method = "POST" onsubmit = "return check()">
+	<form action = "mypage_comment_delete" name = "mypageCommentDelete" method = "POST" onsubmit = "return check()">
 	<div class = "mypage_community_frame">
 		<div class = "mypage_move_btn">
 			<table>
@@ -184,10 +184,9 @@
 		</div>
 		<div class = "mypage_createDocBtn_joinDocBtn_frame" style = "margin-top : 1%;">
 			<div class = "mypage_createDocBtn_joinDocBtn">
-				&nbsp;&nbsp;<a href = "mypageCommunityView">내 글 보기</a>
-				<a href = "mypageJoinView" style = "margin-left : 3%;">참여한 모임</a>
+				<a href = "mypageCommunityView">전체보기</a>
+				<a href = "mypageJoinView" style = "margin-left : 3%;">모임</a>
 				<a href = "mypageCommentView" style = "margin-left : 3%;">댓글</a>
-				<a href = "mypageSympathyView" style = "margin-left : 3%;">공감</a>
 			</div>
 		</div>
 		<div class = "mypage_community_title_frame">
@@ -195,45 +194,25 @@
 				<table>
 					<tr>
 						<td style = "width : 2%; border-right : 1px solid #BC8F8F;"></td>
-						<td style = "width : 10%; border-right : 1px solid #BC8F8F;">카테고리</td>
-						<td style = "width : 40%; border-right : 1px solid #BC8F8F;">제목</td>
-						<td style = "width : 10%; border-right : 1px solid #BC8F8F;">작성일</td>
-						<td style = "width : 10%;">조회수/참여자수</td>
+						<td style = "width : 60%; border-right : 1px solid #BC8F8F;">댓글</td>
+						<td style = "width : 10%;">작성일</td>
 					</tr>
 				</table>
 			</div>
 		</div>
 		<div class = "mypage_community_content_frame">
 			<div class = "mypage_community_content">
-				<c:forEach items = "${myBoardList }" var = "myboard">
-					<table>
-						<tr>
-							<td style = "width : 2%;"><input type = "checkbox" name = "delete_board" value = "${myboard.boardSubject}-${myboard.boardNumber}"/></td>
-							<td style = "width : 10%;">
-								<c:if test = "${myboard.boardSubject eq 'freedom'}">자유</c:if>
-								<c:if test = "${myboard.boardSubject ne 'freedom'}">${myboard.boardSubject}</c:if>
-							</td>
-							<td style = "width : 40%;">
-							<a href = "mypageContentView?boardNumber=${myboard.boardNumber}&boardSubject=${myboard.boardSubject}">${myboard.boardTitle}</a>
-								<c:forEach items = "${joinBoard_JoinUserList }" var = "joinUserList">
-									<c:if test = "${joinUserList.verified eq 0}">
-										<c:if test = "${myboard.boardNumber eq joinUserList.joinBoard_boardNumber }">
-											<c:if test = "${myboard.boardSubject ne 'freedom'}">
-												<span style = "color : red;">[신청!]</span>
-											</c:if>
-										</c:if>
-									</c:if>
-								</c:forEach>
-							</td>
-							<fmt:formatDate value = "${myboard.boardDate}" pattern = "yyyy-MM-dd" var = "boardDate"/>
-							<td style = "width : 10%;">${boardDate}</td>
-							<td style = "width : 10%;">
-								${myboard.boardViews}
-								<c:if test = "${myboard.boardSubject eq 'freedom'}">회</c:if>
-								<c:if test = "${myboard.boardSubject ne 'freedom'}">명</c:if>
-							</td>
-						</tr>
-					</table>
+				<c:forEach items = "${boardCommentList }" var = "boardComment">
+					<c:if test = "${boardComment.userId eq ssVar}">
+						<table>
+							<tr>
+								<td style = "width : 2%;"><input type = "checkbox" name = "delete_board" value = "${boardComment.boardCommentNumber}"/></td>
+								<td style = "width : 60%;"><a href = "mypageConmment_communityView?boardNumber=${boardComment.boardNumber}">${boardComment.boardComment}</a></td>
+								<fmt:formatDate value = "${boardComment.boardCommentDate}" pattern = "yyyy-MM-dd" var = "boardCommentDate"/>
+								<td style = "width : 10%;">${boardCommentDate}</td>
+							</tr>
+						</table>
+					</c:if>
 				</c:forEach>
 			</div>
 		</div>

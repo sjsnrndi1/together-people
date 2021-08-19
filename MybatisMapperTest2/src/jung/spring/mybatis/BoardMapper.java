@@ -2,9 +2,7 @@ package jung.spring.mybatis;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import jung.spring.vo.BoardInfoVO;
-import jung.spring.vo.TestBean;
 
 public interface BoardMapper {
 

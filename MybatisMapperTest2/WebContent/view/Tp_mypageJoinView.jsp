@@ -184,10 +184,9 @@
 		</div>
 		<div class = "mypage_createDocBtn_joinDocBtn_frame" style = "margin-top : 1%;">
 			<div class = "mypage_createDocBtn_joinDocBtn">
-				&nbsp;&nbsp;<a href = "mypageCommunityView">내 글 보기</a>
-				<a href = "mypageJoinView" style = "margin-left : 3%;">참여한 모임</a>
+				<a href = "mypageCommunityView">전체보기</a>
+				<a href = "mypageJoinView" style = "margin-left : 3%;">모임</a>
 				<a href = "mypageCommentView" style = "margin-left : 3%;">댓글</a>
-				<a href = "mypageSympathyView" style = "margin-left : 3%;">공감</a>
 			</div>
 		</div>
 		<div class = "mypage_community_title_frame">

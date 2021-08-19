@@ -1,6 +1,5 @@
 package jung.spring.mybatis;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import jung.spring.vo.BoardSympathyInfoVO;

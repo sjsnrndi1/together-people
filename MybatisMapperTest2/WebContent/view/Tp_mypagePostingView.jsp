@@ -36,87 +36,19 @@
 		const popup = document.querySelector('#postingPopup');
 	  	popup.classList.add('hide');
 	}
-	function minusCut(loc) {
-		if(/[^0123456789]/g.test(loc.value)) {
-			alert("숫자가 아닙니다.\n\n숫자만 입력해주십시오.");
-			loc.value = "";
-			loc.focus(); 
-		}
-		document.getElementById("signUp").disabled = 'disabled';
-		document.getElementById("allAddCheck").disabled = false;
-	}
-	function sample4_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var roadAddr = data.roadAddress; // 도로명 주소 변수
-                var extraRoadAddr = ''; // 참고 항목 변수
-
-                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                    extraRoadAddr += data.bname;
-                }
-                // 건물명이 있고, 공동주택일 경우 추가한다.
-                if(data.buildingName !== '' && data.apartment === 'Y'){
-                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                }
-                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                if(extraRoadAddr !== ''){
-                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample4_postcode').value = data.zonecode;
-                document.getElementById("sample4_roadAddress").value = roadAddr;
-                document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
-                
-                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-                if(roadAddr !== ''){
-                    document.getElementById("sample4_extraAddress").value = extraRoadAddr;
-                } else {
-                    document.getElementById("sample4_extraAddress").value = '';
-                }
-
-                var guideTextBox = document.getElementById("guide");
-                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-                if(data.autoRoadAddress) {
-                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-                    guideTextBox.style.display = 'block';
-
-                } else if(data.autoJibunAddress) {
-                    var expJibunAddr = data.autoJibunAddress;
-                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-                    guideTextBox.style.display = 'block';
-                } else {
-                    guideTextBox.innerHTML = '';
-                    guideTextBox.style.display = 'none';
-                }
-            }
-        }).open();
-    }       
 	function check(){
-		if(mypageInformationUpdate.user_name.value == "") {
-			if(mypageInformationUpdate.sample4_postcode.value == ""){
-				if(mypageInformationUpdate.sample4_roadAddress.value == ""){
-					if(mypageInformationUpdate.sample4_jibunAddress.value == ""){
-						if(mypageInformationUpdate.sample4_detailAddress.value == ""){
-							if(mypageInformationUpdate.user_phone.value == ""){
-								if(mypageInformationUpdate.user_email.value == ""){
-									if(mypageInformationUpdate.user_information.value == "") {
-										alert("아무거나 하나라도 입력해주세요.");
-										return false;
-									} else { return true;}
-								} else { return true;}
-							} else { return true;}
-						} else { return true;}
-					} else { return true;}
-				} else { return true;}
-			} else { return true;}
+		var obj_length = document.getElementsByName("delete_board").length;
+		
+		if(obj_length == 0) { return false; }
+		
+		var count = 0;
+		for (var i = 0; i < obj_length; i++) {
+			if(document.getElementsByName("delete_board")[i].checked == true){
+				count++;
+			}
+		}
+		if(count == 0) {
+			return false;
 		} else {
 			return true;
 		}
@@ -126,103 +58,60 @@
 	.floorBar {
 		position : absolute;
 	}
-	.mypage_frame {
-		width : 50%;
-		height : 600px;
-		margin-left : 26%;
-		margin-top : 0.5%;
-		color : #696969;
+	.mypage_community_frame {
+		width : 50%; height : 600px; margin-left : 26%; margin-top : 0.5%; color : #696969;
 	}
 	.mypage_move_btn {
-		width : 99.3%;
-		height : 5%;
-		margin : 2px;
-		border-bottom : 1px solid #BC8F8F;
+		width : 99.3%; height : 5%; margin : 2px; border-bottom : 1px solid #BC8F8F;
 	}
 	.mypage_move_btn a:link { color: #696969; text-decoration: none;}
 	.mypage_move_btn a:visited { color: #696969; text-decoration: none;}
  	.mypage_move_btn a:hover { color: black; text-decoration: none;}
  	.mypage_move_btn table {
- 		width : 100%;
- 		height : 100%;
- 		text-align : center;
+ 		width : 100%; height : 100%; text-align : center;
  	}
- 	.mypage_title_frame {
- 		width : 20%;
- 		height : 90%;
- 		margin : 2px;
- 		color : black;
- 		float : left;
+ 	.mypage_move_btn table td{
+ 		width : 33%;
  	}
- 	.mypage_title {
- 		display : flex;
- 		width : 97%;
- 		justify-content : center;
- 		align-items : center;
- 		height : 10%;
- 		margin : 2px;
- 		border-bottom : 1px solid #BC8F8F;
+ 	.mypage_createDocBtn_joinDocBtn_frame {
+ 		border-bottom : 2px solid #BC8F8F; width : 99.3%; height : 4%; margin : 2px;
  	}
- 	.mypage_information_frame {
- 		width : 78.5%;
- 		height : 90%;
- 		margin : 2px;
- 		float : left;
+ 	.mypage_createDocBtn_joinDocBtn {
+ 		display : flex; justify-content: center; align-items: center;
  	}
- 	.mypage_information {
- 		display : flex;
- 		width : 99%;
- 		justify-content : center;
- 		align-items : center;
- 		height : 10%;
- 		margin : 2px;
- 		border-bottom : 1px solid #BC8F8F;
+ 	.mypage_createDocBtn_joinDocBtn a:link { color: #696969; text-decoration: none;}
+	.mypage_createDocBtn_joinDocBtn a:visited { color: #696969; text-decoration: none;}
+ 	.mypage_createDocBtn_joinDocBtn a:hover { color: black; text-decoration: none;}
+ 	.delete_btn {
+ 		width : 100%; margin : 2px; padding-top : 2px;
  	}
- 	.mypage_update_frame {
- 		float : left;
- 		margin : 2px;
- 		width : 99%;
- 		height : 10%;
+ 	.delete_btn a:link { color: #696969; text-decoration: none;}
+	.delete_btn a:visited { color: #696969; text-decoration: none;}
+ 	.delete_btn a:hover { color: black; text-decoration: none;}
+ 	.mypage_community_title_frame {
+ 		width : 99.3%; margin : 2px; border-bottom : 2px solid #BC8F8F;
  	}
- 	.mypage_update {
- 		width : 99.3%;
- 		height : 91%;
- 		margin : 2px;
+ 	.mypage_community_title {
+ 		width : 99.3%; margin : 2px; padding : 2px;
  	}
- 	.mypage_update a {
- 		display : flex;
- 		justify-content : center;
- 		align-items : center;
- 		height : 100%;
+ 	.mypage_community_title table{
+		width : 100%; text-align : center;
  	}
- 	.mypage_update a:link { color: #696969; text-decoration: none;}
-	.mypage_update a:visited { color: #696969; text-decoration: none;}
- 	.mypage_update a:hover { color: black; text-decoration: none;}
- 	
-	#postingPopup .content {
-		height : 400px;
-	}
-	.content_frame {
-		width : 100%; height : 90%;
-	}
-	.content_btn {
-		margin : 2px; width : 99%; height : 5%;
-	}
-	.content_title_frame {
-		margin : 2px; width : 20%; height : 92.5%; float : left; 
-	}
-	.content_title {
-		margin : 2px; width : 94%; height : 10%; display : flex; justify-content : center; align-items : center; border-bottom : 1px solid #BC8F8F;
-	}
-	.content_input_frame {
-		margin : 2px; width : 77%; height : 92.5%; float : left; 
-	}
-	.content_input {
-		margin : 2px; width : 98%; height : 10%; display : flex; justify-content : center; align-items : center; border-bottom : 1px solid #BC8F8F;
-	}
-	.content_input input {
-		border : 1px solid white;
-	}
+ 	.mypage_community_content_frame {
+ 		border-bottom : 2px solid #BC8F8F; width : 99.3%; height : 88%; margin : 2px; overflow-y : scroll;
+ 	}
+ 	.mypage_community_content {
+ 		width : 99.3%; height : 99%; margin : 2px;
+ 	}
+ 	.mypage_community_content table {
+ 		width : 100%; height : 8.1%; text-align : center; border-bottom : 1px solid #BC8F8F;
+ 	}
+ 	.delete_btn input {
+ 		margin : 0; padding : 0; width : 4%; height : 50%;
+ 	}
+ 	.mypage_community_content a:link { color: #696969; text-decoration: none;}
+	.mypage_community_content a:visited { color: #696969; text-decoration: none;}
+ 	.mypage_community_content a:hover { color: black; text-decoration: none;}
 </style>
 </head>
 <body>
@@ -282,79 +171,76 @@
 		</div>					
 	</div>
 	<!-- 마이페이지 / 회원정보 / 즐겨찾기 / 포스팅 / 기타사항 -->
-	<div class = "mypage_frame">
+	<form action = "mypage_delete_board" name = "mypageDeleteBoard" method = "POST" onsubmit = "return check()">
+	<div class = "mypage_community_frame">
 		<div class = "mypage_move_btn">
 			<table>
 				<tr>
-					<td style = "border-right : 1px solid #BC8F8F; width : 33%;"><a href = "myPageView">내 정보</a></td>
-					<td style = "border-right : 1px solid #BC8F8F; width : 33%;"><a href = "mypageCommunityView">글 목록</a></td>
-					<td style = "width : 33%;"><a href = "mypagePostingView">포스팅 목록</a></td>
+					<td style = "border-right : 1px solid #BC8F8F;"><a href = "myPageView">내 정보</a></td>
+					<td style = "border-right : 1px solid #BC8F8F;"><a href = "mypageCommunityView">글 목록</a></td>
+					<td><a href = "mypagePostingView">포스팅 목록</a></td>
 				</tr>
 			</table>
 		</div>
-		<div class = "mypage_title_frame" >
-			<div class = "mypage_title">이름</div>
-			<div class = "mypage_title">성별</div>
-			<div class = "mypage_title">생년월일</div>
-			<div class = "mypage_title">주소</div>
-			<div class = "mypage_title">휴대폰</div>
-			<div class = "mypage_title">이메일</div>
-			<div class = "mypage_title">자기소개</div>
-		</div>
-		<div class = "mypage_information_frame">
-			<div class = "mypage_information">${userInfo.user_name}</div>
-			<div class = "mypage_information">
-				<c:if test = "${userInfo.user_gender eq 'male'}">남</c:if>
-				<c:if test = "${userInfo.user_gender eq 'female'}">여</c:if>
+		<div class = "mypage_createDocBtn_joinDocBtn_frame" style = "margin-top : 1%;">
+			<div class = "mypage_createDocBtn_joinDocBtn">
+				<a href = "mypageCommunityView">전체보기</a>
+				<a href = "mypageJoinView" style = "margin-left : 3%;">공감 포스팅</a>
 			</div>
-			<div class = "mypage_information">${userInfo.user_birthday_year}.${month}.${userInfo.user_birthday_day}</div>
-			<div class = "mypage_information">(${userInfo.user_postCode})${userInfo.user_roadAddress}(지번 : ${userInfo.user_jibunAddress}) ${userInfo.user_detailAddress}</div>
-			<div class = "mypage_information">010-${middle_phoneNumber}-${last_phoneNumber}</div>
-			<div class = "mypage_information">${userInfo.user_email}</div>
-			<div class = "mypage_information">${userInfo.user_information}</div>
 		</div>
-		<div class = "mypage_update_frame">
-			<div class = "mypage_update">
-				<a href = "#" onclick = "showPostingPopup(false)">수정</a>
+		<div class = "mypage_community_title_frame">
+			<div class = "mypage_community_title">
+				<table>
+					<tr>
+						<td style = "width : 2%; border-right : 1px solid #BC8F8F;"></td>
+						<td style = "width : 10%; border-right : 1px solid #BC8F8F;">카테고리</td>
+						<td style = "width : 40%; border-right : 1px solid #BC8F8F;">제목</td>
+						<td style = "width : 10%; border-right : 1px solid #BC8F8F;">작성일</td>
+						<td style = "width : 10%;">조회수/참여자수</td>
+					</tr>
+				</table>
 			</div>
+		</div>
+		<div class = "mypage_community_content_frame">
+			<div class = "mypage_community_content">
+				<c:forEach items = "${myBoardList }" var = "myboard">
+					<table>
+						<tr>
+							<td style = "width : 2%;"><input type = "checkbox" name = "delete_board" value = "${myboard.boardSubject}-${myboard.boardNumber}"/></td>
+							<td style = "width : 10%;">
+								<c:if test = "${myboard.boardSubject eq 'freedom'}">자유</c:if>
+								<c:if test = "${myboard.boardSubject ne 'freedom'}">${myboard.boardSubject}</c:if>
+							</td>
+							<td style = "width : 40%;">
+							<a href = "mypageContentView?boardNumber=${myboard.boardNumber}&boardSubject=${myboard.boardSubject}">${myboard.boardTitle}</a>
+								<c:forEach items = "${joinBoard_JoinUserList }" var = "joinUserList">
+									<c:if test = "${joinUserList.verified eq 0}">
+										<c:if test = "${myboard.boardNumber eq joinUserList.joinBoard_boardNumber }">
+											<c:if test = "${myboard.boardSubject ne 'freedom'}">
+												<span style = "color : red;">[신청!]</span>
+											</c:if>
+										</c:if>
+									</c:if>
+								</c:forEach>
+							</td>
+							<fmt:formatDate value = "${myboard.boardDate}" pattern = "yyyy-MM-dd" var = "boardDate"/>
+							<td style = "width : 10%;">${boardDate}</td>
+							<td style = "width : 10%;">
+								${myboard.boardViews}
+								<c:if test = "${myboard.boardSubject eq 'freedom'}">회</c:if>
+								<c:if test = "${myboard.boardSubject ne 'freedom'}">명</c:if>
+							</td>
+						</tr>
+					</table>
+				</c:forEach>
+			</div>
+		</div>
+		<div class = "delete_btn">
+			<input type = "submit" value = "삭제"/>
 		</div>
 	</div>
-
-	<form action = "mypage_information_update" name = "mypageInformationUpdate" method = "POST" onsubmit="return check()">
-		<div id = "postingPopup" class="hide">
-			<div class = "content">
-				<div class = "content_frame">
-					<div class = "content_btn">
-						<button type = "button" class = "closeBtn" style = "margin : 0; float : right;" onclick="closePostingPopup()">x</button>
-					</div>
-					<div class = "content_title_frame">
-						<div class = "content_title">이름</div>
-						<div class = "content_title" style = "height : 35%;">주소</div>
-						<div class = "content_title">휴대폰</div>
-						<div class = "content_title">이메일</div>
-						<div class = "content_title" style = "height : 27.5%;">자기소개</div>
-					</div>
-					<div class = "content_input_frame">
-						<div class = "content_input"><input type = "text" value = "" placeholder = "이름을 입력해주세요." id = "user_name" name = "user_name" style = "width : 98%;"/></div>
-						<div class = "content_input" style = "height : 35%; display : block;">
-							<input type = "button" onclick = "sample4_execDaumPostcode()" value="우편번호 찾기" style = "border : 1px solid black; border-radius : 3px; margin-bottom : 2px;"><br>
-							<input type = "text" id = "sample4_postcode" class = "sample4_postcode" name = "sample4_postcode" placeholder = "우편번호" style = "margin-bottom : 2px; width : 98%;"><br>
-							<input type = "text" id = "sample4_roadAddress" class = "sample4_roadAddress" name = "sample4_roadAddress" placeholder = "도로명주소" style = "margin-bottom : 2px; width : 98%;"><br>
-							<input type = "text" id = "sample4_jibunAddress" class = "sample4_jibunAddress" name = "sample4_jibunAddress" placeholder = "지번주소" style = "margin-bottom : 2px; width : 98%;"><br>
-							<span id = "guide" style = "color : #999; display : none"></span>
-							<input type = "text" id = "sample4_detailAddress" class = "sample4_detailAddress" name = "sample4_detailAddress" placeholder = "상세주소" style = "width : 98%;">
-						</div>
-						<div class = "content_input"><input type = "tel" value = "" id = "user_phone" name = "user_phone" placeholder = "-없이 입력하세요." onblur = "minusCut(this)" style = "width : 98%;"/></div>
-						<div class = "content_input"><input type = "email" value = "" id = "user_email" name = "user_email" placeholder = "이메일을 입력해주세요." style = "width : 98%;"/></div>
-						<div class = "content_input" style = "height : 27.5%;"><input type = "text" id = "user_information" value = "" placeholder = "자기소개를 입력해주세요." name = "user_information" style = "width : 98%; height : 93%;"/></div>
-						<script src = "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-					</div>
-				</div>
-				<input type = "submit" style = "margin-left : 45%; background-color : black; border : 1px solid black; color : white; border-radius : 5px;" value = "수정하기">
-			</div>
-		</div>
 	</form>
-	
+		
 	<div class = "submenu-frame">
 		<div class = "submenu-phone-app">
 			<a href = "#" onclick = "showPopup(false)"><img src = "http://sjsnrndi12.dothome.co.kr/images/phoneImg.PNG"

@@ -23,4 +23,8 @@
 		<delete id = "deleteBoardComment" parameterType = "int">
 			DELETE boardCommentInfo WHERE boardCommentNumber = #{boardCommentNumber}
 		</delete>
+		
+		<select id = "getBoardCommentList" resultType = "jung.spring.vo.BoardCommentInfoVO">
+			SELECT * FROM boardCommentInfo
+		</select>
 	</mapper>

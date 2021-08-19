@@ -14,7 +14,6 @@ import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
-import jung.spring.vo.TestBean;
 import jung.spring.vo.UserInfoVO;
 
 @Service
@@ -352,6 +351,23 @@ public class UserInfoServiceImpl implements UserInfoService {
 		userInfoDAO.updateJoinUserRefuse(joinNumber);
 	}
 	/* =========== 참여게시글 수락/거절 서비스============ */
+	
+	/* =========== 마이페이지 댓글 목록 가져오기 서비스============ */
+	@Override
+	public List<BoardCommentInfoVO> getBoardCommentList() {
+		// TODO Auto-generated method stub
+		ArrayList<BoardCommentInfoVO> boardCommentList = userInfoDAO.getBoardCommentList();
+		return boardCommentList;
+	}
+	/* =========== 마이페이지 댓글 목록 가져오기 서비스============ */
+
+
+
+	
+	
+	
+	
+	
 	
 	
 	

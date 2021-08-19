@@ -3,7 +3,6 @@ package jung.spring.svc;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-
 import jung.spring.vo.BoardSympathyInfoVO;
 import jung.spring.vo.JoinBoardInfoVO;
 import jung.spring.vo.JoinBoard_JoinUserInfoVO;
@@ -11,7 +10,6 @@ import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
-import jung.spring.vo.TestBean;
 import jung.spring.vo.UserInfoVO;
 
 public interface UserInfoService {
@@ -69,6 +67,7 @@ public interface UserInfoService {
 	List<BoardInfoVO> getMyBoards(String name); //글 목록 내 글 가져오기
 	void deleteBoard(String data); //내 글 삭제
 	List<JoinBoard_JoinUserInfoVO> getJoinBoard_joinUserList(); //참여신청한 인원 목록 가져오기
+	List<BoardCommentInfoVO> getBoardCommentList(); //댓글 목록 가져오기
 	/********** 마이페이지 **********/
 	
 }

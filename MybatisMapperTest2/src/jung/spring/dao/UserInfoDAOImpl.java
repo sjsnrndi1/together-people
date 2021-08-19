@@ -4,16 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-
 import org.apache.ibatis.session.SqlSession;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import jung.spring.mybatis.BoardSympathyMapper;
 import jung.spring.mybatis.JoinBoardMapper;
 import jung.spring.mybatis.JoinBoard_JoinUserMapper;
-import jung.spring.controller.MybatisController;
 import jung.spring.mybatis.BoardCommentMapper;
 import jung.spring.mybatis.BoardMapper;
 import jung.spring.mybatis.MemberMapper;
@@ -27,7 +23,6 @@ import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
-import jung.spring.vo.TestBean;
 import jung.spring.vo.UserInfoVO;
 
 @Repository
@@ -661,12 +656,19 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	}
 	/* =========== 참여게시글 수락/거절 서비스============ */
 	
-	
-	
-	
-	
-	
-	
+	/* =========== 마이페이지 댓글 목록 가져오기 서비스============ */
+	@Override
+	public ArrayList<BoardCommentInfoVO> getBoardCommentList() {
+		// TODO Auto-generated method stub
+		BoardCommentMapper boardCommentMapper = sqlSession.getMapper(BoardCommentMapper.class);
+		ArrayList<BoardCommentInfoVO> boardCommentList = boardCommentMapper.getBoardCommentList();
+		return boardCommentList;
+	}
+	/* =========== 마이페이지 댓글 목록 가져오기 서비스============ */
+
+
+
+
 	
 	
 	
