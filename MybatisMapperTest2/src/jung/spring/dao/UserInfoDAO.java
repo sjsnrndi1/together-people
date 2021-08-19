@@ -61,6 +61,8 @@ public interface UserInfoDAO {
 	ArrayList<JoinBoard_JoinUserInfoVO> getJoinBoard_joinUsers(int joinBoardNumber); //참여게시글 참여인원 목록 가져오기
 	void addJoinBoard_joinUser_regist(String name, int joinBoardNumber); //참여게시글 참여신청
 	ArrayList<JoinBoardInfoVO> getJoinBoardSorts(String subject); //참여게시글 정렬
+	void updateJoinUserAccept(int joinNumber, int joinBoardNumber); //참여게시글 수락
+	void updateJoinUserRefuse(int joinNumber); //참여게시글 거절
 	/********** 게시글 **********/
 	
 	/********** 마이페이지 **********/

@@ -166,6 +166,8 @@ ON a.boardUserId = b.joinBoardUserId;
 
 SELECT * FROM joinBoardInfo WHERE JoinBoardUserId = 'sjsnrndi12' UNION ALL SELECT * FROM boardInfo WHERE boardUserId = 'sjsnrndi12';
 
+UPDATE joinBoardInfo SET joinBoard_joinUserNumber = '1' WHERE joinBoardNumber = '2'
+
 drop TABLE joinBoardInfo;
 drop SEQUENCE joinBoardNumber_seq;
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -183,6 +185,10 @@ CREATE TABLE joinBoard_joinUserInfo (
 CREATE SEQUENCE joinBoard_number_seq;
 
 select * from joinBoard_joinUserInfo order by joinBoard_boardNumber;
+
+SELECT count(CASE WHEN verified='1' THEN '1' END) FROM joinBoard_joinUserInfo WHERE joinBoard_boardNumber = '2';
+
+update joinBoard_joinUserInfo set verified = '0' where joinBoard_number = '21';
 
 drop TABLE joinBoard_joinUserInfo;
 drop SEQUENCE joinBoard_number_seq;

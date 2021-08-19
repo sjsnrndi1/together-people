@@ -635,9 +635,31 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	}
 	/* =========== 참여신청한 인원 목록 가져오기 서비스============ */
 	
-	
-	
-	
+	/* =========== 참여게시글 수락/거절 서비스============ */
+	@Override
+	public void updateJoinUserAccept(int joinNumber, int joinBoardNumber) {
+		// TODO Auto-generated method stub
+		JoinBoardMapper joinBoardMapper = sqlSession.getMapper(JoinBoardMapper.class);
+		JoinBoard_JoinUserMapper joinBoard_joinUserMapper = sqlSession.getMapper(JoinBoard_JoinUserMapper.class);
+		
+		joinBoard_joinUserMapper.updateJoinUserAccept(joinNumber);
+		
+		int joinBoard_joinUserNumber = joinBoard_joinUserMapper.selectJoinVerifieds(joinBoardNumber);
+		
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("joinBoardNumber", joinBoardNumber);
+		map.put("joinBoard_joinUserNumber", joinBoard_joinUserNumber);
+		
+		joinBoardMapper.updateJoinBoard_joinUserNumber(map);
+		
+	}
+	@Override
+	public void updateJoinUserRefuse(int joinNumber) {
+		// TODO Auto-generated method stub
+		JoinBoard_JoinUserMapper joinBoard_joinUserMapper = sqlSession.getMapper(JoinBoard_JoinUserMapper.class);
+		joinBoard_joinUserMapper.updateJoinUserRefuse(joinNumber);
+	}
+	/* =========== 참여게시글 수락/거절 서비스============ */
 	
 	
 	

@@ -17,4 +17,6 @@ public interface JoinBoardMapper {
 
 	void deleteJoinBoard(HashMap<Object, Object> map); //내 글 삭제
 
+	void updateJoinBoard_joinUserNumber(HashMap<Object, Object> map); //참여인원수 플러스
+
 }

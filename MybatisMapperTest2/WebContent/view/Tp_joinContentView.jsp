@@ -62,11 +62,12 @@
 	function closeKategoriPopup() {
 		const popup = document.querySelector('#kategoriPopup');
 	  	popup.classList.add('hide');
+	  	location.reload();
 	}
 	function join_accept(joinNumber){
 		$.ajax({
 			url: "joinUser_accept",
-		    data: "joinNumber=" + joinNumber,
+		    data: "joinNumber=" + joinNumber + "&joinBoardNumber=" + ${joinBoardInfo.joinBoardNumber},
 		    type: "POST"
 		})
 		setTimeout('autoRefresh_sample_div()', 0);
@@ -79,10 +80,8 @@
 		})
 		setTimeout('autoRefresh_sample_div()', 0);
 	}
-	
 	function autoRefresh_sample_div() {
-		var currentLocation = window.location;
-		$("#content").load(currentLocation + '#content');
+		$("#content_joinUser").load(location.href + ' #content_joinUser');
 	}
 </script>
 <style>
@@ -354,7 +353,7 @@
 	</div>
 	
 	<form action = "joinBoard_joinUser_regist" method = "POST">
-		<div id="postingPopup" class="hide">
+		<div id="postingPopup" class = "hide">
 			<div class="content">
 				<p style = "width : 100%; text-align : center;">
 					<input type = "hidden" value = "${joinBoardInfo.joinBoardNumber }" name = "joinBoardNumber" />
@@ -387,7 +386,6 @@
 	
 	<div id = "kategoriPopup" class = "hide">
 		<div class = "content" id = "content">
-			<input type = "hidden" value = "${joinBoardInfo.joinBoardNumber }" name = "joinBoardNumber" />
 			<button type = "button" class = "closeBtn" style = "margin : 0; float : right;" onclick="closeKategoriPopup()">x</button>
 			<br><br>
 			<div id = "content_frame" class = "content_frame" style = "border : 2px solid #BC8F8F; width : 100%; height : 87%; overflow-y : auto;">
@@ -399,7 +397,7 @@
 						</tr>
 					</table>
 				</div>
-				<div style = "margin : 2px; width : 99%; height : 92%; border-top : 1px solid #BC8F8F; text-align : center">
+				<div id = "content_joinUser" style = "margin : 2px; width : 99%; height : 92%; border-top : 1px solid #BC8F8F; text-align : center">
 					<c:forEach items = "${joinUsers}" var = "joinUser">
 						<div style = "display: flex; justify-content: center; align-items: center; width : 99.3%; height : 10%; margin : 2px; border-bottom : 1px solid #BC8F8F;">
 							<table style = "width : 99.3%; margin : 2px;">

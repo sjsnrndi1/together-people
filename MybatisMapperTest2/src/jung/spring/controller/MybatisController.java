@@ -981,17 +981,46 @@ public class MybatisController {
 	}
 	/* =========== 마이페이지 게시글 화면 =========== */
 	
+	/* =========== 참여게시글 수락/거절 화면 =========== */
 	@ResponseBody
 	@RequestMapping(value = "joinUser_accept", method = RequestMethod.POST)
-	public void JoinUser_accept(int joinNumber) {
+	public void JoinUser_accept(int joinNumber, int joinBoardNumber) {
 		
-		
+		userInfoService.updateJoinUserAccept(joinNumber, joinBoardNumber);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "joinUser_refuse", method = RequestMethod.POST)
+	public void JoinUser_refuse(int joinNumber) {
+		
+		userInfoService.updateJoinUserRefuse(joinNumber);
+	}
+	/* =========== 참여게시글 수락/거절 화면 =========== */
 	
+	/* =========== 마이페이지 참여 글목록 화면 =========== */
+	@RequestMapping(value = "/mypageJoinView")
+	public ModelAndView MypageJoinView(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String name = httpServletRequest(request);
+		UserInfoVO userInfo = userInfoService.getUser(name);
+		mav.addObject("userInfo", userInfo);
+		
+		List<JoinBoardInfoVO> joinBoardList = userInfoService.getJoinBoards();
+		mav.addObject("joinBoardList", joinBoardList);
+		mav.setViewName("Tp_mypageJoinView");
+		return mav;
+	}
+	/* =========== 마이페이지 참여 글 목록 화면 =========== */
 	
-	
-	
+	/* =========== 마이페이지 글 삭제 =========== */
+	@RequestMapping(value = "/mypage_joinBoard_delete", method = RequestMethod.POST)
+	public ModelAndView Mypage_joinBoard_delete(HttpServletRequest request, @RequestParam("delete_board") String data) throws Exception {
+		userInfoService.deleteBoard(data);
+		
+		return MypageJoinView(request);
+	}
+	/* =========== 마이페이지 글 삭제 =========== */
 	
 	
 	

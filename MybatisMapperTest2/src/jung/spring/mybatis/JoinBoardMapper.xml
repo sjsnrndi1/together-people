@@ -34,4 +34,8 @@
 		<delete id = "deleteJoinBoard" parameterType = "map">
 			DELETE joinBoardInfo WHERE joinBoardNumber = #{joinBoardNumber} AND joinBoardSubject = #{joinBoardSubject}
 		</delete>
+		
+		<update id = "updateJoinBoard_joinUserNumber" parameterType = "map">
+			UPDATE joinBoardInfo SET joinBoard_joinUserNumber = #{joinBoard_joinUserNumber} WHERE joinBoardNumber = #{joinBoardNumber}
+		</update>
 	</mapper>

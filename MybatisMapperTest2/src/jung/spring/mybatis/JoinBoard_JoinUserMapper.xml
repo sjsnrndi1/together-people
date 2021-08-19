@@ -26,4 +26,16 @@
 		<select id = "getJoinBoard_joinUserList" resultType = "jung.spring.vo.JoinBoard_JoinUserInfoVO">
 			SELECT * FROM joinBoard_joinUserInfo
 		</select>
+		
+		<update id = "updateJoinUserAccept">
+			UPDATE joinBoard_joinUserInfo SET verified = '1' WHERE joinBoard_number = #{joinNumber}
+		</update>
+		
+		<select id = "selectJoinVerifieds" parameterType = "int" resultType = "int">
+			SELECT count(CASE WHEN verified = '1' THEN '1' END) FROM joinBoard_joinUserInfo WHERE joinBoard_boardNumber = #{joinBoardNumber}
+		</select>
+		
+		<delete id = "updateJoinUserRefuse" parameterType = "int">
+			DELETE joinBoard_joinUserInfo WHERE joinBoard_number = #{joinNumber}
+		</delete>
 	</mapper>

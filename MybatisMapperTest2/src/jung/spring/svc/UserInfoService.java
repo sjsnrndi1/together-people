@@ -59,7 +59,9 @@ public interface UserInfoService {
 	void addJoinBoard_joinUser(String name); //참여게시글 참여인원  생성
 	List<JoinBoard_JoinUserInfoVO> getJoinBoard_joinUsers(int joinBoardNumber); //참여게시글 참여인원 목록 가져오기
 	void addJoinBoard_joinUser_regist(String name, int joinBoardNumber); //참여게시글 참여신청
-	List<JoinBoardInfoVO> getJoinBoardSorts(String subject); //참여게시글 정렬 
+	List<JoinBoardInfoVO> getJoinBoardSorts(String subject); //참여게시글 정렬
+	void updateJoinUserAccept(int joinNumber, int joinBoardNumber); // 참여게시글 수락
+	void updateJoinUserRefuse(int joinNumber); // 참여게시글 거절
 	/********** 커뮤니티 **********/
 	
 	/********** 마이페이지 **********/
@@ -68,4 +70,5 @@ public interface UserInfoService {
 	void deleteBoard(String data); //내 글 삭제
 	List<JoinBoard_JoinUserInfoVO> getJoinBoard_joinUserList(); //참여신청한 인원 목록 가져오기
 	/********** 마이페이지 **********/
+	
 }
