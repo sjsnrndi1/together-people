@@ -140,7 +140,12 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	public void addPosting(String content_title, String content_content, File content_picture, UserInfoVO userInfo) {
 		// TODO Auto-generated method stub
 		PostingMapper postingMapper = sqlSession.getMapper(PostingMapper.class);
-		String cp = content_picture.getName();
+		String cp = null;
+		if(content_picture == null) {
+			cp = "NoPicture";
+		} else {
+			cp = content_picture.getName();
+		}
 		HashMap<Object, Object> map = new HashMap<Object, Object>();
 		map.put("userId", userInfo.getUser_id());
 		map.put("userName", userInfo.getUser_name());

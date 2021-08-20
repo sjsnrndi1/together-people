@@ -224,14 +224,14 @@
 									<c:set var = "loop_flag" value = "false" />
 									<c:forEach items = "${userList }" var = "user">
 										<c:choose>
-											<c:when test="${posting.userId eq user.user_id }">
+											<c:when test="${posting.userId eq user.user_id }"><!-- 이부분 -->
 												<a href="#" style = "text-decoration: none;">
 													<img src = "http://sjsnrndi12.dothome.co.kr/images/siba.png" alt = "없음" class = "userImg" />
 												</a>
 												<c:set var = "loop_flag" value = "true" />
 											</c:when>
 											<c:otherwise>
-												<a href="#" style = "text-decoration: none;">
+												<a href="#" style = "text-decoration: none;"><!-- 이부분 -->
 													<img src = "http://sjsnrndi12.dothome.co.kr/images/notImg.png" alt = "없음" class = "userImg" />
 												</a>
 											</c:otherwise>
@@ -248,7 +248,7 @@
 								</div>
 							</td>
 							<td rowspan = "4">
-								<a href="#" style = "text-decoration: none;">
+								<a href="#" style = "text-decoration: none;"><!-- 이부분 -->
 									<fmt:formatDate var = "postingDate" value = "${posting.postingDate}" pattern="yyyyMMdd"/>
 									<!-- <img src = "http://121.181.36.139:8020/filezilaFolder/user_posting_pictures/${postingDate}/${posting.postingNumber}/${posting.postingPictureTitle}" alt = "없음" style = "padding-left : 5%; width : 94%; height : 170px;"/>  -->
 									<img src = "http://sjsnrndi12.dothome.co.kr/images/siba.png" alt = "없음" style = "padding-left : 5%; width : 94%; height : 170px;"/>

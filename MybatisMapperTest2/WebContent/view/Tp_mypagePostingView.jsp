@@ -171,7 +171,7 @@
 		</div>					
 	</div>
 	<!-- 마이페이지 / 회원정보 / 즐겨찾기 / 포스팅 / 기타사항 -->
-	<form action = "mypage_delete_board" name = "mypageDeleteBoard" method = "POST" onsubmit = "return check()">
+	<form action = "mypage_delete_posting" name = "mypageDeletePosting" method = "POST" onsubmit = "return check()">
 	<div class = "mypage_community_frame">
 		<div class = "mypage_move_btn">
 			<table>
@@ -184,8 +184,8 @@
 		</div>
 		<div class = "mypage_createDocBtn_joinDocBtn_frame" style = "margin-top : 1%;">
 			<div class = "mypage_createDocBtn_joinDocBtn">
-				<a href = "mypageCommunityView">전체보기</a>
-				<a href = "mypageJoinView" style = "margin-left : 3%;">공감 포스팅</a>
+				<a href = "mypagePostingView">전체보기</a>
+				<a href = "mypagePostingRecommendView" style = "margin-left : 3%;">추천 포스팅</a>
 			</div>
 		</div>
 		<div class = "mypage_community_title_frame">
@@ -193,43 +193,25 @@
 				<table>
 					<tr>
 						<td style = "width : 2%; border-right : 1px solid #BC8F8F;"></td>
-						<td style = "width : 10%; border-right : 1px solid #BC8F8F;">카테고리</td>
-						<td style = "width : 40%; border-right : 1px solid #BC8F8F;">제목</td>
+						<td style = "width : 20%; border-right : 1px solid #BC8F8F;">제목</td>
+						<td style = "width : 40%; border-right : 1px solid #BC8F8F;">내용</td>
 						<td style = "width : 10%; border-right : 1px solid #BC8F8F;">작성일</td>
-						<td style = "width : 10%;">조회수/참여자수</td>
+						<td style = "width : 10%;">추천수</td>
 					</tr>
 				</table>
 			</div>
 		</div>
 		<div class = "mypage_community_content_frame">
 			<div class = "mypage_community_content">
-				<c:forEach items = "${myBoardList }" var = "myboard">
+				<c:forEach items = "${postingList }" var = "posting">
 					<table>
 						<tr>
-							<td style = "width : 2%;"><input type = "checkbox" name = "delete_board" value = "${myboard.boardSubject}-${myboard.boardNumber}"/></td>
-							<td style = "width : 10%;">
-								<c:if test = "${myboard.boardSubject eq 'freedom'}">자유</c:if>
-								<c:if test = "${myboard.boardSubject ne 'freedom'}">${myboard.boardSubject}</c:if>
-							</td>
-							<td style = "width : 40%;">
-							<a href = "mypageContentView?boardNumber=${myboard.boardNumber}&boardSubject=${myboard.boardSubject}">${myboard.boardTitle}</a>
-								<c:forEach items = "${joinBoard_JoinUserList }" var = "joinUserList">
-									<c:if test = "${joinUserList.verified eq 0}">
-										<c:if test = "${myboard.boardNumber eq joinUserList.joinBoard_boardNumber }">
-											<c:if test = "${myboard.boardSubject ne 'freedom'}">
-												<span style = "color : red;">[신청!]</span>
-											</c:if>
-										</c:if>
-									</c:if>
-								</c:forEach>
-							</td>
-							<fmt:formatDate value = "${myboard.boardDate}" pattern = "yyyy-MM-dd" var = "boardDate"/>
-							<td style = "width : 10%;">${boardDate}</td>
-							<td style = "width : 10%;">
-								${myboard.boardViews}
-								<c:if test = "${myboard.boardSubject eq 'freedom'}">회</c:if>
-								<c:if test = "${myboard.boardSubject ne 'freedom'}">명</c:if>
-							</td>
+							<td style = "width : 2%;"><input type = "checkbox" name = "delete_board" value = "${posting.postingNumber}"/></td>
+							<td style = "width : 20%;"><a href = "mypageContentView?boardNumber=${posting.postingNumber}">${posting.postingTitle}</a></td>
+							<td style = "width : 40%;">${posting.postingContent}</td>
+							<fmt:formatDate value = "${posting.postingDate}" pattern = "yyyy-MM-dd" var = "postingDate"/>
+							<td style = "width : 10%;">${postingDate}</td>
+							<td style = "width : 10%;">${posting.postingRecommandCount }</td>
 						</tr>
 					</table>
 				</c:forEach>
