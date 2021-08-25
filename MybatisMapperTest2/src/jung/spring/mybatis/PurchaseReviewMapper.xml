@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace = "jung.spring.mybatis.PurchaseReviewMapper">
+		<resultMap type = "jung.spring.vo.PurchaseReviewInfoVO" id = "PurchaseReviewMap">			
+			<result property = "purchaseReviewNumber" column = "PURCHASEREVIEWNUMBER"/>
+			<result property = "purchaseReview_userId" column = "PURCHASEREVIEW_USERID"/>
+			<result property = "purchaseReview_userName" column = "PURCHASEREVIEW_USERNAME"/>
+			<result property = "purchaseReview_title" column = "PURCHASEREVIEW_TITLE"/>
+			<result property = "purchaseReview_content" column = "PURCHASEREVIEW_CONTENT"/>
+			<result property = "purchaseReview_date" column = "PURCHASEREVIEW_DATE"/>
+			<result property = "purchaseReview_picture" column = "PURCHASEREVIEW_PICTURE"/>
+		</resultMap>
+	
+		<select id = "getPurchaseReviews" resultType = "jung.spring.vo.PurchaseReviewInfoVO">
+			SELECT * FROM purchaseReviewInfo
+		</select>
+		
+		<insert id = "addPurchaseReview" parameterType = "map">
+			INSERT INTO purchaseReviewInfo VALUES(purchaseReviewNumber_seq.nextval, #{purchaseReview_userId}, #{purchaseReview_userName}, #{purchaseReview_title},
+			#{purchaseReview_content}, #{purchaseReview_date}, #{purchaseReview_picture})
+		</insert>
+		
+		<delete id = "deletePurchaseReviewFail" parameterType = "int">
+			DELETE FROM purchaseReviewInfo WHERE purchaseReviewNumber = #{purchaseReviewNumber}
+		</delete>
+		
+		<select id = "getPurchaseReview" parameterType = "int" resultType = "jung.spring.vo.PurchaseReviewInfoVO">
+			SELECT * FROM purchaseReviewInfo WHERE purchaseReviewNumber = #{purchaseReviewNumber}
+		</select>
+	</mapper>
