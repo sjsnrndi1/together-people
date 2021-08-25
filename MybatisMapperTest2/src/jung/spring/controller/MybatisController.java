@@ -33,6 +33,7 @@ import jung.spring.vo.JoinBoardInfoVO;
 import jung.spring.vo.JoinBoard_JoinUserInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
+import jung.spring.vo.PurchaseReviewInfoVO;
 import jung.spring.vo.UserInfoVO;
 
 @Controller
@@ -511,6 +512,16 @@ public class MybatisController {
 		}
 		
 		List<BoardInfoVO> boardList = userInfoService.getBoards();
+		List<Integer> list = new ArrayList<Integer>();
+		int divNumber = boardList.size() / 10;
+		if(boardList.size() > 10) {
+			for (int i = 1; i <= divNumber + 1; i++) {
+				list.add(i);
+			}
+		} else {
+			list.add(1);
+		}
+		mav.addObject("pageNumberList", list);
 		mav.addObject("page_check_Number", 1);
 		mav.addObject("pageNumber", 0);
 		mav.addObject("boardList", boardList);
@@ -545,11 +556,8 @@ public class MybatisController {
 			}
 			
 			userInfoService.addBoard(name, title, content, subject);
-			List<BoardInfoVO> boardList = userInfoService.getBoards();
 			
-			mav.addObject("boardList", boardList);
-			mav.setViewName("Tp_communityView");
-			return mav;
+			return CommunityView(request);
 		}
 	
 	/* =========== 커뮤니티 게시글 생성 =========== */
@@ -629,7 +637,19 @@ public class MybatisController {
 			mav.addObject("userInfo", userInfo);
 		}
 		String move = "default";
+		
 		List<BoardInfoVO> boardList = userInfoService.getBoardSort(subject, move);
+		List<Integer> list = new ArrayList<Integer>();
+		int divNumber = boardList.size() / 10;
+		if(boardList.size() > 10) {
+			for (int i = 1; i <= divNumber + 1; i++) {
+				list.add(i);
+			}
+		} else {
+			list.add(1);
+		}
+		mav.addObject("pageNumberList", list);
+		
 		int page = (pageNumber * 10) - 10;
 		mav.addObject("pageNumber", page);
 		mav.addObject("page_check_Number", pageNumber);
@@ -652,6 +672,16 @@ public class MybatisController {
 		}
 		String move = "default";
 		List<BoardInfoVO> boardList = userInfoService.getBoardSort(subject, move);
+		List<Integer> list = new ArrayList<Integer>();
+		int divNumber = boardList.size() / 10;
+		if(boardList.size() > 10) {
+			for (int i = 1; i <= divNumber + 1; i++) {
+				list.add(i);
+			}
+		} else {
+			list.add(1);
+		}
+		mav.addObject("pageNumberList", list);
 		int page = (pageNumber * 10) - 10;
 		mav.addObject("page_check_Number", pageNumber);
 		mav.addObject("subject", subject);
@@ -692,6 +722,17 @@ public class MybatisController {
 				mav.addObject("page_check_Number", pageNumber);
 			}
 		}
+		List<Integer> list = new ArrayList<Integer>();
+		int divNumber = boardList.size() / 10;
+		if(boardList.size() > 10) {
+			for (int i = 1; i <= divNumber + 1; i++) {
+				list.add(i);
+			}
+		} else {
+			list.add(1);
+		}
+		mav.addObject("pageNumberList", list);
+		
 		mav.addObject("subject", subject);
 		mav.addObject("pageNumber", page);
 		mav.addObject("boardList", boardList);
@@ -1070,16 +1111,147 @@ public class MybatisController {
 	}
 	/* =========== 마이페이지 포스팅 삭제 =========== */
 	
+	/* =========== 이용후기 목록 화면 =========== */
+	@RequestMapping(value = "/purchaseReview")
+	public ModelAndView PurchaseReview(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String name = httpServletRequest(request);
+		if (name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+		
+		List<PurchaseReviewInfoVO> purchaseReviewList = userInfoService.getPurchaseReviews();
+		
+		mav.addObject("purchaseReviewList", purchaseReviewList);
+		mav.setViewName("Tp_purchaseReview");
+		return mav;
+	}
+	/* =========== 이용후기 목록 화면 =========== */
+	
+	/* =========== 이용후기 생성 화면 =========== */
+	@RequestMapping(value = "/purchaseReviewCreate")
+	public ModelAndView PurchaseReviewCreate(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String name = httpServletRequest(request);
+		UserInfoVO userInfo = userInfoService.getUser(name);
+		mav.addObject("userInfo", userInfo);
+		
+		mav.setViewName("Tp_purchaseReviewCreate");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/purchaseReview_create_submit")
+	public ModelAndView PurchaseReview_create_submit(@RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("ct_pt") File content_picture,
+			HttpServletRequest request) throws Exception, SocketException, IOException {
+		ModelAndView mav = new ModelAndView();
 
+		String name = httpServletRequest(request);
+		UserInfoVO userInfo = userInfoService.getUser(name);
+		userInfoService.addPurchaseReview(title, content, content_picture, userInfo);
+		String purchaseReviewNumber = userInfoService.getLastPurchaseReviewNumber();
+
+		FTPSClient ftps = null;
+		try {
+			ftps = new FTPSClient("TLS", false);
+			ftps.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
+			ftps.connect("192.168.1.178", 2121);
+			int reply = 0;
+			reply = ftps.getReplyCode();
+			if (!FTPReply.isPositiveCompletion(reply)) {
+				ftps.disconnect();
+			} else {
+				Date from = new Date();
+				// 지금시간
+				// SimpleDateFormat nowDateHHmmss = new SimpleDateFormat ("HHmmss");
+				SimpleDateFormat nowDateymd = new SimpleDateFormat("yyyyMMdd");
+
+				// String nowHHmmss = nowDateHHmmss.format(from);
+				String nowymd = nowDateymd.format(from);
+
+				// 로그인
+				ftps.login("sjsnrndi12", "tkfkd465!@");
+				showServerReply(ftps);
+
+				// 데이터 보안
+				ftps.execPBSZ(0);
+				ftps.execPROT("P");
+
+				// ftp 디렉터리 생성
+				ftps.makeDirectory("/user_purchaseReview_pictures/" + nowymd);
+				showServerReply(ftps);
+
+				ftps.makeDirectory("/user_purchaseReview_pictures/" + nowymd + "/" + purchaseReviewNumber);// nowHHmmss
+				showServerReply(ftps);
+
+				// ftp 디렉터리 변경
+				ftps.changeWorkingDirectory("/user_purchaseReview_pictures/" + nowymd + "/" + purchaseReviewNumber);// nowHHmmss
+				showServerReply(ftps);
+
+				// Active Mode -> PassiveMode로 변경
+				ftps.enterLocalPassiveMode();
+				showServerReply(ftps);
+
+				FileInputStream fis = null;
+				fis = new FileInputStream(content_picture);
+				showServerReply(ftps);
+
+				ftps.setFileType(FTP.BINARY_FILE_TYPE);
+				showServerReply(ftps);
+
+				ftps.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
+				showServerReply(ftps);
+
+				// ftps에 파일 업로드
+				boolean isSuccess = ftps.storeFile(content_picture.getName(), fis);
+				showServerReply(ftps);
+
+				// 업로드 성공 시
+				if (isSuccess) {
+					System.out.println("업로드 성공");
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (SocketException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (ftps.isConnected()) {
+					ftps.logout();
+					ftps.disconnect();
+				}
+			} catch (IOException ex) {
+				userInfoService.deletePurchaseReviewFail(purchaseReviewNumber);
+				ex.printStackTrace();
+			}
+		}
+		List<PurchaseReviewInfoVO> purchaseReviewList = userInfoService.getPurchaseReviews();
+		mav.addObject("purchaseReviewList", purchaseReviewList);
+		mav.setViewName("Tp_purchaseReview");
+		return mav;
+	}
+	/* =========== 이용후기 생성 화면 =========== */
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	/* =========== 이용후기 게시글 화면 =========== */
+	@RequestMapping(value = "/purchaseReview_content_view")
+	public ModelAndView PurchaseReview_content_view(@RequestParam("purchaseReviewNumber") int purchaseReviewNumber, HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String name = httpServletRequest(request);
+		if (name != null) {
+			UserInfoVO userInfo = userInfoService.getUser(name);
+			mav.addObject("userInfo", userInfo);
+		}
+		
+		PurchaseReviewInfoVO purchaseReview = userInfoService.getPurchaseReview(purchaseReviewNumber);
+		mav.addObject("purchaseReview", purchaseReview);
+		mav.setViewName("Tp_purchaseReviewContent");
+		return mav;
+	}
+	/* =========== 이용후기 게시글 화면 =========== */
 	
 	
 	

@@ -16,6 +16,7 @@ import jung.spring.mybatis.MemberMapper;
 import jung.spring.mybatis.PopupChatMapper;
 import jung.spring.mybatis.PopupMapper;
 import jung.spring.mybatis.PostingMapper;
+import jung.spring.mybatis.PurchaseReviewMapper;
 import jung.spring.vo.BoardSympathyInfoVO;
 import jung.spring.vo.JoinBoardInfoVO;
 import jung.spring.vo.JoinBoard_JoinUserInfoVO;
@@ -23,6 +24,7 @@ import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
+import jung.spring.vo.PurchaseReviewInfoVO;
 import jung.spring.vo.UserInfoVO;
 
 @Repository
@@ -671,9 +673,86 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	}
 	/* =========== 마이페이지 댓글 목록 가져오기 서비스============ */
 
-
-
-
+	/* =========== 이용후기 목록 가져오기 서비스============ */
+	@Override
+	public ArrayList<PurchaseReviewInfoVO> getPurchaseReviews() {
+		// TODO Auto-generated method stub
+		PurchaseReviewMapper purchaseReviewMapper = sqlSession.getMapper(PurchaseReviewMapper.class);
+		ArrayList<PurchaseReviewInfoVO> purchaseReviewList = purchaseReviewMapper.getPurchaseReviews();
+		return purchaseReviewList;
+	}
+	/* =========== 이용후기 목록 가져오기 서비스============ */
+	
+	/* =========== 이용후기 생성 서비스============ */
+	@Override
+	public void addPurchaseReview(String title, String content, File content_picture, UserInfoVO userInfo) {
+		// TODO Auto-generated method stub
+		PurchaseReviewMapper purchaseReviewMapper = sqlSession.getMapper(PurchaseReviewMapper.class);
+		String cp = null;
+		if(content_picture == null) {
+			cp = "NoPicture";
+		} else {
+			cp = content_picture.getName();
+		}
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("purchaseReview_userId", userInfo.getUser_id());
+		map.put("purchaseReview_userName", userInfo.getUser_name());
+		map.put("purchaseReview_title", title);
+		map.put("purchaseReview_content", content);
+		map.put("purchaseReview_date", new Date());
+		map.put("purchaseReview_picture", cp);
+		purchaseReviewMapper.addPurchaseReview(map);
+	}
+	/* =========== 이용후기 생성 서비스============ */
+	
+	/* =========== 갓 생성한 이용후기 번호 가져오기 서비스 ============ */
+	@Override
+	public String getLastPurchaseReviewNumber() {
+		// TODO Auto-generated method stub
+		PurchaseReviewMapper purchaseReviewMapper = sqlSession.getMapper(PurchaseReviewMapper.class);
+		ArrayList<PurchaseReviewInfoVO> purchaseReviewList = purchaseReviewMapper.getPurchaseReviews();
+		int purchaseReviewNumber = (purchaseReviewList.get(purchaseReviewList.size() - 1).getPurchaseReviewNumber()); 
+		return String.valueOf(purchaseReviewNumber);
+	}
+	/* =========== 갓 생성한 이용후기 번호 가져오기 서비스 ============ */
+	
+	/* =========== 이용후기 삭제 서비스 ============ */
+	@Override
+	public void deletePurchaseReviewFail(String purchaseReviewNumber) {
+		// TODO Auto-generated method stub
+		PurchaseReviewMapper purchaseReviewMapper = sqlSession.getMapper(PurchaseReviewMapper.class);
+		purchaseReviewMapper.deletePurchaseReviewFail(Integer.parseInt(purchaseReviewNumber));
+	}
+	/* =========== 이용후기 삭제 서비스 ============ */
+	
+	/* =========== 이용후기 내용 서비스 ============ */
+	@Override
+	public PurchaseReviewInfoVO getPurchaseReview(int purchaseReviewNumber) {
+		// TODO Auto-generated method stub
+		PurchaseReviewMapper purchaseReviewMapper = sqlSession.getMapper(PurchaseReviewMapper.class);
+		PurchaseReviewInfoVO purchaseReview = purchaseReviewMapper.getPurchaseReview(purchaseReviewNumber);
+		return purchaseReview;
+	}
+	/* =========== 이용후기 내용 서비스 ============ */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

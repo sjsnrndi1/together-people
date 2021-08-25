@@ -14,6 +14,7 @@ import jung.spring.vo.BoardCommentInfoVO;
 import jung.spring.vo.BoardInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
+import jung.spring.vo.PurchaseReviewInfoVO;
 import jung.spring.vo.UserInfoVO;
 
 @Service
@@ -360,12 +361,49 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return boardCommentList;
 	}
 	/* =========== 마이페이지 댓글 목록 가져오기 서비스============ */
-
-
-
 	
+	/* =========== 이용후기 목록 가져오기 서비스============ */
+	@Override
+	public List<PurchaseReviewInfoVO> getPurchaseReviews() {
+		// TODO Auto-generated method stub
+		ArrayList<PurchaseReviewInfoVO> purchaseReviewList = userInfoDAO.getPurchaseReviews();
+		return purchaseReviewList;
+	}
+	/* =========== 이용후기 목록 가져오기 서비스============ */
 	
+	/* =========== 이용후기 생성 서비스 ============ */
+	@Override
+	public void addPurchaseReview(String title, String content, File content_picture, UserInfoVO userInfo) {
+		// TODO Auto-generated method stub
+		userInfoDAO.addPurchaseReview(title, content, content_picture, userInfo);
+	}
+	/* =========== 이용후기 생성 서비스 ============ */
 	
+	/* =========== 갓 생성한 이용후기 번호 가져오기 서비스 ============ */
+	@Override
+	public String getLastPurchaseReviewNumber() {
+		// TODO Auto-generated method stub
+		String purchaseReviewNumber = userInfoDAO.getLastPurchaseReviewNumber();
+		return purchaseReviewNumber;
+	}
+	/* =========== 갓 생성한 이용후기 번호 가져오기 서비스 ============ */
+	
+	/* =========== 이용후기 삭제 서비스 ============ */
+	@Override
+	public void deletePurchaseReviewFail(String purchaseReviewNumber) {
+		// TODO Auto-generated method stub
+		userInfoDAO.deletePurchaseReviewFail(purchaseReviewNumber);
+	}
+	/* =========== 이용후기 삭제 서비스 ============ */
+	
+	/* =========== 이용후기 내용 서비스 ============ */
+	@Override
+	public PurchaseReviewInfoVO getPurchaseReview(int purchaseReviewNumber) {
+		// TODO Auto-generated method stub
+		PurchaseReviewInfoVO purchaseReview = userInfoDAO.getPurchaseReview(purchaseReviewNumber);
+		return purchaseReview;
+	}
+	/* =========== 이용후기 내용 서비스 ============ */
 	
 	
 	

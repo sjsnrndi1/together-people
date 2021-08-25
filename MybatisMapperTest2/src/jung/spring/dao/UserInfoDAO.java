@@ -10,6 +10,7 @@ import jung.spring.vo.JoinBoardInfoVO;
 import jung.spring.vo.JoinBoard_JoinUserInfoVO;
 import jung.spring.vo.PopupChatInfoVO;
 import jung.spring.vo.PostingInfoVO;
+import jung.spring.vo.PurchaseReviewInfoVO;
 import jung.spring.vo.UserInfoVO;
 
 public interface UserInfoDAO {
@@ -60,6 +61,11 @@ public interface UserInfoDAO {
 	ArrayList<JoinBoardInfoVO> getJoinBoardSorts(String subject); //참여게시글 정렬
 	void updateJoinUserAccept(int joinNumber, int joinBoardNumber); //참여게시글 수락
 	void updateJoinUserRefuse(int joinNumber); //참여게시글 거절
+	ArrayList<PurchaseReviewInfoVO> getPurchaseReviews(); //이용후기 목록
+	void addPurchaseReview(String title, String content, File content_picture, UserInfoVO userInfo); //이용후기 생성
+	String getLastPurchaseReviewNumber(); // 갓 생성한 이용후기 번호 가져오기
+	void deletePurchaseReviewFail(String purchaseReviewNumber); //이용후기 삭제
+	PurchaseReviewInfoVO getPurchaseReview(int purchaseReviewNumber); //이용후기 내용
 	/********** 게시글 **********/
 	
 	/********** 마이페이지 **********/

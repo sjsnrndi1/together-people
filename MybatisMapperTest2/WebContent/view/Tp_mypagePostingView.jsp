@@ -136,7 +136,7 @@
 					<ul>
 						<li><a href="communityView">자유게시판</a></li>
 						<li><a href="joinView">참여게시판</a></li>
-						<li><a href="#">이용후기</a></li>
+						<li><a href="purchaseReview">이용후기</a></li>
 					</ul>
 				</li>
 				<li><a href="#">고객지원</a>
@@ -183,10 +183,7 @@
 			</table>
 		</div>
 		<div class = "mypage_createDocBtn_joinDocBtn_frame" style = "margin-top : 1%;">
-			<div class = "mypage_createDocBtn_joinDocBtn">
-				<a href = "mypagePostingView">전체보기</a>
-				<a href = "mypagePostingRecommendView" style = "margin-left : 3%;">추천 포스팅</a>
-			</div>
+			
 		</div>
 		<div class = "mypage_community_title_frame">
 			<div class = "mypage_community_title">

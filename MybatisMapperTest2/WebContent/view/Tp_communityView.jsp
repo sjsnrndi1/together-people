@@ -43,7 +43,7 @@
 					<ul>
 						<li><a href="communityView">자유게시판</a></li>
 						<li><a href="joinView">참여게시판</a></li>
-						<li><a href="#">이용후기</a></li>
+						<li><a href="purchaseReview">이용후기</a></li>
 					</ul>
 				</li>
 				<li><a href="#">고객지원</a>
@@ -125,22 +125,32 @@
 			</div>
 			<div class = "commu_number_frame">
 				<div style = "width : 99%; height : 99%;">
-					<c:set var = "pageCheckNumber" value = "1"/>
-					<c:forEach items = "${boardList }" var = "board" varStatus = "status">
+					<c:if test = "${page_check_Number > 1}">
+						<c:set var = "page_check_Number" value = "1" scope = "request"/>
+					</c:if>
+					<c:forEach items = "${pageNumberList}" varStatus = "status">
+						<a href = "page_move?pageNumber=${page_check_Number}&subject=${subject}" class = "boardNumberMoveBtn">${page_check_Number}</a>
+						<c:if test = "${status.count ne fn:length(pageNumberList)}">
+							<c:set var = "page_check_Number" value = "${page_check_Number + 1}" scope = "request"/>
+						</c:if>
+					</c:forEach>
+					<%-- <c:forEach items = "${boardList}" var = "board" varStatus = "status">
 						<c:choose>
 							<c:when test = "${fn:length(boardList) < 11}">
 								1
 							</c:when>
-							<c:when test = "${fn:length(boardList) / 10 > 0}">
-								<c:if test = "${status.count % 10 eq 1}">
-									<%-- <a href = "page_move?pageNumber=${page_check_Number}" class = "boardNumberMoveBtn">${page_check_Number}</a>
-									<c:set var = "page_check_Number" value = "${page_check_Number + 1}" scope = "request"/> --%>
-									<a href = "page_move?pageNumber=${pageCheckNumber}&subject=${subject}" class = "boardNumberMoveBtn">${pageCheckNumber}</a>
-									<c:set var = "pageCheckNumber" value = "${pageCheckNumber + 1}"/>
+							<c:when test = "${fn:length(boardList) > 10}">
+								<c:if test = "${fn:length(boardList) / 10 > 0}">
+									<c:if test = "${status.count % 10 eq 1}">
+										<a href = "page_move?pageNumber=${page_check_Number}&subject=${subject}" class = "boardNumberMoveBtn">${page_check_Number}</a>
+										<c:set var = "page_check_Number" value = "${page_check_Number + 1}" scope = "request"/>
+										<a href = "page_move?pageNumber=${pageCheckNumber}&subject=${subject}" class = "boardNumberMoveBtn">${pageCheckNumber}</a>
+										<c:set var = "pageCheckNumber" value = "${pageCheckNumber + 1}"/>
+									</c:if>
 								</c:if>
 							</c:when>
 						</c:choose>
-					</c:forEach>
+					</c:forEach> --%>
 				</div>
 			</div>
 			<div class = "commu_right_frame">

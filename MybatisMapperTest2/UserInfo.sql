@@ -192,7 +192,32 @@ update joinBoard_joinUserInfo set verified = '0' where joinBoard_number = '21';
 
 drop TABLE joinBoard_joinUserInfo;
 drop SEQUENCE joinBoard_number_seq;
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE purchaseReviewInfo (
+	purchaseReviewNumber NUMBER NOT NULL,
+	purchaseReview_userId VARCHAR2(100) NOT NULL,
+	purchaseReview_userName VARCHAR2(100) NOT NULL,
+	purchaseReview_title VARCHAR2(100) NOT NULL,
+	purchaseReview_content VARCHAR2(4000) NOT NULL,
+	purchaseReview_date DATE NOT NULL,
+	purchaseReview_picture VARCHAR2(300),
+	
+	PRIMARY KEY(purchaseReviewNumber)
+);
+
+CREATE SEQUENCE purchaseReviewNumber_seq;
+
+select * from purchaseReviewInfo;
+
+drop TABLE purchaseReviewInfo;
+drop SEQUENCE purchaseReviewNumber_seq;
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
 
 
 

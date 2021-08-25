@@ -66,7 +66,7 @@
 					<ul>
 						<li><a href="communityView">자유게시판</a></li>
 						<li><a href="joinView">참여게시판</a></li>
-						<li><a href="#">이용후기</a></li>
+						<li><a href="purchaseReview">이용후기</a></li>
 					</ul>
 				</li>
 				<li><a href="#">고객지원</a>
