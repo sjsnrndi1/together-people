@@ -26,6 +26,8 @@ select * from userInfo;
 
 INSERT INTO userInfo VALUES(userInfo_seq.nextval, 'admin', 'tkFKD465!@', '12345', '包府磊', '包府磊', '包府磊', '包府磊', '巢己', '1', '1', '1', 'admin', '1234', sysdate, 'null');
 
+delete from userInfo where user_id = 'minjam2'
+
 drop TABLE userInfo;
 drop SEQUENCE userInfo_seq;
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

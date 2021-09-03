@@ -193,8 +193,8 @@ public class MybatisController {
 		map.put("user_date", new Date());
 		map.put("user_picture", "");
 		map.put("user_information", "");
-		userInfoService.addUserInfo(map);
-		userInfoService.addUserPopup(user_id);
+		//userInfoService.addUserInfo(map);
+		//userInfoService.addUserPopup(user_id);
 		mav.addObject("user_name", user_name);
 		
 		List<UserInfoVO> userList = userInfoService.getMembers();
